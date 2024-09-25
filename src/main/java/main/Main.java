@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class Main {
 
-    public static String res = "E:\\Java\\copy\\src\\main\\java\\res";
+    public static String res = "E:\\Java\\BombGame\\src\\main\\java\\res";
 
     public static void main(String[] args) {
 
