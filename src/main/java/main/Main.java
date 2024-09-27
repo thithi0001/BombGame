@@ -1,11 +1,11 @@
 package main;
 
 import javax.swing.JFrame;
+import java.io.File;
 
 public class Main {
 
-    public static String res = "E:\\Java\\BombGame\\src\\main\\java\\res";
-
+    public static String res = new File("..src\\main\\java\\res").getAbsolutePath().replace("..","");
     public static void main(String[] args) {
 
         JFrame window = new JFrame();
