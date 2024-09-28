@@ -73,7 +73,7 @@ public class Player extends Entity {
 
         if (keyH.enterPressed && timer == 0) {
 
-            bombs.add(new NormalBomb(gp, col(), row()));
+            bombs.add(new NormalBomb(gp, col() * gp.tileSize, row() * gp.tileSize, this));
             timer = cooldown;
         }
 
@@ -99,6 +99,8 @@ public class Player extends Entity {
 
             // CHECK TILE COLLiSION
             gp.cChecker.checkTile(this);
+            gp.bombs.addAll(bombs);
+            gp.cChecker.checkBomb(this);
 
             move();
         }

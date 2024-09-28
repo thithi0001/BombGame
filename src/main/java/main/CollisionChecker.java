@@ -2,6 +2,8 @@ package main;
 
 import entity.Entity;
 
+import java.awt.Rectangle;
+
 public class CollisionChecker {
 
     GamePanel gp;
@@ -63,13 +65,43 @@ public class CollisionChecker {
 
     public void checkBomb(Entity entity) {
 
+        if (!entity.collisionOn) return;
 
+        Rectangle solidArea = new Rectangle(entity.solidArea);
+        solidArea.x += entity.x;
+        solidArea.y += entity.y;
         switch (entity.direction) {
             case "up":
-
+                solidArea.y -= entity.speed;
+                gp.bombs.forEach((b) -> {
+                    if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
+                        entity.canMoveUp = false;
+                    }
+                });
                 break;
-
-            default:
+            case "down":
+                solidArea.y += entity.speed;
+                gp.bombs.forEach((b) -> {
+                    if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
+                        entity.canMoveDown = false;
+                    }
+                });
+                break;
+            case "left":
+                solidArea.x -= entity.speed;
+                gp.bombs.forEach((b) -> {
+                    if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
+                        entity.canMoveLeft = false;
+                    }
+                });
+                break;
+            case "right":
+                solidArea.x += entity.speed;
+                gp.bombs.forEach((b) -> {
+                    if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
+                        entity.canMoveRight = false;
+                    }
+                });
                 break;
         }
     }
