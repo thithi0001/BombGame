@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
 
+    public String name;
     public int x, y;
     public int speed;
 
