@@ -27,7 +27,7 @@ public class NormalBomb extends Bomb {
         countdownInFrame = countdownInSecond * gp.FPS;
         countDown = (int) countdownInFrame;
 
-        flame = new Flame(gp, x, y, 1);
+        flame = new Flame(gp, x, y, 2);
         getBombImage();
     }
 
@@ -52,6 +52,8 @@ public class NormalBomb extends Bomb {
 
             return;
         }
+
+        flame.update();
 
         if (++spriteCounter > spriteTime) {
 
@@ -85,5 +87,8 @@ public class NormalBomb extends Bomb {
     public void draw(Graphics2D g2) {
 
         g2.drawImage(sprites[spriteNum], x, y, null);
+        if (exploding) {
+            flame.draw(g2);
+        }
     }
 }

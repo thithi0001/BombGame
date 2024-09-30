@@ -35,6 +35,11 @@ public class Bomb {
     public boolean letPlayerPassThrough = true;
 
     // FLAME
+    public Flame flame;
+
+    public Bomb(){
+
+    }
 
     public int col() {
 
