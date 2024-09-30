@@ -3,10 +3,11 @@ package main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import bomb.NormalBomb;
+import bomb.Bomb;
 import entity.Player;
 import tile.TileManager;
 
@@ -30,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     public Player player = new Player(this, keyh);
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public NormalBomb nBomb = new NormalBomb(this, tileSize, tileSize);
+    public ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 
     public GamePanel() {
 
@@ -81,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+        bombs.clear();
         player.update();
     }
 

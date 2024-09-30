@@ -34,6 +34,7 @@ public class Player extends Entity {
 
         this.gp = gp;
         this.keyH = keyH;
+        this.name = "player";
 
         cooldownInSecond = 1;
         cooldownInFrame = cooldownInSecond * gp.FPS;
@@ -48,7 +49,7 @@ public class Player extends Entity {
     void setDefaultValues() {
 
         x = gp.tileSize * 1;
-        y = gp.tileSize * 1;
+        y = gp.tileSize * 10;
         speed = 2;
         direction = "down";
         spriteTime = 12;
@@ -61,22 +62,34 @@ public class Player extends Entity {
 
     public int col() {
 
-        return (x + gp.tileSize / 2) / gp.tileSize * gp.tileSize;
+        return (x + gp.tileSize / 2) / gp.tileSize;
     }
 
     public int row() {
 
-        return (y + gp.tileSize / 2) / gp.tileSize * gp.tileSize;
+        return (y + gp.tileSize / 2) / gp.tileSize;
     }
 
     public void update() {
 
         if (keyH.enterPressed && timer == 0) {
 
-            bombs.add(new NormalBomb(gp, col(), row()));
+            bombs.add(new NormalBomb(gp, col() * gp.tileSize, row() * gp.tileSize, this));
             timer = cooldown;
         }
 
+        NormalBomb bomb;
+        for (int i = 0; i < bombs.size(); ) {
+
+            bomb = bombs.get(i);
+            bomb.update();
+
+            if (bomb.exploded) {
+                bombs.remove(i);
+            } else {
+                i++;
+            }
+        }
         if (timer > 0) {
 
             timer--;
@@ -99,22 +112,10 @@ public class Player extends Entity {
 
             // CHECK TILE COLLiSION
             gp.cChecker.checkTile(this);
+            gp.bombs.addAll(bombs);
+            gp.cChecker.checkBomb(this);
 
             move();
-        }
-
-        NormalBomb bomb;
-        for (int i = 0; i < bombs.size(); ) {
-
-            bomb = bombs.get(i);
-            bomb.update();
-            // bomb.checkPlayer(this);
-
-            if (bomb.exploded) {
-                bombs.remove(i);
-            } else {
-                i++;
-            }
         }
 
         if (++spriteCounter > spriteTime) {
