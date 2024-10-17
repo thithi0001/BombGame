@@ -14,7 +14,6 @@ import main.UtilityTool;
 
 public class Player extends Entity {
 
-    GamePanel gp;
     KeyHandler keyH;
 
     BufferedImage[] upSprites, downSprites, leftSprites, rightSprites;
@@ -23,7 +22,7 @@ public class Player extends Entity {
     // direction
 
 
-    public ArrayList<NormalBomb> bombs = new ArrayList<NormalBomb>();
+    public ArrayList<NormalBomb> bombs = new ArrayList<>();
     int maxBombs = 1;
     double cooldownInSecond;
     double cooldownInFrame;
@@ -48,9 +47,9 @@ public class Player extends Entity {
 
     void setDefaultValues() {
 
-        x = gp.tileSize * 1;
+        x = gp.tileSize * 2;
         y = gp.tileSize * 10;
-        speed = 2;
+        speed = 4;
         direction = "down";
         spriteTime = 12;
     }
@@ -58,16 +57,6 @@ public class Player extends Entity {
     void getPlayerImage() {
 
         sprites = UtilityTool.loadSpriteSheet(gp, Main.res + "/bomb/normal/bomb_64_x_16_.png");
-    }
-
-    public int col() {
-
-        return (x + gp.tileSize / 2) / gp.tileSize;
-    }
-
-    public int row() {
-
-        return (y + gp.tileSize / 2) / gp.tileSize;
     }
 
     public void update() {
@@ -78,18 +67,9 @@ public class Player extends Entity {
             timer = cooldown;
         }
 
-        NormalBomb bomb;
-        for (int i = 0; i < bombs.size(); ) {
+        bombs.forEach(NormalBomb::update);
+        bombs.removeIf(bomb -> bomb.exploded);
 
-            bomb = bombs.get(i);
-            bomb.update();
-
-            if (bomb.exploded) {
-                bombs.remove(i);
-            } else {
-                i++;
-            }
-        }
         if (timer > 0) {
 
             timer--;
@@ -110,7 +90,7 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            // CHECK TILE COLLiSION
+            // CHECK COLLISION
             gp.cChecker.checkTile(this);
             gp.bombs.addAll(bombs);
             gp.cChecker.checkBomb(this);

@@ -3,11 +3,13 @@ package bomb;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import entity.Entity;
 import main.GamePanel;
 
 public class Bomb {
 
     public String name;
+    public Entity owner = null;
 
     public GamePanel gp;
     public int x, y;

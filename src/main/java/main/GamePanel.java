@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import bomb.Bomb;
+import entity.Item;
 import entity.Player;
+import tile.Map;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -27,12 +29,14 @@ public class GamePanel extends JPanel implements Runnable {
     public int FPS = 60;
 
     public TileManager tileManager = new TileManager(this);
+    public Map map;
     KeyHandler keyh = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(this, keyh);
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+    public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
+//    public GamePanel(Map map)
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -40,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyh);
         this.setFocusable(true);// this can be focused to receive key input
+        this.map = new Map(this, "level_1");
     }
 
     void startGameThread() {
@@ -84,6 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         bombs.clear();
         player.update();
+        map.items.forEach(Item::update);
     }
 
     public void paintComponent(Graphics g) {
@@ -92,13 +98,13 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         // DRAW ORDER
-        // background outside the tilemap
-        // tilemap
+        // background outside the tile map
+        // tileMap
         // player and monster
         // bomb and item
         // ui
 
-        tileManager.draw(g2);
+        tileManager.draw(g2, map);
 
         player.draw(g2);
 

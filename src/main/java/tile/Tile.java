@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile {
 
+    public String name = "";
     public BufferedImage image = null;
     public boolean collision = false;
     public boolean destructible = false;
