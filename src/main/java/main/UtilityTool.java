@@ -44,8 +44,8 @@ public class UtilityTool {
                     row = Integer.parseInt(str) / gp.originalTileSize;
                     break;
                 }
-            } catch (NumberFormatException e) {
-                continue;
+            } catch (NumberFormatException _) {
+
             }
         }
 
