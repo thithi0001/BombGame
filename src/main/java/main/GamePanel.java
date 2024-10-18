@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = maxScreenCol * tileSize;// 192
     public final int screenHeight = maxScreenRow * tileSize;// 192
-
+    
     // FPS
     public int FPS = 60;
 
@@ -31,7 +31,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyh);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public NormalBomb nBomb = new NormalBomb(this, tileSize, tileSize);
-    public Sound sound = new Sound();
 
     public GamePanel() {
 
@@ -42,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);// this can be focused to receive key input
     }
     public void setUpGame(){
-        playMusic(0);
+    //    Sound s =new Sound("Music");
     }
     void startGameThread() {
 
@@ -106,15 +105,6 @@ public class GamePanel extends JPanel implements Runnable {
         // nBomb.draw(g2);
 
         g2.dispose();// save memories
-    }
-
-    public void playMusic(int i){
-        sound.setFile(i);
-        sound.play();
-        sound.loop();
-    }
-    public void stopMusic(){
-        sound.stop();
     }
 
 }
