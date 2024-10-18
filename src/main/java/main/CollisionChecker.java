@@ -124,10 +124,10 @@ public class CollisionChecker {
 
     public static void checkItemForFlame(Flame flame, Item item) {
 
-        if (!item.hidden && !item.isPickedUp && !item.isHit && flame.duration > 1
+        if (item.state == Item.States.shown && flame.duration > 1
                 && (flame.verticalSolidArea.intersects(item.solidArea)
                 || flame.horizontalSolidArea.intersects(item.solidArea))) {
-            item.isHit = true;
+            item.state = Item.States.isHit;
             // do something when the item is hit
             System.out.println("hit " + item.name);
         }
@@ -138,8 +138,8 @@ public class CollisionChecker {
         Rectangle solidArea = new Rectangle(gp.player.solidArea);
         solidArea.x += gp.player.x;
         solidArea.y += gp.player.y;
-        if (!item.hidden && !item.isPickedUp && !item.isHit && solidArea.intersects(item.solidArea)) {
-            item.isPickedUp = true;
+        if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
+            item.state = Item.States.isPickedUp;
             System.out.println("+1 " + item.name);
         }
     }
