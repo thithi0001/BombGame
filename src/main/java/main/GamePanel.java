@@ -30,9 +30,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TileManager tileManager = new TileManager(this);
     public Map map;
-    KeyHandler keyh = new KeyHandler();
+    KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    public Player player = new Player(this, keyh);
+    public Player player = new Player(this, keyH);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyh);
+        this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
         this.map = new Map(this, "level_1");
     }
