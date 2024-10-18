@@ -67,7 +67,20 @@ public class CollisionChecker {
         }
     }
 
-    public void checkBomb(Entity entity) {
+    public boolean canPlaceBomb(Entity entity) {
+
+        boolean canPlaceBomb = true;
+        for (int i = 0; i < gp.bombs.size(); i++) {
+            Bomb b = gp.bombs.get(i);
+            if (entity.col() == b.col() && entity.row() == b.row()) {
+                canPlaceBomb = false;
+                break;
+            }
+        }
+        return canPlaceBomb;
+    }
+
+    public void checkBombForMoving(Entity entity) {
 
         if (!entity.collisionOn) return;
 
