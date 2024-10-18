@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,8 +8,6 @@ import java.util.ArrayList;
 import bomb.NormalBomb;
 import main.GamePanel;
 import main.KeyHandler;
-import main.Main;
-import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -117,25 +114,22 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
 
-         switch (direction) {
-             case "up":
-                 sprites = playerUp;
-                 break;
-             case "down":
-                 sprites = playerDown;
-                 break;
-             case "left":
-                 sprites = playerLeft;
-                 break;
-             case "right":
-                 sprites = playerRight;
-                 break;
-         }
+        switch (direction) {
+            case "up":
+                sprites = playerUp;
+                break;
+            case "down":
+                sprites = playerDown;
+                break;
+            case "left":
+                sprites = playerLeft;
+                break;
+            case "right":
+                sprites = playerRight;
+                break;
+        }
 
-         g2.drawImage(sprites[spriteNum], x, y, null);
-
-//        g2.setColor(Color.RED);
-//        g2.fillRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
+        g2.drawImage(sprites[spriteNum], x, y, null);
 
         for (NormalBomb bomb : bombs) {
             bomb.draw(g2);
