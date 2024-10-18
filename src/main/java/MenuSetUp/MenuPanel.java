@@ -34,6 +34,7 @@ public class MenuPanel extends JPanel {
             g.drawImage(background, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
             g.drawImage(logo, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

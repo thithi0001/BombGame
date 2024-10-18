@@ -34,8 +34,8 @@ public class NewGameDialog extends JDialog{
         okButton = new MyButton("yes");
         okButton.setLocateButton(175, 400);
         
-        MyButton cancleButton = new MyButton("no");
-        cancleButton.setLocateButton(275, 400);
+        MyButton cancelButton = new MyButton("no");
+        cancelButton.setLocateButton(275, 400);
 
         JLabel label = new JLabel("Enter name :");
         label.setFont(new Font("Courier New", Font.BOLD, 20));
@@ -55,10 +55,10 @@ public class NewGameDialog extends JDialog{
         textPanel.add(textField);
         getContentPane().add(label);
         getContentPane().add(okButton);
-        getContentPane().add(cancleButton);
+        getContentPane().add(cancelButton);
         getContentPane().add(textField);
         getContentPane().add(bg);
-        cancleButton.addActionListener(e -> {setVisible(false);
+        cancelButton.addActionListener(e -> {setVisible(false);
             textField.setText("");
         });
     }

@@ -22,7 +22,7 @@ public class LevelPanel extends JPanel {
     User user;
     CardLayout cardLayout;
     Container contentPane;
-    MyButton level[]= new MyButton[3];
+    MyButton[] level = new MyButton[3];
     public LevelPanel(User currentUser, CardLayout cardlayout, Container contentPane, JFrame frame, UserList list){
         if(currentUser != null){
             user = currentUser;
@@ -80,7 +80,7 @@ public class LevelPanel extends JPanel {
             background= ImageIO.read(a);
             g.drawImage(background, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
         } catch (Exception e) {
-            
+            e.printStackTrace();
         } 
     }
 }

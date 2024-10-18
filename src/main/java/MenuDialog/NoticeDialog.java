@@ -11,8 +11,8 @@ import javax.swing.SwingConstants;
 
 import MenuSetUp.MyButton;
 
-public class NoticDialog extends JDialog{
-    public NoticDialog(JFrame parent){
+public class NoticeDialog extends JDialog{
+    public NoticeDialog(JFrame parent){
         super(parent);
         setSize(400, 200);
         setResizable(false);
@@ -37,7 +37,7 @@ public class NoticDialog extends JDialog{
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("BOMB GAME");
-        NoticDialog a = new NoticDialog(window);
+        NoticeDialog a = new NoticeDialog(window);
         window.setSize(576, 576);
         a.setVisible(true);
         window.setResizable(false);

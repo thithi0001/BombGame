@@ -38,7 +38,8 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(file);
             this.clip = AudioSystem.getClip();
             this.clip.open(ais);
-        } catch (Exception e) {        
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         
     } 
@@ -58,14 +59,14 @@ public class Sound {
     
     public void checkVolume(){
         if(name.equals("Music")){
-            if(Music.get() == true){
+            if(Music.get()){
                 controlMusic.setValue(musicVolume);
                 clip.start();
             }
             else clip.stop();
         }
         else{
-            if(SE.get() == true)controlSE.setValue(SEVolume);
+            if(SE.get())controlSE.setValue(SEVolume);
             else controlSE.setValue(-80);
         }
     }

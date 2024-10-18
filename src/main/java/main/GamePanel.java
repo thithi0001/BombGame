@@ -40,15 +40,12 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        // this.setBackground(Color.GREEN);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyh);
         this.setFocusable(true);// this can be focused to receive key input
         this.map = new Map(this, "level_1");
     }
-    public void setUpGame(){
-    //    Sound s =new Sound("Music");
-    }
+
     void startGameThread() {
 
         gameThread = new Thread(this);
@@ -109,8 +106,6 @@ public class GamePanel extends JPanel implements Runnable {
         tileManager.draw(g2, map);
 
         player.draw(g2);
-
-        // nBomb.draw(g2);
 
         g2.dispose();// save memories
     }

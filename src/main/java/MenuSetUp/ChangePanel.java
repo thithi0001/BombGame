@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import MenuDialog.ContinueDialog;
-import MenuDialog.NoticDialog;
+import MenuDialog.NoticeDialog;
 import MenuDialog.RemindDialog;
 import MenuDialog.ReplaceDialog;
 import MenuDialog.HighScoreDialog;
@@ -39,12 +39,12 @@ public class ChangePanel {
         
 
         ReplaceDialog replace = new ReplaceDialog(frame);
-        NoticDialog note = new NoticDialog(frame);
+        NoticeDialog note = new NoticeDialog(frame);
         
         
         start.newUser.okButton.addActionListener(e -> {
             String x = start.newUser.textField.getText();
-            if(x.equals(""))
+            if(x.isEmpty())
                 note.setVisible(true);
             else{
                 boolean check = false;
@@ -55,7 +55,7 @@ public class ChangePanel {
                         break;
                     }
                 }
-                if(check == false){
+                if(!check){
                     currentUser = new userClass.User(x);
                     start.newUser.setVisible(false);
                     start.newUser.textField.setText("");
@@ -67,7 +67,7 @@ public class ChangePanel {
         });
         start.newUser.textField.addActionListener(e -> {
             String x = start.newUser.textField.getText();
-            if(x.equals(""))
+            if(x.isEmpty())
                 note.setVisible(true);
             else{
                 boolean check = false;
@@ -78,7 +78,7 @@ public class ChangePanel {
                         break;
                     }
                 }
-                if(check == false){
+                if(!check){
                     currentUser = new userClass.User(x);
                     start.newUser.setVisible(false);
                     start.newUser.textField.setText("");
