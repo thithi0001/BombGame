@@ -24,7 +24,6 @@ public class Player extends Entity {
     // bombing, riding animal, kicking bomb, picking up bomb will depend on the
     // direction
 
-
     public ArrayList<NormalBomb> bombs = new ArrayList<>();
     int maxBombs = 1;
     double cooldownInSecond;
@@ -38,7 +37,7 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.name = "player";
 
-        cooldownInSecond = 1;
+        cooldownInSecond = 0.1;
         cooldownInFrame = cooldownInSecond * gp.FPS;
         cooldown = (int) cooldownInFrame;
 
@@ -68,8 +67,10 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.enterPressed && timer == 0) {
-
+        // placing bomb
+        gp.bombs.addAll(bombs);
+        if (keyH.enterPressed && bombs.size() < maxBombs
+                && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
             bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this));
             timer = cooldown;
         }
@@ -78,7 +79,6 @@ public class Player extends Entity {
         bombs.removeIf(bomb -> bomb.exploded);
 
         if (timer > 0) {
-
             timer--;
         }
 
@@ -99,8 +99,7 @@ public class Player extends Entity {
 
             // CHECK COLLISION
             gp.cChecker.checkTile(this);
-            gp.bombs.addAll(bombs);
-            gp.cChecker.checkBomb(this);
+            gp.cChecker.checkBombForMoving(this);
 
             move();
         }
