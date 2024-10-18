@@ -1,5 +1,6 @@
 package main;
 
+import bomb.Bomb;
 import bomb.Flame;
 import entity.Entity;
 import entity.Item;
