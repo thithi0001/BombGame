@@ -1,5 +1,5 @@
 package MenuSetUp;
-//import main.*;
+
 public class DimensionSize {
     public static final int originalTileSize = 16;
     public static final int scale = 3;

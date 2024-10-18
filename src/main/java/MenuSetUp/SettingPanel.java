@@ -82,7 +82,7 @@ public class SettingPanel extends JPanel {
             background= ImageIO.read(a);
             g.drawImage(background, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
         } catch (Exception e) {
-            
+            e.printStackTrace();
         }
        
      }

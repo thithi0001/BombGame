@@ -8,7 +8,7 @@ import javax.swing.*;
 import MenuSetUp.MyButton;
 public class ReplaceDialog extends JDialog{
     public MyButton okButton;
-    public MyButton cancleButton;
+    public MyButton cancelButton;
     public ReplaceDialog(JFrame parent){
         super(parent);
         setSize(400, 200);
@@ -17,7 +17,7 @@ public class ReplaceDialog extends JDialog{
 
 
         JLabel message= new JLabel();
-        message.setText("<html>Player'name has existed.<br>Do you want to replace it?</html>");
+        message.setText("<html>Player's name has existed.<br>Do you want to replace it?</html>");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
         message.setFont(new Font("Courier New", Font.BOLD, 20));
@@ -25,13 +25,13 @@ public class ReplaceDialog extends JDialog{
         text.add(message);
 
         okButton = new MyButton("yes");
-        cancleButton = new MyButton("no");
+        cancelButton = new MyButton("no");
         JPanel panel = new JPanel();
         panel.add(okButton);
-        panel.add(cancleButton);
+        panel.add(cancelButton);
         getContentPane().add(text,BorderLayout.CENTER);
         getContentPane().add(panel,BorderLayout.SOUTH);
-        cancleButton.addActionListener(e -> setVisible(false));
+        cancelButton.addActionListener(e -> setVisible(false));
         okButton.addActionListener(e -> setVisible(false));
     }
     public static void main(String[] args) {
