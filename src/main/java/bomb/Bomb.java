@@ -47,11 +47,11 @@ public class Bomb {
 
     public int col() {
 
-        return (x + tileSize / 2) / tileSize;
+        return x / tileSize;
     }
 
     public int row() {
 
-        return (y + tileSize / 2) / tileSize;
+        return y / tileSize;
     }
 }
