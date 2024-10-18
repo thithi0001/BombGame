@@ -3,22 +3,23 @@ package bomb;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import entity.Player;
+import entity.Entity;
 import main.GamePanel;
 import main.Main;
 import main.UtilityTool;
 
 public class NormalBomb extends Bomb {
 
-    public NormalBomb(GamePanel gp, int x, int y) {
+    public NormalBomb(GamePanel gp, int x, int y, Entity owner) {
 
         this.gp = gp;
         name = "normal bomb";
         this.x = x;
         this.y = y;
+        this.owner = owner;
         spriteTime = 6;// draw 1 sprite after every 6 frames
 
-        solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
+        solidArea = new Rectangle(x, y, gp.tileSize, gp.tileSize);
 
         countdownInSecond = 3;
         countdownInFrame = countdownInSecond * gp.FPS;
@@ -36,6 +37,7 @@ public class NormalBomb extends Bomb {
 
     public void update() {
 
+        checkPlayer();
         // countDown--;
         if (--countDown == 0) {
 
@@ -44,8 +46,12 @@ public class NormalBomb extends Bomb {
             spriteCounter = 0;
             spriteNum = 0;
             spriteTime = 1;
-
+            flame = new Flame(this, x, y, 3, explosion.length * (1 + spriteTime));
             return;
+        }
+
+        if (exploding) {
+            flame.update();
         }
 
         if (++spriteCounter > spriteTime) {
@@ -63,12 +69,15 @@ public class NormalBomb extends Bomb {
 
     }
 
-    public void checkPlayer(Player player) {
+    public void checkPlayer() {
 
         if (letPlayerPassThrough) {
 
-            if (!player.solidArea.intersects(solidArea)) {
+            Rectangle pSolidArea = new Rectangle(owner.solidArea);
+            pSolidArea.x += owner.x;
+            pSolidArea.y += owner.y;
 
+            if (!pSolidArea.intersects(solidArea)) {
                 letPlayerPassThrough = false;
             }
         }
@@ -77,5 +86,8 @@ public class NormalBomb extends Bomb {
     public void draw(Graphics2D g2) {
 
         g2.drawImage(sprites[spriteNum], x, y, null);
+        if (exploding) {
+            flame.draw(g2);
+        }
     }
 }

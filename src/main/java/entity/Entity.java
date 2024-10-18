@@ -1,10 +1,14 @@
 package entity;
 
+import main.GamePanel;
+
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
 
+    GamePanel gp;
+    public String name;
     public int x, y;
     public int speed;
 
@@ -17,6 +21,8 @@ public class Entity {
     public Rectangle solidArea;
     public boolean collisionOn = true;
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
+    public boolean isHit = false;
+    public boolean isDead = false;
 
     public void resetCollision(boolean state) {
         canMoveUp = state;
@@ -24,4 +30,15 @@ public class Entity {
         canMoveLeft = state;
         canMoveRight = state;
     }
+
+    public int col() {
+
+        return (x + gp.tileSize / 2) / gp.tileSize;
+    }
+
+    public int row() {
+
+        return (y + gp.tileSize / 2) / gp.tileSize;
+    }
+
 }

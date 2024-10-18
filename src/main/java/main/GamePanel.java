@@ -3,11 +3,14 @@ package main;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import bomb.NormalBomb;
+import bomb.Bomb;
+import entity.Item;
 import entity.Player;
+import tile.Map;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -26,12 +29,14 @@ public class GamePanel extends JPanel implements Runnable {
     public int FPS = 60;
 
     public TileManager tileManager = new TileManager(this);
+    public Map map;
     KeyHandler keyh = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(this, keyh);
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public NormalBomb nBomb = new NormalBomb(this, tileSize, tileSize);
+    public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
+//    public GamePanel(Map map)
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -39,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyh);
         this.setFocusable(true);// this can be focused to receive key input
+        this.map = new Map(this, "level_1");
     }
     public void setUpGame(){
     //    Sound s =new Sound("Music");
@@ -83,7 +89,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
+        bombs.clear();
         player.update();
+        map.items.forEach(Item::update);
     }
 
     public void paintComponent(Graphics g) {
@@ -92,13 +100,13 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         // DRAW ORDER
-        // background outside the tilemap
-        // tilemap
+        // background outside the tile map
+        // tileMap
         // player and monster
         // bomb and item
         // ui
 
-        tileManager.draw(g2);
+        tileManager.draw(g2, map);
 
         player.draw(g2);
 
