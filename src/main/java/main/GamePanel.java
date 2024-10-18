@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
         // bomb and item
         // ui
 
-        tileManager.draw(g2, map);
+        map.draw(g2);
 
         player.draw(g2);
 

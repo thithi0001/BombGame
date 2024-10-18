@@ -26,11 +26,11 @@ public class UtilityTool {
         return scaledImage;
     }
 
-    public static BufferedImage[] loadSpriteSheet(GamePanel gp, String spriteSheetPath) {
+    public static BufferedImage[] loadSpriteSheet(String spriteSheetPath) {
 
         BufferedImage spriteSheet = null;
         try {
-            spriteSheet = ImageIO.read(new File(spriteSheetPath));
+            spriteSheet = ImageIO.read(new File(Main.res + spriteSheetPath));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -114,4 +114,35 @@ public class Map {
             e.printStackTrace();
         }
     }
+
+    public void draw(Graphics2D g2) {
+
+        int col = 0;
+        int row = 0;
+        int x = 0;
+        int y = 0;
+
+        while (col < maxScreenCol && row < maxScreenRow) {
+
+            int tileNum = mapTileNum[col][row];
+
+            g2.drawImage(gp.tileManager.tile[tileNum].image, x, y, null);
+            col++;
+            x += tileSize;
+
+            if (col == maxScreenCol) {
+                col = 0;
+                x = 0;
+                row++;
+                y += tileSize;
+            }
+        }
+
+        items.forEach(item -> {
+            if(!item.isHit && !item.isPickedUp){
+                item.draw(g2);
+            }
+        });
+    }
+
 }

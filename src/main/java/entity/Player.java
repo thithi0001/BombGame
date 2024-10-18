@@ -11,6 +11,7 @@ import main.GamePanel;
 import main.KeyHandler;
 import main.Main;
 import main.UtilityTool;
+import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
@@ -18,7 +19,7 @@ public class Player extends Entity {
 
     KeyHandler keyH;
 
-    BufferedImage[] upSprites, downSprites, leftSprites, rightSprites;
+    BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
     // idle, death will be up direction
     // bombing, riding animal, kicking bomb, picking up bomb will depend on the
     // direction
@@ -58,7 +59,11 @@ public class Player extends Entity {
 
     void getPlayerImage() {
 
-        sprites = UtilityTool.loadSpriteSheet(gp, Main.res + "/bomb/normal/bomb_64_x_16_.png");
+        playerUp = LoadResource.playerUp;
+        playerDown = LoadResource.playerDown;
+        playerLeft = LoadResource.playerLeft;
+        playerRight = LoadResource.playerRight;
+        sprites = playerUp;
     }
 
     public void update() {
@@ -102,7 +107,8 @@ public class Player extends Entity {
 
         if (++spriteCounter > spriteTime) {
 
-            if (++spriteNum == sprites.length) {
+            if (keyH.movePressed) spriteNum++;
+            if (spriteNum == sprites.length) {
 
                 spriteNum = 0;
             }
@@ -112,33 +118,25 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        // BufferedImage image = null;
+         switch (direction) {
+             case "up":
+                 sprites = playerUp;
+                 break;
+             case "down":
+                 sprites = playerDown;
+                 break;
+             case "left":
+                 sprites = playerLeft;
+                 break;
+             case "right":
+                 sprites = playerRight;
+                 break;
+         }
 
-        // switch (direction) {
-        // case "up":
-        // image = upSprites[spriteNum];
-        // break;
-        // case "down":
-        // image = downSprites[spriteNum];
-        // break;
-        // case "left":
-        // image = leftSprites[spriteNum];
-        // break;
-        // case "right":
-        // image = rightSprites[spriteNum];
-        // break;
+         g2.drawImage(sprites[spriteNum], x, y, null);
 
-        // default:
-        // break;
-        // }
-
-        // image = sprites[0];
-        // g2.drawImage(image, x, y, null);
-
-        // g2.drawImage(sprites[spriteNum], x, y, null);
-
-        g2.setColor(Color.RED);
-        g2.fillRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
+//        g2.setColor(Color.RED);
+//        g2.fillRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
 
         for (NormalBomb bomb : bombs) {
             bomb.draw(g2);

@@ -44,34 +44,4 @@ public class TileManager {
             e.printStackTrace();
         }
     }
-
-    public void draw(Graphics2D g2, Map map) {
-
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
-
-        while (col < maxScreenCol && row < maxScreenRow) {
-
-            int tileNum = map.mapTileNum[col][row];
-
-            g2.drawImage(tile[tileNum].image, x, y, null);
-            col++;
-            x += tileSize;
-
-            if (col == maxScreenCol) {
-                col = 0;
-                x = 0;
-                row++;
-                y += tileSize;
-            }
-        }
-
-        map.items.forEach(item -> {
-            if(!item.isHit && !item.isPickedUp){
-                item.draw(g2);
-            }
-        });
-    }
 }

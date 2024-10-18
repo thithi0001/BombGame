@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 
 import main.CollisionChecker;
 import main.GamePanel;
-import main.Main;
-import main.UtilityTool;
 import res.LoadResource;
 import tile.Tile;
 
@@ -45,13 +43,12 @@ public class Flame {
     }
 
     void getFlameImage() {
-
-        headUp = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\headUpFlame_48_x_16_.png");
-        headDown = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\headDownFlame_48_x_16_.png");
-        headLeft = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\headLeftFlame_48_x_16_.png");
-        headRight = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\headRightFlame_48_x_16_.png");
-        verticalBody = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\verticalBodyFlame_48_x_16_.png");
-        horizontalBody = UtilityTool.loadSpriteSheet(gp, Main.res + "\\flame\\horizontalBodyFlame_48_x_16_.png");
+        headUp = LoadResource.headUp;
+        headDown = LoadResource.headDown;
+        headLeft = LoadResource.headLeft;
+        headRight = LoadResource.headRight;
+        verticalBody = LoadResource.verticalBody;
+        horizontalBody = LoadResource.horizontalBody;
     }
 
     public void update() {

@@ -5,8 +5,7 @@ import java.awt.Rectangle;
 
 import entity.Entity;
 import main.GamePanel;
-import main.Main;
-import main.UtilityTool;
+import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
@@ -32,8 +31,8 @@ public class NormalBomb extends Bomb {
 
     void getBombImage() {
 
-        idle = UtilityTool.loadSpriteSheet(gp, Main.res + "\\bomb\\normal\\bomb_64_x_16_.png");
-        explosion = UtilityTool.loadSpriteSheet(gp, Main.res + "\\bomb\\normal\\explosion_128_x_16_.png");
+        idle = LoadResource.idle;
+        explosion = LoadResource.explosion;
         sprites = idle;
     }
 
