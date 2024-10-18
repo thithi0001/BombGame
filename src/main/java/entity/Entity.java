@@ -5,6 +5,8 @@ import main.GamePanel;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class Entity {
 
     GamePanel gp;
@@ -33,12 +35,12 @@ public class Entity {
 
     public int col() {
 
-        return (x + gp.tileSize / 2) / gp.tileSize;
+        return (x + tileSize / 2) / tileSize;
     }
 
     public int row() {
 
-        return (y + gp.tileSize / 2) / gp.tileSize;
+        return (y + tileSize / 2) / tileSize;
     }
 
 }

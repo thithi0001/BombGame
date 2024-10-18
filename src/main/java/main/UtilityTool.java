@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import static MenuSetUp.DimensionSize.originalTileSize;
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class UtilityTool {
 
     public UtilityTool() {
@@ -39,9 +42,9 @@ public class UtilityTool {
         for (String str : tmp) {
             try {
                 if (col == 0) {
-                    col = Integer.parseInt(str) / gp.originalTileSize;
+                    col = Integer.parseInt(str) / originalTileSize;
                 } else {
-                    row = Integer.parseInt(str) / gp.originalTileSize;
+                    row = Integer.parseInt(str) / originalTileSize;
                     break;
                 }
             } catch (NumberFormatException _) {
@@ -52,8 +55,8 @@ public class UtilityTool {
         BufferedImage[] sprites = new BufferedImage[col * row];
         for (int i = 0; i < sprites.length; i++) {
             assert spriteSheet != null;
-            sprites[i] = spriteSheet.getSubimage(i * gp.originalTileSize, 0, gp.originalTileSize, gp.originalTileSize);
-            sprites[i] = scaleImage(sprites[i], gp.tileSize, gp.tileSize);
+            sprites[i] = spriteSheet.getSubimage(i * originalTileSize, 0, originalTileSize, originalTileSize);
+            sprites[i] = scaleImage(sprites[i], tileSize, tileSize);
         }
 
         return sprites;

@@ -6,7 +6,7 @@ import java.util.*;
 public class User {
     String userName;
     int level;
-    int lvScore[];
+    int[] lvScore;
     public User(){
         level =1;
         lvScore = new int[3]; 

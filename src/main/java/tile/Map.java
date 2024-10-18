@@ -9,6 +9,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static MenuSetUp.DimensionSize.*;
+
 public class Map {
 
     GamePanel gp;
@@ -27,7 +29,7 @@ public class Map {
 
         this.gp = gp;
         this.mapFileName = mapFileName;
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[maxScreenCol][maxScreenRow];
 
         loadMap(Main.res + "/maps/" + mapFileName + ".txt");
         placeItem();
@@ -41,9 +43,9 @@ public class Map {
         for (Item item : items) {
             pIndex = rand.nextInt(itemPos.size());
             p = itemPos.get(pIndex);
-            item.x = p.x * gp.tileSize;
-            item.y = p.y * gp.tileSize;
-            item.solidArea = new Rectangle(item.x, item.y, gp.tileSize, gp.tileSize);
+            item.x = p.x * tileSize;
+            item.y = p.y * tileSize;
+            item.solidArea = new Rectangle(item.x, item.y, tileSize, tileSize);
             itemPos.remove(pIndex);
             System.out.println(p.y + "," + p.x);
         }
@@ -88,11 +90,11 @@ public class Map {
                     items.add(new Item(gp, tmp[1]));
             }
 
-            while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+            while (col < maxScreenCol && row < maxScreenRow) {
                 String line = br.readLine();
                 String[] numbers = line.split(" ");
 
-                while (col < gp.maxScreenCol) {
+                while (col < maxScreenCol) {
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                     if (gp.tileManager.tile[num].destructible) {
@@ -101,7 +103,7 @@ public class Map {
                     col++;
                 }
 
-                if (col == gp.maxScreenCol) {
+                if (col == maxScreenCol) {
                     col = 0;
                     row++;
                 }

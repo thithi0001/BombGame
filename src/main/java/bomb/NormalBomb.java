@@ -8,6 +8,8 @@ import main.GamePanel;
 import main.Main;
 import main.UtilityTool;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class NormalBomb extends Bomb {
 
     public NormalBomb(GamePanel gp, int x, int y, Entity owner) {
@@ -19,7 +21,7 @@ public class NormalBomb extends Bomb {
         this.owner = owner;
         spriteTime = 6;// draw 1 sprite after every 6 frames
 
-        solidArea = new Rectangle(x, y, gp.tileSize, gp.tileSize);
+        solidArea = new Rectangle(x, y, tileSize, tileSize);
 
         countdownInSecond = 3;
         countdownInFrame = countdownInSecond * gp.FPS;

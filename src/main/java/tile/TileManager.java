@@ -9,6 +9,8 @@ import main.GamePanel;
 import main.Main;
 import main.UtilityTool;
 
+import static MenuSetUp.DimensionSize.*;
+
 public class TileManager {
 
     GamePanel gp;
@@ -34,7 +36,7 @@ public class TileManager {
             tile[index] = new Tile();
             tile[index].name = imageName;
             tile[index].image = ImageIO.read(new File(Main.res + "\\tiles\\" + imageName + ".png"));
-            tile[index].image = UtilityTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].image = UtilityTool.scaleImage(tile[index].image, tileSize, tileSize);
             tile[index].collision = collision;
             tile[index].destructible = destructible;
 
@@ -50,19 +52,19 @@ public class TileManager {
         int x = 0;
         int y = 0;
 
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+        while (col < maxScreenCol && row < maxScreenRow) {
 
             int tileNum = map.mapTileNum[col][row];
 
             g2.drawImage(tile[tileNum].image, x, y, null);
             col++;
-            x += gp.tileSize;
+            x += tileSize;
 
-            if (col == gp.maxScreenCol) {
+            if (col == maxScreenCol) {
                 col = 0;
                 x = 0;
                 row++;
-                y += gp.tileSize;
+                y += tileSize;
             }
         }
 

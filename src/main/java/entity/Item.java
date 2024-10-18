@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class Item extends Entity {
 
     public BufferedImage itemImg = null;
@@ -28,11 +30,11 @@ public class Item extends Entity {
     public Item(GamePanel gp, int col, int row) {
         // default item
         this.gp = gp;
-        this.x = col * gp.tileSize;
-        this.y = row * gp.tileSize;
+        this.x = col * tileSize;
+        this.y = row * tileSize;
         this.name = "ugly key";
 
-        solidArea = new Rectangle(x, y, gp.tileSize, gp.tileSize);
+        solidArea = new Rectangle(x, y, tileSize, tileSize);
         getItemImage(name);
     }
 
@@ -40,7 +42,7 @@ public class Item extends Entity {
 
         try {
             itemImg = ImageIO.read(new File(Main.res + "\\item\\" + name + ".png"));
-            itemImg = UtilityTool.scaleImage(itemImg, gp.tileSize, gp.tileSize);
+            itemImg = UtilityTool.scaleImage(itemImg, tileSize, tileSize);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,7 +57,7 @@ public class Item extends Entity {
     public void draw(Graphics2D g2) {
 
         if (!hidden && !isPickedUp && !isHit) {
-            g2.drawImage(itemImg, x, y, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(itemImg, x, y, tileSize, tileSize, null);
         }
     }
 }

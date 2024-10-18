@@ -10,6 +10,8 @@ import main.UtilityTool;
 import res.LoadResource;
 import tile.Tile;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class Flame {
 
     Bomb creator;
@@ -37,8 +39,8 @@ public class Flame {
         this.length = length;
         this.duration = duration;
 
-        verticalSolidArea = new Rectangle(x, y, gp.tileSize, gp.tileSize);
-        horizontalSolidArea = new Rectangle(x, y, gp.tileSize, gp.tileSize);
+        verticalSolidArea = new Rectangle(x, y, tileSize, tileSize);
+        horizontalSolidArea = new Rectangle(x, y, tileSize, tileSize);
         getFlameImage();
     }
 
@@ -82,12 +84,12 @@ public class Flame {
         Tile tile;
         int fx, fy, offset = 0;
         for (int i = 1; i <= length; i++) {
-            offset = i * gp.tileSize;
+            offset = i * tileSize;
             fx = x;
             fy = y - offset;
-            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / gp.tileSize][fy / gp.tileSize]];
+            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / tileSize][fy / tileSize]];
             if (tile.collision && !tile.destructible) {
-                offset -= gp.tileSize;
+                offset -= tileSize;
                 break;
             }
             if (i == length) {
@@ -101,7 +103,7 @@ public class Flame {
             //a function to change the object tile to the base tile
             if (tile.destructible) {
                 if (duration == 1) {
-                    gp.map.toBaseTile(fx / gp.tileSize, fy / gp.tileSize);
+                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
                 }
                 break;
             }
@@ -118,12 +120,12 @@ public class Flame {
         Tile tile;
         int fx, fy, offset = 0;
         for (int i = 1; i <= length; i++) {
-            offset = i * gp.tileSize;
+            offset = i * tileSize;
             fx = x;
             fy = y + offset;
-            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / gp.tileSize][fy / gp.tileSize]];
+            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / tileSize][fy / tileSize]];
             if (tile.collision && !tile.destructible) {
-                offset -= gp.tileSize;
+                offset -= tileSize;
                 break;
             }
             if (i == length) {
@@ -137,7 +139,7 @@ public class Flame {
             //a function to change the object tile to the base tile
             if (tile.destructible) {
                 if (duration == 1) {
-                    gp.map.toBaseTile(fx / gp.tileSize, fy / gp.tileSize);
+                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
                 }
                 break;
             }
@@ -153,12 +155,12 @@ public class Flame {
         Tile tile;
         int fx, fy, offset = 0;
         for (int i = 1; i <= length; i++) {
-            offset = i * gp.tileSize;
+            offset = i * tileSize;
             fx = x - offset;
             fy = y;
-            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / gp.tileSize][fy / gp.tileSize]];
+            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / tileSize][fy / tileSize]];
             if (tile.collision && !tile.destructible) {
-                offset -= gp.tileSize;
+                offset -= tileSize;
                 break;
             }
             if (i == length) {
@@ -172,7 +174,7 @@ public class Flame {
             //a function to change the destructible tile to the base tile -> create a Map class
             if (tile.destructible) {
                 if (duration == 1) {
-                    gp.map.toBaseTile(fx / gp.tileSize, fy / gp.tileSize);
+                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
                 }
                 break;
             }
@@ -189,12 +191,12 @@ public class Flame {
         Tile tile;
         int fx, fy, offset = 0;
         for (int i = 1; i <= length; i++) {
-            offset = i * gp.tileSize;
+            offset = i * tileSize;
             fx = x + offset;
             fy = y;
-            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / gp.tileSize][fy / gp.tileSize]];
+            tile = gp.tileManager.tile[gp.map.mapTileNum[fx / tileSize][fy / tileSize]];
             if (tile.collision && !tile.destructible) {
-                offset -= gp.tileSize;
+                offset -= tileSize;
                 break;
             }
             if (i == length) {
@@ -208,7 +210,7 @@ public class Flame {
             //a function to change the object tile to the base tile
             if (tile.destructible) {
                 if (duration == 1) {
-                    gp.map.toBaseTile(fx / gp.tileSize, fy / gp.tileSize);
+                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
                 }
                 break;
             }

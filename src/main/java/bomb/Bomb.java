@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import entity.Entity;
 import main.GamePanel;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class Bomb {
 
     public String name;
@@ -45,11 +47,11 @@ public class Bomb {
 
     public int col() {
 
-        return (x + gp.tileSize / 2) / gp.tileSize * gp.tileSize;
+        return (x + tileSize / 2) / tileSize;
     }
 
     public int row() {
 
-        return (y + gp.tileSize / 2) / gp.tileSize * gp.tileSize;
+        return (y + tileSize / 2) / tileSize;
     }
 }

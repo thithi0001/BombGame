@@ -13,17 +13,10 @@ import entity.Player;
 import tile.Map;
 import tile.TileManager;
 
+import static MenuSetUp.DimensionSize.screenHeight;
+import static MenuSetUp.DimensionSize.screenWidth;
+
 public class GamePanel extends JPanel implements Runnable {
-
-    // SCREEN SETTINGS
-    public final int originalTileSize = 16;
-    public final int scale = 3;
-    public final int tileSize = originalTileSize * scale;
-
-    public final int maxScreenCol = 12;
-    public final int maxScreenRow = 12;
-    public final int screenWidth = maxScreenCol * tileSize;// 192
-    public final int screenHeight = maxScreenRow * tileSize;// 192
     
     // FPS
     public int FPS = 60;

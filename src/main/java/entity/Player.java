@@ -12,6 +12,8 @@ import main.KeyHandler;
 import main.Main;
 import main.UtilityTool;
 
+import static MenuSetUp.DimensionSize.tileSize;
+
 public class Player extends Entity {
 
     KeyHandler keyH;
@@ -47,8 +49,8 @@ public class Player extends Entity {
 
     void setDefaultValues() {
 
-        x = gp.tileSize * 2;
-        y = gp.tileSize * 10;
+        x = tileSize * 2;
+        y = tileSize * 10;
         speed = 4;
         direction = "down";
         spriteTime = 12;
@@ -63,7 +65,7 @@ public class Player extends Entity {
 
         if (keyH.enterPressed && timer == 0) {
 
-            bombs.add(new NormalBomb(gp, col() * gp.tileSize, row() * gp.tileSize, this));
+            bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this));
             timer = cooldown;
         }
 
