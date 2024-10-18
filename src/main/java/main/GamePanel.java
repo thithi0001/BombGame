@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = maxScreenCol * tileSize;// 192
     public final int screenHeight = maxScreenRow * tileSize;// 192
-
+    
     // FPS
     public int FPS = 60;
 
@@ -46,7 +46,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);// this can be focused to receive key input
         this.map = new Map(this, "level_1");
     }
-
+    public void setUpGame(){
+    //    Sound s =new Sound("Music");
+    }
     void startGameThread() {
 
         gameThread = new Thread(this);
