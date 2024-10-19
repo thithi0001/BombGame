@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -9,8 +8,6 @@ import java.util.ArrayList;
 import bomb.NormalBomb;
 import main.GamePanel;
 import main.KeyHandler;
-import main.Main;
-import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -23,7 +20,6 @@ public class Player extends Entity {
     // idle, death will be up direction
     // bombing, riding animal, kicking bomb, picking up bomb will depend on the
     // direction
-
 
     public ArrayList<NormalBomb> bombs = new ArrayList<>();
     int maxBombs = 1;
@@ -38,7 +34,7 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.name = "player";
 
-        cooldownInSecond = 1;
+        cooldownInSecond = 0.1;
         cooldownInFrame = cooldownInSecond * gp.FPS;
         cooldown = (int) cooldownInFrame;
 
@@ -68,8 +64,10 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.enterPressed && timer == 0) {
-
+        // placing bomb
+        gp.bombs.addAll(bombs);
+        if (keyH.enterPressed && bombs.size() < maxBombs
+                && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
             bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this));
             timer = cooldown;
         }
@@ -78,7 +76,6 @@ public class Player extends Entity {
         bombs.removeIf(bomb -> bomb.exploded);
 
         if (timer > 0) {
-
             timer--;
         }
 
@@ -99,8 +96,7 @@ public class Player extends Entity {
 
             // CHECK COLLISION
             gp.cChecker.checkTile(this);
-            gp.bombs.addAll(bombs);
-            gp.cChecker.checkBomb(this);
+            gp.cChecker.checkBombForMoving(this);
 
             move();
         }
@@ -118,25 +114,22 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
 
-         switch (direction) {
-             case "up":
-                 sprites = playerUp;
-                 break;
-             case "down":
-                 sprites = playerDown;
-                 break;
-             case "left":
-                 sprites = playerLeft;
-                 break;
-             case "right":
-                 sprites = playerRight;
-                 break;
-         }
+        switch (direction) {
+            case "up":
+                sprites = playerUp;
+                break;
+            case "down":
+                sprites = playerDown;
+                break;
+            case "left":
+                sprites = playerLeft;
+                break;
+            case "right":
+                sprites = playerRight;
+                break;
+        }
 
-         g2.drawImage(sprites[spriteNum], x, y, null);
-
-//        g2.setColor(Color.RED);
-//        g2.fillRect(x + solidArea.x, y + solidArea.y, solidArea.width, solidArea.height);
+        g2.drawImage(sprites[spriteNum], x, y, null);
 
         for (NormalBomb bomb : bombs) {
             bomb.draw(g2);

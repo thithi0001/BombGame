@@ -16,8 +16,8 @@ import static MenuSetUp.DimensionSize.tileSize;
 public class Item extends Entity {
 
     public BufferedImage itemImg = null;
-    public boolean hidden = true;
-    public boolean isPickedUp = false;
+    public enum States {hidden, isPickedUp, isHit, shown}
+    public States state = States.hidden;
 
     public Item(GamePanel gp, String name) {
 
@@ -56,7 +56,7 @@ public class Item extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        if (!hidden && !isPickedUp && !isHit) {
+        if (state == States.shown) {
             g2.drawImage(itemImg, x, y, tileSize, tileSize, null);
         }
     }

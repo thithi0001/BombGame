@@ -57,7 +57,7 @@ public class Map {
 
         items.forEach(item -> {
             if (item.col() == x && item.row() == y) {
-                item.hidden = false;
+                item.state = Item.States.shown;
             }
         });
     }
@@ -139,7 +139,7 @@ public class Map {
         }
 
         items.forEach(item -> {
-            if(!item.isHit && !item.isPickedUp){
+            if(item.state == Item.States.shown){
                 item.draw(g2);
             }
         });
