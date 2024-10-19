@@ -151,6 +151,7 @@ public class CollisionChecker {
         solidArea.y += gp.player.y;
         if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
             item.beingPickedUp();
+            gp.player.addScore(item.point);
             switch (item.name) {
                 case "plus_1":
                     gp.player.addMoreFlame(1);

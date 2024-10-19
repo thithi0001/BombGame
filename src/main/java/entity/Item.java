@@ -1,32 +1,26 @@
 package entity;
 
 import main.GamePanel;
-import main.Main;
-import main.UtilityTool;
 import res.LoadResource;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
 public class Item extends Entity {
 
+    public int point = 0;
     public BufferedImage itemImg = null;
 
     public enum States {hidden, isPickedUp, isHit, shown}
-
     public States state = States.hidden;
 
     public Item(GamePanel gp, String name) {
 
         this.gp = gp;
         this.name = name;
-
-        this.itemImg = LoadResource.itemMap.get(name);
+        getItemImage();
     }
 
     public Item(GamePanel gp, int col, int row) {
@@ -34,21 +28,16 @@ public class Item extends Entity {
         this.gp = gp;
         this.x = col * tileSize;
         this.y = row * tileSize;
-        this.name = "ugly key";
+        this.name = "ugly_key";
 
         solidArea = new Rectangle(x, y, tileSize, tileSize);
-        getItemImage(name);
+        getItemImage();
     }
 
-    public void getItemImage(String name) {
+    public void getItemImage() {
 
-        try {
-            itemImg = ImageIO.read(new File(Main.res + "\\item\\" + name + ".png"));
-            itemImg = UtilityTool.scaleImage(itemImg, tileSize, tileSize);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        itemImg = LoadResource.itemImgMap.get(name);
+        point = LoadResource.itemPointMap.get(name);
     }
 
     public void update() {

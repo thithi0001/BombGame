@@ -1,6 +1,5 @@
 package tile;
 
-import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -27,7 +26,12 @@ public class TileManager {
 
         setup(0, "grass", false, false);
         setup(1, "water", true, false);
-        setup(2, "wood_box", true, true);
+        setup(2, "wood_box", true, true, 20);
+    }
+
+    public void setup(int index, String imageName, boolean collision, boolean destructible, int point) {
+        setup(index, imageName, collision, destructible);
+        tile[index].point = point;
     }
 
     public void setup(int index, String imageName, boolean collision, boolean destructible) {

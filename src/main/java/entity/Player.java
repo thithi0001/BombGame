@@ -170,4 +170,8 @@ public class Player extends Entity {
     public void addMoreFlame(int n) {
         flameLength += n;
     }
+
+    public void addScore(int point) {
+        score += point;
+    }
 }

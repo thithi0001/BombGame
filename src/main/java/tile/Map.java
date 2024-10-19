@@ -53,6 +53,8 @@ public class Map {
 
     public void toBaseTile(int x, int y) {
 
+        gp.player.score += gp.tileManager.tile[mapTileNum[x][y]].point;
+
         mapTileNum[x][y] = baseIndex;
 
         items.forEach(item -> {
@@ -108,6 +110,7 @@ public class Map {
                     row++;
                 }
             }
+            is.close();
             br.close();
 
         } catch (Exception e) {

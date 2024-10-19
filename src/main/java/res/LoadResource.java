@@ -6,13 +6,16 @@ import tile.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
+
+import static MenuSetUp.DimensionSize.tileSize;
 
 public class LoadResource {
-    public static HashMap<String, BufferedImage> itemMap = new HashMap<>();
-    public static HashMap<String, BufferedImage> monsterMap = new HashMap<>();
+    public static HashMap<String, BufferedImage> itemImgMap = new HashMap<>();
+    public static HashMap<String, Integer> itemPointMap = new HashMap<>();
+    public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
 
     // tiles
     public static Tile[] tiles = new Tile[10];
@@ -36,13 +39,28 @@ public class LoadResource {
         loadItem();
     }
 
-    public static void loadTile() {
+    static void loadTile() {
 
     }
 
-    public static void loadItem() {
-        itemMap.put("ugly_key", itemImage("ugly_key"));
-        itemMap.put("plus_1", itemImage("plus_1"));
+    static void loadItem() {
+
+        File file = new File(Main.res + "\\item\\itemList.txt");
+        try (Scanner reader = new Scanner(file)) {
+            String[] nameAndPoint;
+            String itemName;
+            int itemPoint;
+            while (reader.hasNextLine()) {
+                nameAndPoint = reader.nextLine().split(" ");
+                itemName = nameAndPoint[0];
+                itemPoint = Integer.parseInt(nameAndPoint[1]);
+                itemImgMap.put(itemName, itemImage(itemName));
+                itemPointMap.put(itemName, itemPoint);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static BufferedImage itemImage(String name) {
@@ -50,7 +68,7 @@ public class LoadResource {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(Main.res + "\\item\\" + name + ".png"));
-            img = UtilityTool.scaleImage(img, 48, 48);
+            img = UtilityTool.scaleImage(img, tileSize, tileSize);
 
         } catch (IOException e) {
             e.printStackTrace();

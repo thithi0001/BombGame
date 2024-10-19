@@ -90,7 +90,6 @@ public class GamePanel extends JPanel implements Runnable {
         int drawCount = 0;
 
         while (gameThread != null) {
-
             if (state == States.pausing) continue;
 
             currentTime = System.nanoTime();
@@ -108,10 +107,19 @@ public class GamePanel extends JPanel implements Runnable {
             if (timer >= 1e9) {
                 // System.out.println("FPS: " + drawCount);
                 clock.update();
+                System.out.println("SCORE: " + player.score);
                 System.out.println(clock.toString());
                 drawCount = 0;
                 timer = 0;
             }
+            /**
+             * if isWin:
+             *      endGame("win");
+             */
+            /**
+             * if player isDead:
+             *      endGame("lose")
+             */
         }
     }
 
