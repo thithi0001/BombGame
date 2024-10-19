@@ -48,6 +48,7 @@ public class UserList {
             }
             writer.close();
         } catch (Exception e) {
+            System.out.println("Errol save file");
         }
     }
 }

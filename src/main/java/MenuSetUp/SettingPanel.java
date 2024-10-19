@@ -2,7 +2,6 @@ package MenuSetUp;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +10,14 @@ import main.Main;
 public class SettingPanel extends JPanel {
     MyButton back;
 
-    public SettingPanel(){
+    public SettingPanel(Sound music){
         MySlider musicSlider;
         MySlider SESlider;
+        
         setFocusable(false);
         setLayout(null);
+
+        
         //TITLE PANEL
         JLabel setting = new JLabel("SETTING");
         setting.setSize(235, 100);
@@ -29,11 +31,10 @@ public class SettingPanel extends JPanel {
         add(back);
 
         //SET SOUND
-        Sound music= new Sound("Music");
-        music.play();
-
+        // music.stopMusic();
+        
         //SLIDER MUSIC
-        musicSlider = new MySlider(250, 25, "music");
+        musicSlider = new MySlider(250, 25, (int)music.musicVolume, "music");
         musicSlider.setLocateMySlider((DimensionSize.screenWidth-250)/2, ((DimensionSize.maxScreenRow - 4)/2)* DimensionSize.tileSize);
         add(musicSlider.slider);
         add(musicSlider.nameSlider);
@@ -43,37 +44,40 @@ public class SettingPanel extends JPanel {
         });
 
         //SLIDER SOUND EFFECT
-        SESlider = new MySlider(250, 25,"SE");
+        SESlider = new MySlider(250, 25, (int)Sound.SEVolume, "SE");
         SESlider.setLocateMySlider((DimensionSize.screenWidth - 250)/2, ((DimensionSize.maxScreenRow - 4)/2 + 1) * DimensionSize.tileSize);
         add(SESlider.slider);
-        add(SESlider.nameSlider);
+        // add(SESlider.nameSlider);
         SESlider.slider.addChangeListener((e) -> {
             Sound.SEVolume = SESlider.slider.getValue();
         });
 
+
         //BUTTON MUSIC AND SE
-        MyButton seButton = new MyButton("sound");
+        MyButton seButton = Sound.SE ? new MyButton("sound") : new MyButton("soundOff");
         seButton.setLocateButton(DimensionSize.screenWidth/2 + 50, ((DimensionSize.maxScreenRow - 4)/2 + 3)* DimensionSize.tileSize);
         add(seButton);
         seButton.addActionListener((e) -> {
-            Sound.SE.set(!Sound.SE.get());
-            seButton.setIcon(Sound.SE.get() ? new ImageIcon(Main.res+"/button/soundButton.png")
+            Sound.SE = !Sound.SE;
+            seButton.setIcon(Sound.SE ? new ImageIcon(Main.res+"/button/soundButton.png")
                                             :new ImageIcon(Main.res+"/button/soundOffButton.png") );
-            SESlider.slider.setEnabled(Sound.SE.get());
+            SESlider.slider.setEnabled(Sound.SE);
         });
 
-        MyButton musicButton =new MyButton("music");
+        MyButton musicButton = music.Music ? new MyButton("music") : new MyButton("musicOff");
         musicButton.setLocateButton(DimensionSize.screenWidth/2 - 100, ((DimensionSize.maxScreenRow - 4)/2 +3)* DimensionSize.tileSize);
+        add(musicButton);
         musicButton.addActionListener((e) -> {
-            music.Music.set(!music.Music.get());
-            musicButton.setIcon(music.Music.get() ? new ImageIcon(Main.res+"/button/musicButton.png")
+            music.Music = !music.Music;
+            musicButton.setIcon(music.Music ? new ImageIcon(Main.res+"/button/musicButton.png")
                                                   : new ImageIcon(Main.res+"/button/musicOffButton.png") );
             music.checkVolume();
-            musicSlider.slider.setEnabled(music.Music.get());
+            musicSlider.slider.setEnabled(music.Music);
         });
-        add(musicButton);
     }
-     @Override
+
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         BufferedImage background;
@@ -83,7 +87,7 @@ public class SettingPanel extends JPanel {
             g.drawImage(background, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
         } catch (Exception e) {
             e.printStackTrace();
-        }
-       
+        } 
      }
+     
 }
