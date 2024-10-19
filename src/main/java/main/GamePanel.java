@@ -39,10 +39,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.map = new Map(this, "level_1");
     }
 
-    void startGameThread() {
+    public void startGameThread() {
 
         gameThread = new Thread(this);
         gameThread.start();
+        // System.out.println("ok");
     }
 
     @Override

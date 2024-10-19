@@ -11,14 +11,20 @@ import java.io.File;
 public class MenuPanel extends JPanel {
     MyButton start;
     MyButton quit;
+    Sound music;
     public MenuPanel(int width , int height){
-        setFocusable(false);
         setLayout(null);
-        
+        music= new Sound("Music");
+        music.play();
+        // khai bao button
         start = new MyButton("start");
         quit = new MyButton("quit");
+
+        //thiet lap vi tri
         start.setLocateButton(width/2 -71, (DimensionSize.maxScreenCol - 4)* DimensionSize.tileSize);
         quit.setLocateButton(width/2 -71, (DimensionSize.maxScreenCol - 2)* DimensionSize.tileSize);
+
+        //them button vao panel
         add(start);
         add(quit);
     }

@@ -10,17 +10,11 @@ public class User {
     public User(){
         level =1;
         lvScore = new int[3]; 
-        for (int i = 0; i < 3; i++) {
-            lvScore[i] = 0;
-        }
     }
     public User (String userName){
         this.userName = userName;
         level =1;
         lvScore = new int[3]; 
-        for (int i = 0; i < 3; i++) {
-            lvScore[i] = 0;
-        }
     }
     public void setLevel(){
         level ++;

@@ -1,42 +1,38 @@
 package MenuDialog;
 
 import java.awt.Font;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import MenuSetUp.MyButton;
-import main.Main;
 
 
-public class NewGameDialog extends JDialog{
+public class NewGameDialog extends SuperDialog{
     public JTextField textField;
     public MyButton okButton;
     public NewGameDialog(JFrame parent){
         super(parent);
-        setSize(500, 520);
-        setLayout(null);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        Icon background;
-        JLabel bg;
-        background= new ImageIcon(Main.res + "/background/dialogBackground.png");
-        bg = new JLabel(background);
-        bg.setLocation(-5,-15);
-        bg.setSize(500, 520);
 
-        // Định nghĩa các thành phần của dialog
+        // BUTTON
         okButton = new MyButton("yes");
-        okButton.setLocateButton(175, 400);
-        
         MyButton cancelButton = new MyButton("no");
-        cancelButton.setLocateButton(275, 400);
+        
 
+        
+
+        // Thêm các thành phần vào dialog
+        setLabel();
+        addButton(okButton, cancelButton);
+        setBackground();
+
+        //BUTTON ACTION
+        cancelButton.addActionListener(e -> {setVisible(false);
+            textField.setText("");
+        });
+    }
+    void setLabel(){
         JLabel label = new JLabel("Enter name :");
         label.setFont(new Font("Courier New", Font.BOLD, 20));
         label.setSize(150, 30);
@@ -49,29 +45,13 @@ public class NewGameDialog extends JDialog{
         textField.setOpaque(true);
         textField.setBorder(null);
 
-        // Thêm các thành phần vào dialog
-        JPanel textPanel = new JPanel();
+        JPanel textPanel = new JPanel(null);
+        textPanel.setSize(500, 520);
+        textPanel.setLocation(0, 0);
+        textPanel.setOpaque(false);
         textPanel.add(label);
         textPanel.add(textField);
-        getContentPane().add(label);
-        getContentPane().add(okButton);
-        getContentPane().add(cancelButton);
-        getContentPane().add(textField);
-        getContentPane().add(bg);
-        cancelButton.addActionListener(e -> {setVisible(false);
-            textField.setText("");
-        });
-    }
 
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setTitle("BOMB GAME");
-        NewGameDialog a = new NewGameDialog(window);
-        window.setSize(576, 576);
-        a.setVisible(true);
-        window.setResizable(false);
-        window.setLocationRelativeTo(null);
-       // window.setVisible(true);
+        getContentPane().add(textPanel);
     }
 }

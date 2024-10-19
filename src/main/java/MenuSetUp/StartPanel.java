@@ -12,6 +12,7 @@ import main.Main;
 
 public class StartPanel extends JPanel {
     MyButton back;
+    MyButton setting;
     MyButton newGame;
     MyButton score;
     MyButton continueButton;
@@ -19,9 +20,14 @@ public class StartPanel extends JPanel {
 
     public StartPanel(JFrame frame ){
         setLayout(null);
+
         back = new MyButton("back");
         back.setLocateButton(10, 10);
         add(back);
+        
+        setting = new MyButton("setting");
+        setting.setLocateButton(DimensionSize.screenWidth - 60, 10);
+        add(setting);
 
         newGame = new MyButton("newGame");
         newGame.setLocateButton((DimensionSize.screenWidth - 206)/2, ((DimensionSize.maxScreenRow - 5)/2) * DimensionSize.tileSize);
@@ -35,10 +41,9 @@ public class StartPanel extends JPanel {
         score.setLocateButton((DimensionSize.screenWidth - 206)/2, ((DimensionSize.maxScreenRow - 5)/2 +4) * DimensionSize.tileSize);
         add(score);
 
-        newUser = new NewGameDialog(frame);
-
+        newUser = new NewGameDialog(frame);//Dialog thong bao nhap ten nhan vat moi
         newGame.addActionListener(e -> newUser.setVisible(true));
-        //continueButton.addActionListener(e -> continueDialog.setVisible(true));
+
     }
 
     @Override
@@ -53,16 +58,4 @@ public class StartPanel extends JPanel {
             e.printStackTrace();
         }
     }
-    // public static void main(String[] args) {
-        
-    //     JFrame window = new JFrame();
-    //     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //     window.setTitle("BOMB GAME");
-    //     startPanel a = new startPanel(window);
-    //     window.setSize(576, 576);
-    //     window.add(a);
-    //     window.setResizable(false);
-    //     window.setLocationRelativeTo(null);
-    //     window.setVisible(true);
-    // }
 }

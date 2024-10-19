@@ -12,8 +12,8 @@ import javax.swing.SwingConstants;
 public class MySlider{
     JLabel nameSlider;
     JSlider slider;
-    public MySlider(int width,int height,String name){
-        slider = new JSlider(-24,6);
+    public MySlider(int width,int height,int value,String name){
+        slider = new JSlider(-24,6 , value);
         slider.setUI(new SliderUI(slider));
         slider.setOpaque(false);
         slider.setSize(width - 55, height);
