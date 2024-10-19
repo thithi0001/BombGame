@@ -28,6 +28,8 @@ public class Player extends Entity {
     int cooldown;
     int timer = 0;
 
+    public int score = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;

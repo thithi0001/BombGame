@@ -16,34 +16,31 @@ public class Sound {
     FloatControl controlMusic;
     FloatControl controlSE;
     String name;
-    float musicVolume ;
-    public static float SEVolume ;
-    public static Boolean SE ;
-    Boolean Music ;
+    float musicVolume;
+    public static float SEVolume;
+    public static Boolean SE;
+    Boolean Music;
 
 
-    public Sound(String a){
+    public Sound(String a) {
         name = a;
-        file = new File(Main.res+ nameFile(a));
+        file = new File(Main.res + nameFile(a));
         this.setFile();
         readSetting(this);
-        if(name.equals("Music")){
-            controlMusic = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-            if(Music){
+        if (name.equals("Music")) {
+            controlMusic = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            if (Music) {
                 controlMusic.setValue(musicVolume);
-            }
-            else controlMusic.setValue(-80);
-        }
-        else{
-            controlSE = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-            if(SE){
+            } else controlMusic.setValue(-80);
+        } else {
+            controlSE = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            if (SE) {
                 controlSE.setValue(SEVolume);
-            }
-            else controlSE.setValue(-80);
+            } else controlSE.setValue(-80);
         }
     }
 
-    public void setFile(){
+    public void setFile() {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(file);
             this.clip = AudioSystem.getClip();
@@ -51,37 +48,39 @@ public class Sound {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-    } 
-    public void play(){
+
+    }
+
+    public void play() {
         checkVolume();
         clip.start();
     }
-    public void loop(){
+
+    public void loop() {
         clip.loop(-1);
     }
-    public void stopMusic(){
-            clip.stop();
+
+    public void stopMusic() {
+        clip.stop();
     }
-    public String nameFile(String a){
-        return "/sound/"+a+".wav";
+
+    public String nameFile(String a) {
+        return "/sound/" + a + ".wav";
     }
-    
-    public void checkVolume(){
-        if(name.equals("Music")){
-            if(Music){
+
+    public void checkVolume() {
+        if (name.equals("Music")) {
+            if (Music) {
                 controlMusic.setValue(musicVolume);
                 clip.start();
-            }
-            else clip.stop();
-        }
-        else{
-            if(SE)controlSE.setValue(SEVolume);
+            } else clip.stop();
+        } else {
+            if (SE) controlSE.setValue(SEVolume);
             else controlSE.setValue(-80);
         }
     }
 
-    void readSetting(Sound x){
+    void readSetting(Sound x) {
         File file = new File(Main.res + "/userData/setting.txt");
         try {
             Scanner in = new Scanner(file);
@@ -95,17 +94,17 @@ public class Sound {
         }
     }
 
-    void saveSetting(Sound music){
+    void saveSetting(Sound music) {
         try {
             FileWriter writer = new FileWriter(Main.res + "/userData/setting.txt");
-            writer.write(music.musicVolume +"\n");
-            writer.write(Sound.SEVolume +"\n");
-            writer.write(music.Music +"\n");
-            writer.write(Sound.SE +"\n");
+            writer.write(music.musicVolume + "\n");
+            writer.write(Sound.SEVolume + "\n");
+            writer.write(music.Music + "\n");
+            writer.write(Sound.SE + "\n");
             writer.close();
 
         } catch (Exception e) {
             System.out.println("Enrrol save setting file");
         }
-     }
+    }
 }

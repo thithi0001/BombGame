@@ -5,24 +5,25 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+
 import main.Main;
 
 public class SettingPanel extends JPanel {
     MyButton back;
 
-    public SettingPanel(Sound music){
+    public SettingPanel(Sound music) {
         MySlider musicSlider;
         MySlider SESlider;
-        
+
         setFocusable(false);
         setLayout(null);
 
-        
+
         //TITLE PANEL
         JLabel setting = new JLabel("SETTING");
         setting.setSize(235, 100);
         setting.setFont(new Font("Courier New", Font.BOLD, 38));
-        setting.setLocation((DimensionSize.screenWidth - 150)/2, 20);
+        setting.setLocation((DimensionSize.screenWidth - 150) / 2, 20);
         add(setting);
 
         //BUTTON BACK
@@ -32,10 +33,10 @@ public class SettingPanel extends JPanel {
 
         //SET SOUND
         // music.stopMusic();
-        
+
         //SLIDER MUSIC
-        musicSlider = new MySlider(250, 25, (int)music.musicVolume, "music");
-        musicSlider.setLocateMySlider((DimensionSize.screenWidth-250)/2, ((DimensionSize.maxScreenRow - 4)/2)* DimensionSize.tileSize);
+        musicSlider = new MySlider(250, 25, (int) music.musicVolume, "music");
+        musicSlider.setLocateMySlider((DimensionSize.screenWidth - 250) / 2, ((DimensionSize.maxScreenRow - 4) / 2) * DimensionSize.tileSize);
         add(musicSlider.slider);
         add(musicSlider.nameSlider);
         musicSlider.slider.addChangeListener((e) -> {
@@ -44,8 +45,8 @@ public class SettingPanel extends JPanel {
         });
 
         //SLIDER SOUND EFFECT
-        SESlider = new MySlider(250, 25, (int)Sound.SEVolume, "SE");
-        SESlider.setLocateMySlider((DimensionSize.screenWidth - 250)/2, ((DimensionSize.maxScreenRow - 4)/2 + 1) * DimensionSize.tileSize);
+        SESlider = new MySlider(250, 25, (int) Sound.SEVolume, "SE");
+        SESlider.setLocateMySlider((DimensionSize.screenWidth - 250) / 2, ((DimensionSize.maxScreenRow - 4) / 2 + 1) * DimensionSize.tileSize);
         add(SESlider.slider);
         // add(SESlider.nameSlider);
         SESlider.slider.addChangeListener((e) -> {
@@ -55,22 +56,22 @@ public class SettingPanel extends JPanel {
 
         //BUTTON MUSIC AND SE
         MyButton seButton = Sound.SE ? new MyButton("sound") : new MyButton("soundOff");
-        seButton.setLocateButton(DimensionSize.screenWidth/2 + 50, ((DimensionSize.maxScreenRow - 4)/2 + 3)* DimensionSize.tileSize);
+        seButton.setLocateButton(DimensionSize.screenWidth / 2 + 50, ((DimensionSize.maxScreenRow - 4) / 2 + 3) * DimensionSize.tileSize);
         add(seButton);
         seButton.addActionListener((e) -> {
             Sound.SE = !Sound.SE;
-            seButton.setIcon(Sound.SE ? new ImageIcon(Main.res+"/button/soundButton.png")
-                                            :new ImageIcon(Main.res+"/button/soundOffButton.png") );
+            seButton.setIcon(Sound.SE ? new ImageIcon(Main.res + "/button/soundButton.png")
+                    : new ImageIcon(Main.res + "/button/soundOffButton.png"));
             SESlider.slider.setEnabled(Sound.SE);
         });
 
         MyButton musicButton = music.Music ? new MyButton("music") : new MyButton("musicOff");
-        musicButton.setLocateButton(DimensionSize.screenWidth/2 - 100, ((DimensionSize.maxScreenRow - 4)/2 +3)* DimensionSize.tileSize);
+        musicButton.setLocateButton(DimensionSize.screenWidth / 2 - 100, ((DimensionSize.maxScreenRow - 4) / 2 + 3) * DimensionSize.tileSize);
         add(musicButton);
         musicButton.addActionListener((e) -> {
             music.Music = !music.Music;
-            musicButton.setIcon(music.Music ? new ImageIcon(Main.res+"/button/musicButton.png")
-                                                  : new ImageIcon(Main.res+"/button/musicOffButton.png") );
+            musicButton.setIcon(music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
+                    : new ImageIcon(Main.res + "/button/musicOffButton.png"));
             music.checkVolume();
             musicSlider.slider.setEnabled(music.Music);
         });
@@ -82,12 +83,12 @@ public class SettingPanel extends JPanel {
         super.paintComponent(g);
         BufferedImage background;
         try {
-            File a =new File(Main.res + "/background/background.png");
-            background= ImageIO.read(a);
-            g.drawImage(background, 0, 0, DimensionSize.screenWidth , DimensionSize.screenHeight, null);
+            File a = new File(Main.res + "/background/background.png");
+            background = ImageIO.read(a);
+            g.drawImage(background, 0, 0, DimensionSize.screenWidth, DimensionSize.screenHeight, null);
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-     }
-     
+        }
+    }
+
 }

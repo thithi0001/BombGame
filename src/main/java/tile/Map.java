@@ -139,7 +139,7 @@ public class Map {
         }
 
         items.forEach(item -> {
-            if(item.state == Item.States.shown){
+            if (item.state == Item.States.shown) {
                 item.draw(g2);
             }
         });

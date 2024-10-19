@@ -41,7 +41,7 @@ public class Bomb {
     // FLAME
     public Flame flame;
 
-    public Bomb(){
+    public Bomb() {
 
     }
 

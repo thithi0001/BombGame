@@ -25,24 +25,25 @@ public class ChangePanel {
     MenuPanel menu;
     StartPanel start;
     JFrame frame;
-    public ChangePanel(JFrame frame){
-        
+
+    public ChangePanel(JFrame frame) {
+
         this.frame = frame;
         cardLayout = new CardLayout();
         contentPane = frame.getContentPane();
         contentPane.setLayout(cardLayout);
-        userList =new UserList();
-        
-        menu = new MenuPanel(DimensionSize.screenWidth , DimensionSize.screenHeight);
+        userList = new UserList();
+
+        menu = new MenuPanel(DimensionSize.screenWidth, DimensionSize.screenHeight);
         start = new StartPanel(frame);
 
-        contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth , DimensionSize.screenHeight)); 
+        contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(menu, "menu");//panel 1 in contentPane
         contentPane.add(start, "start");//panel 2 in contentPane
-        
+
     }
 
-    public void actionChange(){
+    public void actionChange() {
         ReplaceDialog replace = new ReplaceDialog(frame);
 
         // SET UP DIALOG NEWGAME
@@ -56,13 +57,13 @@ public class ChangePanel {
 
 
         //SET UP OTHER BUTTON IN STARTPANEL
-        
+
         start.score.addActionListener(e -> {
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
             highScore.setVisible(true);
         });
 
-        start.continueButton.addActionListener(e ->{
+        start.continueButton.addActionListener(e -> {
             ContinueDialog dialog = new ContinueDialog(frame, this);
             dialog.setVisible(true);
         });
@@ -71,17 +72,17 @@ public class ChangePanel {
         start.setting.addActionListener(e -> {
             SettingPanel setting = new SettingPanel(menu.music);
             contentPane.add(setting, "setting");
-            cardLayout.show(contentPane , "setting");
+            cardLayout.show(contentPane, "setting");
             setting.back.addActionListener((event) -> {
-                cardLayout.show(contentPane , "start");
+                cardLayout.show(contentPane, "start");
                 menu.music.saveSetting(menu.music);
             });
         });
         // // SET UP MENUPANEL BUTTON
         menu.start.addActionListener((e) -> cardLayout.next(contentPane));
 
-        menu.quit.addActionListener((e) ->{
-            RemindDialog a = new RemindDialog(userList, frame,"exit Game ");
+        menu.quit.addActionListener((e) -> {
+            RemindDialog a = new RemindDialog(userList, frame, "exit Game ");
             a.setVisible(true);
 
             //SET UP BUTTON FOR RemindDialog
@@ -91,63 +92,66 @@ public class ChangePanel {
             });
             a.noButton.addActionListener(event -> a.setVisible(false));
         });
-      
+
     }
-    
+
 }
 
-class newUserAction implements ActionListener{
+class newUserAction implements ActionListener {
     NewGameDialog newUser;
     String x;
     ChangePanel change;
     ReplaceDialog replace;
-    public newUserAction(NewGameDialog newUser, ChangePanel change , ReplaceDialog replace){
+
+    public newUserAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
         this.newUser = newUser;
         this.change = change;
         this.replace = replace;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        String x =newUser.textField.getText();
-            if(x.isEmpty()){
-                NoticeDialog note = new NoticeDialog(change.frame);
-                note.setVisible(true);
-            }
-            else{
-                boolean check = false;
-                for(User a : change.userList.list){
-                    if(a.getUserName().equals(x)){
-                        check = true;
-                        replace.setVisible(true);
-                        break;
-                    }
-                }
-                if(!check){
-                    User A = new userClass.User(x);
-                    newUser.setVisible(false);
-                    newUser.textField.setText("");
-                    change.contentPane.add(new LevelPanel(A ,change), "level");
-                    change.cardLayout.show(change.contentPane, "level");
+        String x = newUser.textField.getText();
+        if (x.isEmpty()) {
+            NoticeDialog note = new NoticeDialog(change.frame);
+            note.setVisible(true);
+        } else {
+            boolean check = false;
+            for (User a : change.userList.list) {
+                if (a.getUserName().equals(x)) {
+                    check = true;
+                    replace.setVisible(true);
+                    break;
                 }
             }
-        
+            if (!check) {
+                User A = new userClass.User(x);
+                newUser.setVisible(false);
+                newUser.textField.setText("");
+                change.contentPane.add(new LevelPanel(A, change), "level");
+                change.cardLayout.show(change.contentPane, "level");
+            }
+        }
+
     }
 }
 
-class replaceAction implements ActionListener{
+class replaceAction implements ActionListener {
     ChangePanel changePanel;
     ReplaceDialog replace;
-    public replaceAction(ChangePanel changePanel , ReplaceDialog replace){
+
+    public replaceAction(ChangePanel changePanel, ReplaceDialog replace) {
         this.changePanel = changePanel;
         this.replace = replace;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String x = changePanel.start.newUser.textField.getText();
-            changePanel.start.newUser.setVisible(false);
-            changePanel.start.newUser.textField.setText("");
-            changePanel.contentPane.add(new LevelPanel(new User(x) , changePanel), "level");
-            changePanel.cardLayout.show(changePanel.contentPane, "level");
-            replace.setVisible(false); 
+        changePanel.start.newUser.setVisible(false);
+        changePanel.start.newUser.textField.setText("");
+        changePanel.contentPane.add(new LevelPanel(new User(x), changePanel), "level");
+        changePanel.cardLayout.show(changePanel.contentPane, "level");
+        replace.setVisible(false);
     }
 }

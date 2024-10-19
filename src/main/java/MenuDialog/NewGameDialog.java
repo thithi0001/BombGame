@@ -9,18 +9,17 @@ import javax.swing.JTextField;
 import MenuSetUp.MyButton;
 
 
-public class NewGameDialog extends SuperDialog{
+public class NewGameDialog extends SuperDialog {
     public JTextField textField;
     public MyButton okButton;
-    public NewGameDialog(JFrame parent){
+
+    public NewGameDialog(JFrame parent) {
         super(parent);
 
         // BUTTON
         okButton = new MyButton("yes");
         MyButton cancelButton = new MyButton("no");
-        
 
-        
 
         // Thêm các thành phần vào dialog
         setLabel();
@@ -28,19 +27,21 @@ public class NewGameDialog extends SuperDialog{
         setBackground();
 
         //BUTTON ACTION
-        cancelButton.addActionListener(e -> {setVisible(false);
+        cancelButton.addActionListener(e -> {
+            setVisible(false);
             textField.setText("");
         });
     }
-    void setLabel(){
+
+    void setLabel() {
         JLabel label = new JLabel("Enter name :");
         label.setFont(new Font("Courier New", Font.BOLD, 20));
         label.setSize(150, 30);
-        label.setLocation((500-350)/2, 180);
+        label.setLocation((500 - 350) / 2, 180);
 
         textField = new JTextField();
         textField.setSize(200, 30);
-        textField.setLocation((500 - 350) /2 +150, 180);
+        textField.setLocation((500 - 350) / 2 + 150, 180);
         textField.setFont(new Font("Courier New", Font.BOLD, 20));
         textField.setOpaque(true);
         textField.setBorder(null);

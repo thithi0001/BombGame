@@ -10,8 +10,8 @@ import javax.swing.SwingConstants;
 
 import MenuSetUp.MyButton;
 
-public class NoticeDialog extends JDialog{
-    public NoticeDialog(JFrame parent){
+public class NoticeDialog extends JDialog {
+    public NoticeDialog(JFrame parent) {
         super(parent);
         setSize(400, 200);
         setResizable(false);
@@ -22,11 +22,12 @@ public class NoticeDialog extends JDialog{
         addMessage();
 
         MyButton okButton = new MyButton("yes");
-        getContentPane().add(okButton,BorderLayout.SOUTH);
+        getContentPane().add(okButton, BorderLayout.SOUTH);
         okButton.addActionListener(e -> setVisible(false));
     }
-    void addMessage(){
-        JLabel message= new JLabel();
+
+    void addMessage() {
+        JLabel message = new JLabel();
         message.setText("Please enter Player's name ");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);

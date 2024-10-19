@@ -6,10 +6,12 @@ import java.awt.Font;
 import javax.swing.*;
 
 import MenuSetUp.MyButton;
-public class ReplaceDialog extends JDialog{
+
+public class ReplaceDialog extends JDialog {
     public MyButton okButton;
     public MyButton cancelButton;
-    public ReplaceDialog(JFrame parent){
+
+    public ReplaceDialog(JFrame parent) {
         super(parent);
         setSize(400, 200);
         setResizable(false);
@@ -25,8 +27,8 @@ public class ReplaceDialog extends JDialog{
         okButton.addActionListener(e -> setVisible(false));
     }
 
-    void addMessage(){
-        JLabel message= new JLabel();
+    void addMessage() {
+        JLabel message = new JLabel();
         message.setText("<html>Player's name has existed.<br>Do you want to replace it?</html>");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
@@ -34,12 +36,12 @@ public class ReplaceDialog extends JDialog{
         getContentPane().add(message);
     }
 
-    void addButton(MyButton okButton, MyButton noButton){
+    void addButton(MyButton okButton, MyButton noButton) {
         JPanel button = new JPanel();
         button.add(okButton);
         button.add(noButton);
         button.setOpaque(false);
 
-        getContentPane().add(button,BorderLayout.SOUTH);
+        getContentPane().add(button, BorderLayout.SOUTH);
     }
 }

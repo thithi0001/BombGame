@@ -26,6 +26,7 @@ public class LoadResource {
 
     // bomb
     public static BufferedImage[] idle, explosion;
+
     static {
 
         loadTile();
@@ -72,7 +73,7 @@ public class LoadResource {
     }
 
     static void loadPlayer() {
-        playerUp  = UtilityTool.loadSpriteSheet("\\player\\up_32_x_16_.png");
+        playerUp = UtilityTool.loadSpriteSheet("\\player\\up_32_x_16_.png");
         playerDown = UtilityTool.loadSpriteSheet("\\player\\down_32_x_16_.png");
         playerLeft = UtilityTool.loadSpriteSheet("\\player\\left_32_x_16_.png");
         playerRight = UtilityTool.loadSpriteSheet("\\player\\right_32_x_16_.png");

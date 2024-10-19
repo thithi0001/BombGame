@@ -17,7 +17,7 @@ import static MenuSetUp.DimensionSize.screenHeight;
 import static MenuSetUp.DimensionSize.screenWidth;
 
 public class GamePanel extends JPanel implements Runnable {
-    
+
     // FPS
     public int FPS = 60;
 
@@ -29,21 +29,41 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
-//    public GamePanel(Map map)
-    public GamePanel() {
-
+    public GamePanel(String mapFileName) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
-        this.map = new Map(this, "level_1");
+        this.map = new Map(this, mapFileName);
     }
 
     public void startGameThread() {
 
         gameThread = new Thread(this);
         gameThread.start();
-        // System.out.println("ok");
+    }
+
+    public void endGame(String result) {
+        // result: win, lose, uncompleted
+        switch (result) {
+            case "win":
+                // score
+                // completion time
+                // OPTIONS: replay, next level, quit (->level panel)
+                // save user data
+                break;
+
+            case "lose":
+                // score
+                // playing time
+                // OPTIONS: replay, quit (-> level panel)
+                break;
+
+            case "uncompleted":
+                // OPTIONS: resume, quit (-> level panel)
+                break;
+        }
+//        gameThread = null;
     }
 
     @Override
