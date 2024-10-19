@@ -62,4 +62,15 @@ public class Item extends Entity {
             g2.drawImage(itemImg, x, y, tileSize, tileSize, null);
         }
     }
+
+    @Override
+    public void beingHit() {
+        super.beingHit();
+        state = States.isHit;
+    }
+
+    public void beingPickedUp() {
+        state = States.isPickedUp;
+        System.out.println("+1 " + name);
+    }
 }

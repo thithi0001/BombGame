@@ -43,4 +43,8 @@ public class Entity {
         return (y + tileSize / 2) / tileSize;
     }
 
+    public void beingHit() {
+        isHit = true;
+        System.out.println("hit " + name);
+    }
 }

@@ -11,13 +11,14 @@ import static MenuSetUp.DimensionSize.tileSize;
 
 public class NormalBomb extends Bomb {
 
-    public NormalBomb(GamePanel gp, int x, int y, Entity owner) {
+    public NormalBomb(GamePanel gp, int x, int y, Entity owner, int flameLength) {
 
         this.gp = gp;
         name = "normal bomb";
         this.x = x;
         this.y = y;
         this.owner = owner;
+        this.flameLength = flameLength;
         spriteTime = 6;// draw 1 sprite after every 6 frames
 
         solidArea = new Rectangle(x, y, tileSize, tileSize);
@@ -47,7 +48,7 @@ public class NormalBomb extends Bomb {
             spriteCounter = 0;
             spriteNum = 0;
             spriteTime = 1;
-            flame = new Flame(this, x, y, 3, explosion.length * (1 + spriteTime));
+            flame = new Flame(this, x, y, flameLength, explosion.length * (1 + spriteTime));
             return;
         }
 

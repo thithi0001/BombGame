@@ -22,7 +22,8 @@ public class Player extends Entity {
     // direction
 
     public ArrayList<NormalBomb> bombs = new ArrayList<>();
-    int maxBombs = 1;
+    private int maxBombs = 1;
+    private int flameLength = 3;
     double cooldownInSecond;
     double cooldownInFrame;
     int cooldown;
@@ -70,7 +71,7 @@ public class Player extends Entity {
         gp.bombs.addAll(bombs);
         if (keyH.enterPressed && bombs.size() < maxBombs
                 && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
-            bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this));
+            bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
             timer = cooldown;
         }
 
@@ -155,5 +156,18 @@ public class Player extends Entity {
                 break;
         }
         resetCollision(true);
+    }
+
+    @Override
+    public void beingHit() {
+        super.beingHit();
+    }
+
+    public void addMoreBombs(int n) {
+        maxBombs += n;
+    }
+
+    public void addMoreFlame(int n) {
+        flameLength += n;
     }
 }

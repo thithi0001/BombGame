@@ -131,8 +131,7 @@ public class CollisionChecker {
         solidArea.y += entity.y;
         if (flame.verticalSolidArea.intersects(solidArea)
                 || flame.horizontalSolidArea.intersects(solidArea)) {
-            entity.isHit = true;
-            System.out.println("hit player");
+            entity.beingHit();
         }
     }
 
@@ -141,9 +140,7 @@ public class CollisionChecker {
         if (item.state == Item.States.shown && flame.duration > 1
                 && (flame.verticalSolidArea.intersects(item.solidArea)
                 || flame.horizontalSolidArea.intersects(item.solidArea))) {
-            item.state = Item.States.isHit;
-            // do something when the item is hit
-            System.out.println("hit " + item.name);
+            item.beingHit();
         }
     }
 
@@ -153,8 +150,14 @@ public class CollisionChecker {
         solidArea.x += gp.player.x;
         solidArea.y += gp.player.y;
         if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
-            item.state = Item.States.isPickedUp;
-            System.out.println("+1 " + item.name);
+            item.beingPickedUp();
+            switch (item.name) {
+                case "plus_1":
+                    gp.player.addMoreFlame(1);
+                    break;
+                case "ugly_key":
+                    break;
+            }
         }
     }
 }

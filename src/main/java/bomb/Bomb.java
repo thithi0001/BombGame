@@ -40,6 +40,7 @@ public class Bomb {
 
     // FLAME
     public Flame flame;
+    public int flameLength = 1;
 
     public Bomb() {
 
