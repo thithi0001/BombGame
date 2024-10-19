@@ -53,7 +53,7 @@ public class Player extends Entity {
         y = tileSize * 10;
         speed = 4;
         direction = "down";
-        spriteTime = 12;
+        spriteTime = 6;
     }
 
     void getPlayerImage() {
