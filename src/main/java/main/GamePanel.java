@@ -18,8 +18,13 @@ import static MenuSetUp.DimensionSize.screenWidth;
 
 public class GamePanel extends JPanel implements Runnable {
 
+    public enum States {playing, stop, pausing}
+
+    States state = States.playing;
+
     // FPS
     public int FPS = 60;
+    public Clock clock = new Clock(this);
 
     public TileManager tileManager = new TileManager(this);
     public Map map;
@@ -47,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
         // result: win, lose, uncompleted
         switch (result) {
             case "win":
+                state = States.stop;
                 // score
                 // completion time
                 // OPTIONS: replay, next level, quit (->level panel)
@@ -54,16 +60,23 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
 
             case "lose":
+                state = States.stop;
                 // score
                 // playing time
                 // OPTIONS: replay, quit (-> level panel)
                 break;
 
             case "uncompleted":
+                state = States.pausing;
                 // OPTIONS: resume, quit (-> level panel)
+                // if resume: state = States.playing
+                // else: state = States.stop
                 break;
         }
-//        gameThread = null;
+
+        if (state == States.stop) {
+            gameThread = null;
+        }
     }
 
     @Override
@@ -77,6 +90,8 @@ public class GamePanel extends JPanel implements Runnable {
         int drawCount = 0;
 
         while (gameThread != null) {
+
+            if (state == States.pausing) continue;
 
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
@@ -92,6 +107,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1e9) {
                 // System.out.println("FPS: " + drawCount);
+                clock.update();
+                System.out.println(clock.toString());
                 drawCount = 0;
                 timer = 0;
             }
@@ -124,4 +141,36 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();// save memories
     }
 
+    public static class Clock {
+
+        GamePanel gp;
+
+        public int hour = 0;
+        public int minute = 0;
+        public int second = 0;
+
+        Clock(GamePanel gp) {
+            this.gp = gp;
+        }
+
+        public void update() {
+            second++;
+            if (second == 60) {
+                minute++;
+                second = 0;
+                if (minute == 60) {
+                    hour++;
+                    minute = 0;
+                }
+            }
+        }
+
+        @Override
+        public String toString() {
+            String out = String.format("%2d:%2d", minute, second).replace(' ', '0');
+            if (hour > 0) out = String.format("%2d:", hour).replace(' ', '0') + out;
+            return out;
+        }
+    }
 }
+
