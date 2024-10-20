@@ -22,19 +22,20 @@ public class LevelGameFrame extends JFrame {
         setVisible(false);
         gamePanel.startGameThread();
     }
-    public LevelGameFrame(int lv ,LevelPanel levelPanel, GamePanel gamePanel){
+    public LevelGameFrame(int lv ,LevelPanel levelPanel, GamePanel oldGamePanel){
         new JFrame();
         this.lv = lv;
         this.levelPanel = levelPanel;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setTitle("BOMB GAME");
-        this.gamePanel = gamePanel;
+        oldGamePanel.setParentFrame(this);
+        this.gamePanel = oldGamePanel;
         add(this.gamePanel);
         pack();
         setLocationRelativeTo(null);
         setVisible(false);
-
+        // gamePanel.startGameThread();
     }
     public String mapFileNameToString(int lv){
         return "level_"+lv;

@@ -18,10 +18,9 @@ public class PauseDialog extends SuperDialog {
         resume = new JButton("resume");
         resume.addActionListener(e -> {
             setVisible(false);
-            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
-            newParent.gamePanel.setParentFrame(newParent);
-            newParent.gamePanel = parent.gamePanel;
-            newParent.add(newParent.gamePanel);
+            parent.gamePanel.state = GamePanel.States.playing;
+            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
+            // newParent.gamePanel.setParentFrame(newParent);
             newParent.setTitle("new Parent");
             
             parent.setVisible(false);
