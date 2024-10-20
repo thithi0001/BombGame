@@ -5,7 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import MenuDialog.RemindDialog;
-import main.GamePanel;
 import main.Main;
 import userClass.User;
 

@@ -78,16 +78,10 @@ public class GamePanel extends JPanel implements Runnable {
         button.setLocateButton(screenHeight - 60, 20);
         this.add(button);
         button.addActionListener(e -> {
-            endGame("uncompleted");
+            endGame("win");
         });
     }
-    // public JPanel status(){
-    //     JPanel statusPanel = new JPanel();
-    //     statusPanel.setSize(new Dimension(screenWidth, screenHeight));
-    //     statusPanel.setLocation(0, 0);
-    //     statusPanel.setBackground(Color.BLACK);
-    //     return statusPanel;
-    // }
+
     public void startGameThread() {
 
         gameThread = new Thread(this);
@@ -101,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
                 state = States.stop;
                 // mở khóa màn mới
                 if(levelPanel.user.getLevel() <3){
-                    levelPanel.user.setLevel();
+                    levelPanel.user.setLevel(parent.lv+1);
                     levelPanel.resetLevelPanel(levelPanel.user);
                 }
                 //lưu điêm
@@ -120,11 +114,6 @@ public class GamePanel extends JPanel implements Runnable {
                 state = States.pausing;
                 PauseDialog pauseDialog = new PauseDialog(parent);
                 pauseDialog.setVisible(true);
-                // pauseDialog.resume.addActionListener(e -> {
-                //     pauseDialog.setVisible(false);
-                //     state = States.playing;
-                // });
-                // else: state = States.stop
                 break;
         }
 

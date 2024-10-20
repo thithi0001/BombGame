@@ -24,7 +24,8 @@ public class User {
     }
 
     public void setLevel(int lv) {
-        level = lv;
+        if(level<lv)
+            level = lv;
     }
 
     public void setScore(int lv, int score) {
