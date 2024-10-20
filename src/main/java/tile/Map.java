@@ -100,7 +100,7 @@ public class Map {
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                     if (gp.tileManager.tile[num].destructible) {
-                        itemPos.add(new Point(row, col));
+                        itemPos.add(new Point(col, row));
                     }
                     col++;
                 }
