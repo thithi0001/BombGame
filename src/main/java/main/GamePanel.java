@@ -8,10 +8,12 @@ import java.awt.Graphics2D;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import MenuDialog.EndGameDialog;
+import MenuDialog.PauseDialog;
 import MenuSetUp.DimensionSize;
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.LevelPanel;
@@ -29,9 +31,10 @@ import static MenuSetUp.DimensionSize.screenWidth;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    public enum States {playing, stop, pausing}
+    public static 
+    enum States {playing, stop, pausing}
 
-    States state = States.playing;
+    public States state = States.playing;
 
     // FPS
     public int FPS = 60;
@@ -50,26 +53,33 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
-    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel levelPanel) {
+    public GamePanel(String mapFileName) {
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);// this can be focused to receive key input
+        this.map = new Map(this, mapFileName);
+        this.setLayout(null);
+        addButton();
+        // this.add(new Button("button"));
+    }
+    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
         this.map = new Map(this, mapFileName);
         this.parent = parent;
-        this.levelPanel = levelPanel;
+        this.levelPanel = level;
         this.setLayout(null);
         addButton();
-       
-        // this.add(new Button("button"));
-
     }
     public void addButton(){
         button = new MyButton("yes");
         button.setLocateButton(screenHeight - 60, 20);
         this.add(button);
         button.addActionListener(e -> {
-            endGame("win");
+            endGame("uncompleted");
         });
     }
     // public JPanel status(){
@@ -109,8 +119,12 @@ public class GamePanel extends JPanel implements Runnable {
 
             case "uncompleted":
                 state = States.pausing;
-                // OPTIONS: resume, quit (-> level panel)
-                // if resume: state = States.playing
+                PauseDialog pauseDialog = new PauseDialog(parent);
+                pauseDialog.setVisible(true);
+                // pauseDialog.resume.addActionListener(e -> {
+                //     pauseDialog.setVisible(false);
+                //     state = States.playing;
+                // });
                 // else: state = States.stop
                 break;
         }
@@ -229,6 +243,9 @@ public class GamePanel extends JPanel implements Runnable {
             if (hour > 0) out = String.format("%2d:", hour).replace(' ', '0') + out;
             return out;
         }
+    }
+    public void setParentFrame(LevelGameFrame newParent){
+        parent = newParent;
     }
 }
 
