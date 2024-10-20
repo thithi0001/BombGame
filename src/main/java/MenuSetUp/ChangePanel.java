@@ -22,9 +22,9 @@ public class ChangePanel {
     public Container contentPane;
     public CardLayout cardLayout;
     public UserList userList;
-    MenuPanel menu;
-    StartPanel start;
-    JFrame frame;
+    public MenuPanel menu;
+    public StartPanel start;
+    public JFrame frame;
 
     public ChangePanel(JFrame frame) {
 
@@ -69,6 +69,7 @@ public class ChangePanel {
         });
 
         start.back.addActionListener(e -> cardLayout.previous(contentPane));
+
         start.setting.addActionListener(e -> {
             SettingPanel setting = new SettingPanel(menu.music);
             contentPane.add(setting, "setting");
@@ -128,8 +129,8 @@ class newUserAction implements ActionListener {
                 User A = new userClass.User(x);
                 newUser.setVisible(false);
                 newUser.textField.setText("");
-                change.contentPane.add(new LevelPanel(A, change), "level");
-                change.cardLayout.show(change.contentPane, "level");
+                change.contentPane.add(new LevelPanel(A, change), "newlevel");
+                change.cardLayout.show(change.contentPane, "newlevel");
             }
         }
 

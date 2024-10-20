@@ -1,11 +1,22 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import MenuDialog.EndGameDialog;
+import MenuSetUp.DimensionSize;
+import MenuSetUp.LevelGameFrame;
+import MenuSetUp.LevelPanel;
+import MenuSetUp.MyButton;
+
 
 import bomb.Bomb;
 import entity.Item;
@@ -26,22 +37,48 @@ public class GamePanel extends JPanel implements Runnable {
     public int FPS = 60;
     public Clock clock = new Clock(this);
 
+    public LevelGameFrame parent;
+    public JLabel scoreLabel;
+    public MyButton button;
+    public LevelPanel levelPanel;
+
     public TileManager tileManager = new TileManager(this);
     public Map map;
     KeyHandler keyH = new KeyHandler();
-    Thread gameThread;
+    public Thread gameThread;
     public Player player = new Player(this, keyH);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
-    public GamePanel(String mapFileName) {
+    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel levelPanel) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
         this.map = new Map(this, mapFileName);
-    }
+        this.parent = parent;
+        this.levelPanel = levelPanel;
+        this.setLayout(null);
+        addButton();
+       
+        // this.add(new Button("button"));
 
+    }
+    public void addButton(){
+        button = new MyButton("yes");
+        button.setLocateButton(screenHeight - 60, 20);
+        this.add(button);
+        button.addActionListener(e -> {
+            endGame("win");
+        });
+    }
+    // public JPanel status(){
+    //     JPanel statusPanel = new JPanel();
+    //     statusPanel.setSize(new Dimension(screenWidth, screenHeight));
+    //     statusPanel.setLocation(0, 0);
+    //     statusPanel.setBackground(Color.BLACK);
+    //     return statusPanel;
+    // }
     public void startGameThread() {
 
         gameThread = new Thread(this);
@@ -53,17 +90,21 @@ public class GamePanel extends JPanel implements Runnable {
         switch (result) {
             case "win":
                 state = States.stop;
-                // score
-                // completion time
-                // OPTIONS: replay, next level, quit (->level panel)
-                // save user data
+                // mở khóa màn mới
+                if(levelPanel.user.getLevel() <3){
+                    levelPanel.user.setLevel();
+                    levelPanel.resetLevelPanel(levelPanel.user);
+                }
+                //lưu điêm
+                levelPanel.user.setScore(parent.lv, player.score);
+                EndGameDialog winDialog = new EndGameDialog("YOU WIN",parent, player.score, clock.toString(), levelPanel.change );
+                winDialog.setVisible(true);
                 break;
 
             case "lose":
                 state = States.stop;
-                // score
-                // playing time
-                // OPTIONS: replay, quit (-> level panel)
+                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", parent, player.score , clock.toString(), levelPanel.change);
+                loseDialog.setVisible(true);
                 break;
 
             case "uncompleted":
@@ -133,12 +174,29 @@ public class GamePanel extends JPanel implements Runnable {
         // player and monster
         // bomb and item
         // ui
-
+    
         map.draw(g2);
 
         player.draw(g2);
+        
+        drawUI(g2, new MyButton("yes"), screenHeight- 60, 20);
 
         g2.dispose();// save memories
+        
+       
+    }
+
+    void drawUI(Graphics2D g2, MyButton button, int x, int y){
+        //draw button
+        g2.drawImage(button.getIcon().getImage(), x, y, 50,50 ,null);
+
+        //draw score
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Consolas",Font.BOLD,20));
+        g2.drawString("SCORE "+ player.score, 10, y);
+
+        //draw clock
+        g2.drawString(clock.toString(),(DimensionSize.screenWidth - clock.toString().length())/2 , y);
     }
 
     public static class Clock {

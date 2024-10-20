@@ -44,8 +44,8 @@ public class ContinueDialog extends SuperDialog {
             for (int i = 1; i <= A.getLevel(); i++) {
                 currentUser.setScore(i, A.getScoreLv(i));
             }
-            change.contentPane.add(new LevelPanel(currentUser, change), "Panel 3");
-            change.cardLayout.show(change.contentPane, "Panel 3");
+            change.contentPane.add(new LevelPanel(currentUser, change), "level");
+            change.cardLayout.show(change.contentPane, "level");
         });
     }
 
