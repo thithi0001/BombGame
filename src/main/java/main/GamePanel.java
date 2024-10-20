@@ -74,11 +74,11 @@ public class GamePanel extends JPanel implements Runnable {
         addButton();
     }
     public void addButton(){
-        button = new MyButton("yes");
-        button.setLocateButton(screenHeight - 60, 20);
+        button = new MyButton("pause");
+        button.setLocateButton(screenHeight - 60, 10);
         this.add(button);
         button.addActionListener(e -> {
-            endGame("win");
+            endGame("uncompleted");
         });
     }
 
@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
         
-        drawUI(g2, new MyButton("yes"), screenHeight- 60, 20);
+        drawUI(g2, new MyButton("pause"), screenHeight- 60, 20);
 
         g2.dispose();// save memories
         
@@ -190,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     void drawUI(Graphics2D g2, MyButton button, int x, int y){
         //draw button
-        g2.drawImage(button.getIcon().getImage(), x, y, 50,50 ,null);
+        g2.drawImage(button.getIcon().getImage(), x, 0, 50,50 ,null);
 
         //draw score
         g2.setColor(Color.BLACK);

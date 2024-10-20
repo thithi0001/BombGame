@@ -6,21 +6,22 @@ import javax.swing.*;
 import MenuSetUp.ChangePanel;
 import MenuSetUp.LevelGameFrame;
 // import MenuSetUp.MyButton;
+import MenuSetUp.MyButton;
 
 public class EndGameDialog extends SuperDialog {
-    public JButton next ,restart , quit; 
+    public MyButton next ,restart , quit; 
     public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change){
         super(parent);
         setTitle(title);
 
-        next = new JButton("next");
+        next = new MyButton("next");
         next.addActionListener(e ->{
             LevelGameFrame nextLevel = new LevelGameFrame(parent.lv + 1, parent.levelPanel);
             parent.setVisible(false);
             nextLevel.setVisible(true);
         });
 
-        restart = new JButton("restart");
+        restart = new MyButton("restart");
         restart.addActionListener(e -> {
             setVisible(false);
             parent.setVisible(false);
@@ -30,7 +31,7 @@ public class EndGameDialog extends SuperDialog {
             // newParent.gamePanel.startGameThread();
         });
 
-        quit = new JButton("quit");
+        quit = new MyButton("level");
         quit.addActionListener(e -> {
             parent.setVisible(false);
             change.frame.setVisible(true);

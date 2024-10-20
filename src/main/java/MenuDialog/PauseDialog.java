@@ -5,29 +5,28 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import MenuSetUp.LevelGameFrame;
+import MenuSetUp.MyButton;
 import main.GamePanel;
 
 
 public class PauseDialog extends SuperDialog {
-    public JButton resume;
 
     public PauseDialog(LevelGameFrame parent) {
         super(parent);
         setTitle("PAUSE");
 
-        resume = new JButton("resume");
+        MyButton resume = new MyButton("resume");
         resume.addActionListener(e -> {
             setVisible(false);
             parent.gamePanel.state = GamePanel.States.playing;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
-            // newParent.gamePanel.setParentFrame(newParent);
-            newParent.setTitle("new Parent");
-            
+ 
             parent.setVisible(false);
             newParent.setVisible(true);
         });
 
-        JButton restart = new JButton("restart");
+
+        MyButton restart = new MyButton("bigRestart");
         restart.addActionListener(e -> {
             setVisible(false);
             parent.setVisible(false);
@@ -37,7 +36,7 @@ public class PauseDialog extends SuperDialog {
             // newParent.gamePanel.startGameThread();
         });
 
-        JButton quit = new JButton("quit");
+        MyButton quit = new MyButton("exit");
         quit.addActionListener(e -> {
             parent.setVisible(false);
             parent.levelPanel.change.frame.setVisible(true);
@@ -50,7 +49,7 @@ public class PauseDialog extends SuperDialog {
     void Content(JButton resume, JButton quit, JButton restart) {
         JPanel content = new JPanel();
         content.setSize(150, 250);
-        content.setLocation((500 - 150) / 2, 150);
+        content.setLocation((500 - 150) / 2, 125);
         content.setOpaque(false);
         content.setLayout(new GridLayout(3, 1));
         content.add(resume);
