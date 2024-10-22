@@ -44,4 +44,5 @@ public class ReplaceDialog extends JDialog {
 
         getContentPane().add(button, BorderLayout.SOUTH);
     }
+
 }
