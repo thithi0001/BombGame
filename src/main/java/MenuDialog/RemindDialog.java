@@ -10,6 +10,7 @@ import MenuSetUp.MyButton;
 
 import java.awt.*;
 
+import res.LoadResource;
 import userClass.UserList;
 
 public class RemindDialog extends JDialog {
@@ -46,7 +47,7 @@ public class RemindDialog extends JDialog {
         message.setText("Do you want " + note + "?");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(new Font("Courier New", Font.BOLD, 20));
+        message.setFont(LoadResource.Courier_New_Bold_20);
         getContentPane().add(message);
     }
 }

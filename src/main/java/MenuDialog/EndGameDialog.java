@@ -6,6 +6,7 @@ import javax.swing.*;
 import MenuSetUp.ChangePanel;
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.MyButton;
+import res.LoadResource;
 
 public class EndGameDialog extends SuperDialog {
     public MyButton next, restart, quit;
@@ -55,7 +56,7 @@ public class EndGameDialog extends SuperDialog {
         labelPanel.setSize(500, 520);
         labelPanel.setLocation(10, 0);
 
-        Font font = new Font("Courier New", Font.BOLD, 20);
+        Font font = LoadResource.Courier_New_Bold_20;
         JLabel nameLabel = new JLabel(name);
         nameLabel.setFont(font);
         nameLabel.setSize(150, 30);

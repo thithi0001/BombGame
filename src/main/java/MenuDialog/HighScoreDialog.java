@@ -7,6 +7,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 import MenuSetUp.MyButton;
+import res.LoadResource;
 import userClass.User;
 import userClass.UserList;
 
@@ -58,14 +59,14 @@ public class HighScoreDialog extends SuperDialog {
             if (userList.list.get(i).getScore() == 0) break;
             JLabel name = new JLabel();
             name.setText(userList.list.get(i).getUserName());
-            name.setFont(new Font("Courier New", Font.BOLD, 20));
+            name.setFont(LoadResource.Courier_New_Bold_20);
             content.add(name);
 
             Border border = new BevelBorder(1);
             JLabel score = new JLabel();
             score.setText(" " + userList.list.get(i).getScore());
             score.setBorder(border);
-            score.setFont(new Font("Courier New", Font.BOLD, 20));
+            score.setFont(LoadResource.Courier_New_Bold_20);
             content.add(score);
         }
         content.setLayout(new GridLayout(5, 2, 10, 10));

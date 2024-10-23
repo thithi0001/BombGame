@@ -1,12 +1,12 @@
 package MenuDialog;
 
-import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import MenuSetUp.MyButton;
+import res.LoadResource;
 
 
 public class NewGameDialog extends SuperDialog {
@@ -34,14 +34,14 @@ public class NewGameDialog extends SuperDialog {
 
     void setLabel() {
         JLabel label = new JLabel("Enter name :");
-        label.setFont(new Font("Courier New", Font.BOLD, 20));
+        label.setFont(LoadResource.Courier_New_Bold_20);
         label.setSize(150, 30);
         label.setLocation((500 - 350) / 2, 180);
 
         textField = new JTextField();
         textField.setSize(200, 30);
         textField.setLocation((500 - 350) / 2 + 150, 180);
-        textField.setFont(new Font("Courier New", Font.BOLD, 20));
+        textField.setFont(LoadResource.Courier_New_Bold_20);
         textField.setOpaque(true);
         textField.setBorder(null);
 

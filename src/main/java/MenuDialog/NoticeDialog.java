@@ -2,13 +2,13 @@ package MenuDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import MenuSetUp.MyButton;
+import res.LoadResource;
 
 public class NoticeDialog extends JDialog {
     public NoticeDialog(JFrame parent) {
@@ -31,7 +31,7 @@ public class NoticeDialog extends JDialog {
         message.setText("Please enter Player's name ");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(new Font("Courier New", Font.BOLD, 20));
+        message.setFont(LoadResource.Courier_New_Bold_20);
         getContentPane().add(message);
     }
 }

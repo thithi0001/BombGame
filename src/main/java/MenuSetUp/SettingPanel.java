@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import main.Main;
+import res.LoadResource;
 
 public class SettingPanel extends JPanel {
     MyButton back;
@@ -23,7 +24,7 @@ public class SettingPanel extends JPanel {
         //TITLE PANEL
         JLabel setting = new JLabel("SETTING");
         setting.setSize(235, 100);
-        setting.setFont(new Font("Courier New", Font.BOLD, 38));
+        setting.setFont(LoadResource.Courier_New_Bold_38);
         setting.setLocation((DimensionSize.screenWidth - 150) / 2, 20);
         add(setting);
 
@@ -68,8 +69,7 @@ public class SettingPanel extends JPanel {
         musicButton.addActionListener((e) -> {
             music.Music = !music.Music;
             //set icon
-            musicButton.icon = music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
-                    : new ImageIcon(Main.res + "/button/musicOffButton.png");
+            musicButton.icon = music.Music ? LoadResource.musicOnBtnIcon : LoadResource.musicOffBtnIcon;
             music.checkVolume();
 
             //slider unmoved
@@ -86,8 +86,7 @@ public class SettingPanel extends JPanel {
         seButton.addActionListener((e) -> {
             Sound.SE = !Sound.SE;
             //set icon
-            seButton.icon = Sound.SE ? new ImageIcon(Main.res + "/button/soundButton.png")
-                    : new ImageIcon(Main.res + "/button/soundOffButton.png");
+            seButton.icon = Sound.SE ? LoadResource.soundOnBtnIcon : LoadResource.soundOffBtnIcon;
 
             //slider unmoved
             SESlider.slider.setEnabled(Sound.SE);

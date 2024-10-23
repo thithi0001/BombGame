@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 
 import MenuDialog.RemindDialog;
 import main.Main;
+import res.LoadResource;
 import userClass.User;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.awt.Font;
 
 public class LevelPanel extends JPanel {
     MyButton back;
@@ -41,7 +41,7 @@ public class LevelPanel extends JPanel {
         // SET LABEL
         JLabel lv = new JLabel("LEVEL");
         lv.setSize(200, 100);
-        lv.setFont(new Font("Courier New", Font.BOLD, 38));
+        lv.setFont(LoadResource.Courier_New_Bold_38);
         lv.setLocation((DimensionSize.screenWidth - 130) / 2, 20);
         add(lv);
 

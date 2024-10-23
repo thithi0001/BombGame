@@ -1,10 +1,9 @@
 package MenuDialog;
 
 import javax.swing.*;
-import java.awt.*;
 
 import MenuSetUp.MyButton;
-import main.Main;
+import res.LoadResource;
 
 public class SuperDialog extends JDialog {
     public SuperDialog(JFrame parent) {
@@ -19,7 +18,7 @@ public class SuperDialog extends JDialog {
     public void setBackground() {
         Icon background;
         JLabel bg;
-        background = new ImageIcon(Main.res + "/background/dialogBackground.png");
+        background = LoadResource.dialogBackground;
         bg = new JLabel(background);
         bg.setLocation(-5, -15);
         bg.setSize(500, 520);
@@ -28,7 +27,7 @@ public class SuperDialog extends JDialog {
 
     public void setTitle(String Title) {
         JLabel title = new JLabel(Title);
-        title.setFont(new Font("Courier New", Font.BOLD, 30));
+        title.setFont(LoadResource.Courier_New_Bold_30);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
         title.setSize(200, 30);

@@ -5,6 +5,8 @@ import main.UtilityTool;
 import tile.Tile;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
@@ -16,6 +18,19 @@ public class LoadResource {
     public static HashMap<String, BufferedImage> itemImgMap = new HashMap<>();
     public static HashMap<String, Integer> itemPointMap = new HashMap<>();
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
+
+    // font
+    public static Font Courier_New_Bold_20 = new Font("Courier New", Font.BOLD, 20);
+    public static Font Courier_New_Bold_30 = new Font("Courier New", Font.BOLD, 30);
+    public static Font Courier_New_Bold_38 = new Font("Courier New", Font.BOLD, 38);
+    public static Font Courier_New_Italic_16 = new Font("Courier New", Font.ITALIC, 16);
+
+    // image icon
+    public static ImageIcon musicOnBtnIcon = new ImageIcon(Main.res + "/button/musicButton.png");
+    public static ImageIcon musicOffBtnIcon = new ImageIcon(Main.res + "/button/musicOffButton.png");
+    public static ImageIcon soundOnBtnIcon = new ImageIcon(Main.res + "/button/soundButton.png");
+    public static ImageIcon soundOffBtnIcon = new ImageIcon(Main.res + "/button/soundOffButton.png");
+    public static ImageIcon dialogBackground = new ImageIcon(Main.res + "/background/dialogBackground.png");
 
     // tiles
     public static Tile[] tiles = new Tile[10];

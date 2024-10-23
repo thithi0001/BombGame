@@ -6,6 +6,7 @@ import java.awt.Font;
 import javax.swing.*;
 
 import MenuSetUp.MyButton;
+import res.LoadResource;
 
 public class ReplaceDialog extends JDialog {
     public MyButton okButton;
@@ -32,7 +33,7 @@ public class ReplaceDialog extends JDialog {
         message.setText("<html>Player's name has existed.<br>Do you want to replace it?</html>");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(new Font("Courier New", Font.BOLD, 20));
+        message.setFont(LoadResource.Courier_New_Bold_20);
         getContentPane().add(message);
     }
 
