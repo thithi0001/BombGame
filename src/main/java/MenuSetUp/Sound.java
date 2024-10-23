@@ -104,7 +104,7 @@ public class Sound {
             writer.close();
 
         } catch (Exception e) {
-            System.out.println("Enrrol save setting file");
+            System.out.println("Errol save setting file");
         }
     }
 }

@@ -90,12 +90,12 @@ public class GamePanel extends JPanel implements Runnable {
         // result: win, lose, uncompleted
         switch (result) {
             case "win":
-                // UNCLOCK NEW LEVEL
+                // UNLOCK NEW LEVEL
                 if (levelPanel.user.getLevel() < 3) {
                     levelPanel.user.setLevel(parent.lv + 1);
                     levelPanel.resetLevelPanel(levelPanel.user);
                 }
-                //READ SCORE
+                // READ SCORE
                 levelPanel.user.setScore(parent.lv, player.score);
                 EndGameDialog winDialog = new EndGameDialog("YOU WIN", parent, player.score, clock.toString(), levelPanel.change);
                 winDialog.setVisible(true);

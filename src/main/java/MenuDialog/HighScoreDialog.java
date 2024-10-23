@@ -32,7 +32,7 @@ public class HighScoreDialog extends SuperDialog {
             }
         });
 
-        setTitle("HIGHSOCRE");
+        setTitle("HIGH SCORE");
         setContent();
 
         //SET BACK BUTTON

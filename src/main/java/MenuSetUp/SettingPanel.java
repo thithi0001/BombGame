@@ -72,7 +72,7 @@ public class SettingPanel extends JPanel {
                     : new ImageIcon(Main.res + "/button/musicOffButton.png");
             music.checkVolume();
 
-            //slider unmovied
+            //slider unmoved
             musicSlider.slider.setEnabled(music.Music);
         });
     }

@@ -46,17 +46,17 @@ public class ChangePanel {
     public void actionChange() {
         ReplaceDialog replace = new ReplaceDialog(frame);
 
-        // SET UP DIALOG NEWGAME
+        // SET UP DIALOG NEW GAME
         newUserAction NA = new newUserAction(start.newUser, this, replace);
         start.newUser.okButton.addActionListener(NA);
         start.newUser.textField.addActionListener(NA);
 
 
-        //SET UP DIALOG REPLACE IF USER HAS EXIST
+        //SET UP DIALOG REPLACE IF USER HAS EXISTED
         replace.okButton.addActionListener(new replaceAction(this, replace));
 
 
-        //SET UP OTHER BUTTON IN STARTPANEL
+        //SET UP OTHER BUTTON IN START PANEL
 
         start.score.addActionListener(e -> {
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
@@ -79,7 +79,7 @@ public class ChangePanel {
                 menu.music.saveSetting(menu.music);
             });
         });
-        // // SET UP MENUPANEL BUTTON
+        // // SET UP MENU PANEL BUTTON
         menu.start.addActionListener((e) -> cardLayout.next(contentPane));
 
         menu.quit.addActionListener((e) -> {
@@ -129,8 +129,8 @@ class newUserAction implements ActionListener {
                 User A = new userClass.User(x);
                 newUser.setVisible(false);
                 newUser.textField.setText("");
-                change.contentPane.add(new LevelPanel(A, change), "newlevel");
-                change.cardLayout.show(change.contentPane, "newlevel");
+                change.contentPane.add(new LevelPanel(A, change), "newLevel");
+                change.cardLayout.show(change.contentPane, "newLevel");
             }
         }
 

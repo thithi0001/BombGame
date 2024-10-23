@@ -19,7 +19,7 @@ public class MySlider {
         slider.setSize(width - 55, height);
 
 
-        //SET JLABEL
+        //SET LABEL
         nameSlider = new JLabel(name);
         nameSlider.setSize(60, 35);
         nameSlider.setFont(new Font("Courier New", Font.ITALIC, 16));
