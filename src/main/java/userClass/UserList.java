@@ -22,7 +22,8 @@ public class UserList {
             }
             in.close();
         } catch (Exception e) {
-            e.printStackTrace();
+//            System.out.println("Errol is here");
+//            e.printStackTrace();
         }
         size = list.size();
     }
