@@ -22,6 +22,7 @@ public class UserList {
             }
             in.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         size = list.size();
     }

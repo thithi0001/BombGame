@@ -58,8 +58,7 @@ public class User {
     }
 
     public static User getUser(Scanner in) {
-        User re = new User();
-        re = new User(in.next());
+        User re = new User(in.next());
         re.level = in.nextInt();
         for (int i = 0; i < re.level; i++) {
             re.lvScore[i] = in.nextInt();

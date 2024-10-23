@@ -21,7 +21,7 @@ public class HighScoreDialog extends SuperDialog {
         this.userList = userList;
 
         //SORT BY SCORE IN DESCENDING
-        Collections.sort(this.userList.list, new Comparator<User>() {
+        this.userList.list.sort(new Comparator<>() {
             @Override
             public int compare(User o1, User o2) {
                 if (o1.getScore() < o2.getScore()) return 1;

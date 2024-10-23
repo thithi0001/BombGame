@@ -75,9 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
         button = new MyButton("pause");
         button.setLocateButton(screenHeight - 60, 10);
         this.add(button);
-        button.addActionListener(e -> {
-            endGame("uncompleted");
-        });
+        button.addActionListener(e -> endGame("uncompleted"));
     }
 
     public void startGameThread() {
@@ -184,8 +182,6 @@ public class GamePanel extends JPanel implements Runnable {
         drawUI(g2, new MyButton("pause"), screenHeight - 60, 20);
 
         g2.dispose();// save memories
-
-
     }
 
     void drawUI(Graphics2D g2, MyButton button, int x, int y) {
