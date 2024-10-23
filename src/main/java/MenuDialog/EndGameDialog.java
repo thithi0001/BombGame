@@ -5,7 +5,6 @@ import javax.swing.*;
 
 import MenuSetUp.ChangePanel;
 import MenuSetUp.LevelGameFrame;
-// import MenuSetUp.MyButton;
 import MenuSetUp.MyButton;
 
 public class EndGameDialog extends SuperDialog {
@@ -28,7 +27,6 @@ public class EndGameDialog extends SuperDialog {
             parent.gamePanel.gameThread = null;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
             newParent.setVisible(true);
-            // newParent.gamePanel.startGameThread();
         });
 
         quit = new MyButton("level");

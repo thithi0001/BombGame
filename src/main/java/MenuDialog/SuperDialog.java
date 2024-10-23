@@ -16,7 +16,6 @@ public class SuperDialog extends JDialog {
 
     }
 
-
     public void setBackground() {
         Icon background;
         JLabel bg;
@@ -26,7 +25,6 @@ public class SuperDialog extends JDialog {
         bg.setSize(500, 520);
         getContentPane().add(bg);
     }
-
 
     public void setTitle(String Title) {
         JLabel title = new JLabel(Title);

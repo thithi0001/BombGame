@@ -11,14 +11,12 @@ public class MyButton extends JButton {
     int width, height;
     ImageIcon icon;
     public MyButton(String name) {
-        icon = new ImageIcon(Main.res + nameFileIcon(name));
-        
+        icon = new ImageIcon(Main.res + nameFileIcon(name));        
         width = icon.getIconWidth();
         height = icon.getIconHeight();
 
-        this.setIcon(icon);//them icon cho button
-        this.setContentAreaFilled(false);//lam background cua button trong suot
-        this.setBorder(null);//xoa border
+        this.setContentAreaFilled(false);//
+        this.setBorder(null);//delete button border
     }
 
     public String nameFileIcon(String name) {

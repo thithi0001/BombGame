@@ -33,7 +33,6 @@ public class PauseDialog extends SuperDialog {
             parent.gamePanel.gameThread = null;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel); 
             newParent.setVisible(true);
-            // newParent.gamePanel.startGameThread();
         });
 
         MyButton quit = new MyButton("exit");

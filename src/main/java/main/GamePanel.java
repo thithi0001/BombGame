@@ -60,7 +60,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.map = new Map(this, mapFileName);
         this.setLayout(null);
         addButton();
-        // this.add(new Button("button"));
     }
     public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -93,12 +92,12 @@ public class GamePanel extends JPanel implements Runnable {
         switch (result) {
             case "win":
                 state = States.stop;
-                // mở khóa màn mới
+                // UNCLOCK NEW LEVEL
                 if(levelPanel.user.getLevel() <3){
                     levelPanel.user.setLevel(parent.lv+1);
                     levelPanel.resetLevelPanel(levelPanel.user);
                 }
-                //lưu điêm
+                //READ SCORE
                 levelPanel.user.setScore(parent.lv, player.score);
                 EndGameDialog winDialog = new EndGameDialog("YOU WIN",parent, player.score, clock.toString(), levelPanel.change );
                 winDialog.setVisible(true);

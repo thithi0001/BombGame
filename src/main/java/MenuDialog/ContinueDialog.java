@@ -48,15 +48,5 @@ public class ContinueDialog extends SuperDialog {
             change.cardLayout.show(change.contentPane, "level");
         });
     }
-
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ChangePanel a = new ChangePanel(window);
-        ContinueDialog x = new ContinueDialog(window, a);
-        window.add(x);
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-    }
 }
 
