@@ -14,6 +14,7 @@ public class Item extends Entity {
     public BufferedImage itemImg = null;
 
     public enum States {hidden, isPickedUp, isHit, shown}
+
     public States state = States.hidden;
 
     public Item(GamePanel gp, String name) {

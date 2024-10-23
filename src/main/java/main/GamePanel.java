@@ -29,7 +29,7 @@ import static MenuSetUp.DimensionSize.screenWidth;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    public boolean isPausing  = false;
+    public boolean isPausing = false;
 
     // FPS
     public int FPS = 60;
@@ -91,8 +91,8 @@ public class GamePanel extends JPanel implements Runnable {
         switch (result) {
             case "win":
                 // UNCLOCK NEW LEVEL
-                if(levelPanel.user.getLevel() <3){
-                    levelPanel.user.setLevel(parent.lv+1);
+                if (levelPanel.user.getLevel() < 3) {
+                    levelPanel.user.setLevel(parent.lv + 1);
                     levelPanel.resetLevelPanel(levelPanel.user);
                 }
                 //READ SCORE
@@ -240,6 +240,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Thread getGameThread() {
         return gameThread;
     }
+
     public void setGameThread(Thread thread) {
         gameThread = thread;
     }

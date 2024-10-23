@@ -68,7 +68,7 @@ public class SettingPanel extends JPanel {
         musicButton.addActionListener((e) -> {
             music.Music = !music.Music;
             //set icon
-            musicButton.icon =music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
+            musicButton.icon = music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
                     : new ImageIcon(Main.res + "/button/musicOffButton.png");
             music.checkVolume();
 
