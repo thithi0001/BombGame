@@ -161,6 +161,7 @@ public class Player extends Entity {
     @Override
     public void beingHit() {
         super.beingHit();
+        isDead = true;
     }
 
     public void addMoreBombs(int n) {

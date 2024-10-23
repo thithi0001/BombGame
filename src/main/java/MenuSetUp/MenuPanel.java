@@ -24,7 +24,7 @@ public class MenuPanel extends JPanel {
         quit = new MyButton("quit");
 
         //thiet lap vi tri
-        start.setLocateButton(width / 2 - 71,(DimensionSize.maxScreenCol - 4) * DimensionSize.tileSize);
+        start.setLocateButton(width / 2 - 71, (DimensionSize.maxScreenCol - 4) * DimensionSize.tileSize);
         quit.setLocateButton(width / 2 - 71, (DimensionSize.maxScreenCol - 2) * DimensionSize.tileSize);
 
         //them button vao panel

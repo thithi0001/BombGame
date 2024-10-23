@@ -10,9 +10,10 @@ import javax.swing.ImageIcon;
 public class MyButton extends JButton {
     int width, height;
     ImageIcon icon;
+
     public MyButton(String name) {
         icon = new ImageIcon(Main.res + nameFileIcon(name));
-        
+
         width = icon.getIconWidth();
         height = icon.getIconHeight();
 
@@ -24,9 +25,11 @@ public class MyButton extends JButton {
     public String nameFileIcon(String name) {
         return "/button/" + name + "Button.png";
     }
-    public ImageIcon getIcon(){
+
+    public ImageIcon getIcon() {
         return icon;
     }
+
     public void setLocateButton(int x, int y) {
         setBounds(x, y, width, height);
     }

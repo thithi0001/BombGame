@@ -18,7 +18,6 @@ import MenuSetUp.LevelGameFrame;
 import MenuSetUp.LevelPanel;
 import MenuSetUp.MyButton;
 
-
 import bomb.Bomb;
 import entity.Item;
 import entity.Player;
@@ -30,10 +29,7 @@ import static MenuSetUp.DimensionSize.screenWidth;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    public static 
-    enum States {playing, stop, pausing}
-
-    public States state = States.playing;
+    public boolean isPausing  = false;
 
     // FPS
     public int FPS = 60;
@@ -47,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileManager = new TileManager(this);
     public Map map;
     KeyHandler keyH = new KeyHandler();
-    public Thread gameThread;
+    private Thread gameThread;
     public Player player = new Player(this, keyH);
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
@@ -57,12 +53,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
+
         this.map = new Map(this, mapFileName);
         this.setLayout(null);
         addButton();
-        // this.add(new Button("button"));
     }
-    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level){
+
+    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
@@ -73,7 +70,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(null);
         addButton();
     }
-    public void addButton(){
+
+    public void addButton() {
         button = new MyButton("pause");
         button.setLocateButton(screenHeight - 60, 10);
         this.add(button);
@@ -92,33 +90,27 @@ public class GamePanel extends JPanel implements Runnable {
         // result: win, lose, uncompleted
         switch (result) {
             case "win":
-                state = States.stop;
                 // mở khóa màn mới
-                if(levelPanel.user.getLevel() <3){
-                    levelPanel.user.setLevel(parent.lv+1);
+                if (levelPanel.user.getLevel() < 3) {
+                    levelPanel.user.setLevel(parent.lv + 1);
                     levelPanel.resetLevelPanel(levelPanel.user);
                 }
                 //lưu điêm
                 levelPanel.user.setScore(parent.lv, player.score);
-                EndGameDialog winDialog = new EndGameDialog("YOU WIN",parent, player.score, clock.toString(), levelPanel.change );
+                EndGameDialog winDialog = new EndGameDialog("YOU WIN", parent, player.score, clock.toString(), levelPanel.change);
                 winDialog.setVisible(true);
                 break;
 
             case "lose":
-                state = States.stop;
-                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", parent, player.score , clock.toString(), levelPanel.change);
+                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", parent, player.score, clock.toString(), levelPanel.change);
                 loseDialog.setVisible(true);
                 break;
 
             case "uncompleted":
-                state = States.pausing;
+                isPausing = true;
                 PauseDialog pauseDialog = new PauseDialog(parent);
                 pauseDialog.setVisible(true);
                 break;
-        }
-
-        if (state == States.stop) {
-            gameThread = null;
         }
     }
 
@@ -133,7 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
         int drawCount = 0;
 
         while (gameThread != null) {
-            if (state == States.pausing) continue;
+            if (isPausing) continue;
 
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
@@ -159,10 +151,10 @@ public class GamePanel extends JPanel implements Runnable {
              * if isWin:
              *      endGame("win");
              */
-            /**
-             * if player isDead:
-             *      endGame("lose")
-             */
+
+            if (player.isDead) {
+                endGame("lose");
+            }
         }
     }
 
@@ -184,29 +176,29 @@ public class GamePanel extends JPanel implements Runnable {
         // player and monster
         // bomb and item
         // ui
-    
+
         map.draw(g2);
 
         player.draw(g2);
-        
-        drawUI(g2, new MyButton("pause"), screenHeight- 60, 20);
+
+        drawUI(g2, new MyButton("pause"), screenHeight - 60, 20);
 
         g2.dispose();// save memories
-        
-       
+
+
     }
 
-    void drawUI(Graphics2D g2, MyButton button, int x, int y){
+    void drawUI(Graphics2D g2, MyButton button, int x, int y) {
         //draw button
-        g2.drawImage(button.getIcon().getImage(), x, 0, 50,50 ,null);
+        g2.drawImage(button.getIcon().getImage(), x, 0, 50, 50, null);
 
         //draw score
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Consolas",Font.BOLD,20));
-        g2.drawString("SCORE "+ player.score, 10, y);
+        g2.setFont(new Font("Consolas", Font.BOLD, 20));
+        g2.drawString("SCORE " + player.score, 10, y);
 
         //draw clock
-        g2.drawString(clock.toString(),(DimensionSize.screenWidth - clock.toString().length())/2 , y);
+        g2.drawString(clock.toString(), (DimensionSize.screenWidth - clock.toString().length()) / 2, y);
     }
 
     public static class Clock {
@@ -240,8 +232,16 @@ public class GamePanel extends JPanel implements Runnable {
             return out;
         }
     }
-    public void setParentFrame(LevelGameFrame newParent){
+
+    public void setParentFrame(LevelGameFrame newParent) {
         parent = newParent;
+    }
+
+    public Thread getGameThread() {
+        return gameThread;
+    }
+    public void setGameThread(Thread thread) {
+        gameThread = thread;
     }
 }
 

@@ -32,7 +32,8 @@ public class MySlider {
         slider.setLocation(x + 60, y);
         nameSlider.setLocation(x, y - 5);
     }
-    public void addMySlider(JPanel panel){
+
+    public void addMySlider(JPanel panel) {
         panel.add(slider);
         panel.add(nameSlider);
     }

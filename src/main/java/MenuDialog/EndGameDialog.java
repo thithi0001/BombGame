@@ -1,21 +1,23 @@
 package MenuDialog;
 
-import java.awt.Font;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+import java.awt.Font;
 import javax.swing.*;
 
 import MenuSetUp.ChangePanel;
 import MenuSetUp.LevelGameFrame;
-// import MenuSetUp.MyButton;
 import MenuSetUp.MyButton;
+import main.GamePanel;
 
 public class EndGameDialog extends SuperDialog {
-    public MyButton next ,restart , quit; 
-    public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change){
+    public MyButton next, restart, quit;
+
+    public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change) {
         super(parent);
         setTitle(title);
+        parent.gamePanel.setGameThread(null);
 
         next = new MyButton("next");
-        next.addActionListener(e ->{
+        next.addActionListener(e -> {
             LevelGameFrame nextLevel = new LevelGameFrame(parent.lv + 1, parent.levelPanel);
             parent.setVisible(false);
             nextLevel.setVisible(true);
@@ -25,10 +27,8 @@ public class EndGameDialog extends SuperDialog {
         restart.addActionListener(e -> {
             setVisible(false);
             parent.setVisible(false);
-            parent.gamePanel.gameThread = null;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
             newParent.setVisible(true);
-            // newParent.gamePanel.startGameThread();
         });
 
         quit = new MyButton("level");
@@ -36,11 +36,11 @@ public class EndGameDialog extends SuperDialog {
             parent.setVisible(false);
             change.frame.setVisible(true);
         });
-        if(title == "YOU WIN")
-        addButton(restart, quit, next);
+        if (title.equals("YOU WIN"))
+            addButton(restart, quit, next);
         else addButton(restart, quit);
 
-        String b = String.format("%2d",score);
+        String b = String.format("%2d", score);
 
         getContentPane().add(setLabel("YOUR SCORE", b, 150));
         getContentPane().add(setLabel("TIME", time, 220));
@@ -48,8 +48,7 @@ public class EndGameDialog extends SuperDialog {
         setBackground();
     }
 
-
-    JPanel setLabel(String name, String value, int y){
+    JPanel setLabel(String name, String value, int y) {
         //Panel
         JPanel labelPanel = new JPanel();
         labelPanel.setOpaque(false);
@@ -57,14 +56,12 @@ public class EndGameDialog extends SuperDialog {
         labelPanel.setSize(500, 520);
         labelPanel.setLocation(10, 0);
 
-
         Font font = new Font("Courier New", Font.BOLD, 20);
         JLabel nameLabel = new JLabel(name);
         nameLabel.setFont(font);
-        nameLabel.setSize(150,30);
-        nameLabel.setLocation((500 - 350) / 2 +10, y);
+        nameLabel.setSize(150, 30);
+        nameLabel.setLocation((500 - 350) / 2 + 10, y);
         labelPanel.add(nameLabel);
-
 
         JLabel valueLabel = new JLabel(value);
         valueLabel.setFont(font);
@@ -75,5 +72,4 @@ public class EndGameDialog extends SuperDialog {
 
         return labelPanel;
     }
- 
 }

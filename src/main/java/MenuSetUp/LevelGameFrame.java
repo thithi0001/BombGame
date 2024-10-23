@@ -8,7 +8,8 @@ public class LevelGameFrame extends JFrame {
     public GamePanel gamePanel;
     public int lv;
     public LevelPanel levelPanel;
-    public LevelGameFrame(int lv ,LevelPanel levelPanel) {
+
+    public LevelGameFrame(int lv, LevelPanel levelPanel) {
         new JFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -25,7 +26,8 @@ public class LevelGameFrame extends JFrame {
 
         gamePanel.startGameThread();
     }
-    public LevelGameFrame(int lv ,LevelPanel levelPanel, GamePanel oldGamePanel){
+
+    public LevelGameFrame(int lv, LevelPanel levelPanel, GamePanel oldGamePanel) {
         new JFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -41,7 +43,8 @@ public class LevelGameFrame extends JFrame {
         setLocationRelativeTo(null);
         setVisible(false);
     }
-    public String mapFileNameToString(int lv){
-        return "level_"+lv;
+
+    public String mapFileNameToString(int lv) {
+        return "level_" + lv;
     }
 }
