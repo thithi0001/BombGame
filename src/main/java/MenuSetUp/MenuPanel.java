@@ -23,7 +23,8 @@ public class MenuPanel extends JPanel {
         start = new MyButton("start");
         quit = new MyButton("quit");
 
-        start.setLocateButton(width / 2 - 71,(DimensionSize.maxScreenCol - 4) * DimensionSize.tileSize);
+        //thiet lap vi tri
+        start.setLocateButton(width / 2 - 71, (DimensionSize.maxScreenCol - 4) * DimensionSize.tileSize);
         quit.setLocateButton(width / 2 - 71, (DimensionSize.maxScreenCol - 2) * DimensionSize.tileSize);
 
         add(start);

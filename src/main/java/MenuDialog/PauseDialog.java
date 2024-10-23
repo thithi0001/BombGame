@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.MyButton;
 import main.GamePanel;
@@ -18,9 +19,9 @@ public class PauseDialog extends SuperDialog {
         MyButton resume = new MyButton("resume");
         resume.addActionListener(e -> {
             setVisible(false);
-            parent.gamePanel.state = GamePanel.States.playing;
+            parent.gamePanel.isPausing = false;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
- 
+
             parent.setVisible(false);
             newParent.setVisible(true);
         });
@@ -30,14 +31,15 @@ public class PauseDialog extends SuperDialog {
         restart.addActionListener(e -> {
             setVisible(false);
             parent.setVisible(false);
-            parent.gamePanel.gameThread = null;
-            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel); 
+            parent.gamePanel.setGameThread(null);
+            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
             newParent.setVisible(true);
         });
 
         MyButton quit = new MyButton("exit");
         quit.addActionListener(e -> {
             parent.setVisible(false);
+            parent.gamePanel.setGameThread(null);
             parent.levelPanel.change.frame.setVisible(true);
         });
         Content(resume, quit, restart);

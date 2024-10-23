@@ -24,7 +24,7 @@ public class LevelPanel extends JPanel {
     public LevelPanel(User currentUser, ChangePanel change) {
         setLayout(null);
         this.change = change;
-       
+
         if (currentUser != null) {
             user = currentUser;
         } else user = new User();
@@ -57,29 +57,30 @@ public class LevelPanel extends JPanel {
                 change.cardLayout.previous(change.contentPane);
                 change.menu.music.saveSetting(change.menu.music);
             });
-        });  
+        });
     }
 
+    public void setUser(User a) {
 
-    public void setUser(User a){
-        
     }
-    public void addLevelButton(User a){
+
+    public void addLevelButton(User a) {
         for (int i = 0; i < 3; i++) {
             String x = "level" + (i + 1);
             if (i + 1 <= a.getLevel()) level[i] = new MyButton(x);
 
             else level[i] = new MyButton("levelBlock"); //nếu levelButton bé hơn level -> khóa button;
-            level[i].setLocateButton(((DimensionSize.maxScreenCol - 5) / 2 + i * 2)  * DimensionSize.tileSize
-                                        ,DimensionSize.screenHeight / 2);
+            level[i].setLocateButton(((DimensionSize.maxScreenCol - 5) / 2 + i * 2) * DimensionSize.tileSize
+                    , DimensionSize.screenHeight / 2);
             add(level[i]);
 
         }
     }
 
-    public void actionLevelButton(){
+    public void actionLevelButton() {
+
         for (int i = 0; i < user.getLevel(); i++) {
-            int a = i+1;
+            int a = i + 1;
             if (i < user.getLevel()) {
                 level[i].addActionListener(e -> {
                     LevelGameFrame lv1 = new LevelGameFrame(a, this);
@@ -90,19 +91,20 @@ public class LevelPanel extends JPanel {
         }
     }
 
-    public void resetLevelPanel(User a){
+    public void resetLevelPanel(User a) {
+
         for (int i = 0; i < 3; i++) {
             remove(level[i]); //delete old button
         }
-            //add new button
-            addLevelButton(a);
+        //add new button
+        addLevelButton(a);
 
-            //add action for new button
-            actionLevelButton();
-        
+        //add action for new button
+        actionLevelButton();
+
     }
 
-    void addActionBackButton(){
+    void addActionBackButton() {
         back.addActionListener((event) -> {
             RemindDialog saveGame = new RemindDialog(change.userList, change.frame, "save game ");
             saveGame.setVisible(true);
@@ -122,7 +124,6 @@ public class LevelPanel extends JPanel {
         });
     }
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -131,7 +132,7 @@ public class LevelPanel extends JPanel {
             File a = new File(Main.res + "/background/background.png");
             background = ImageIO.read(a);
             g.drawImage(background, 0, 0, DimensionSize.screenWidth
-                        ,DimensionSize.screenHeight, null);
+                    , DimensionSize.screenHeight, null);
         } catch (Exception e) {
             e.printStackTrace();
         }

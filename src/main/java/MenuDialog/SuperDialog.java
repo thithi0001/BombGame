@@ -45,7 +45,8 @@ public class SuperDialog extends JDialog {
         button.setOpaque(false);
         getContentPane().add(button);
     }
-    public void addButton(JButton button1, JButton button2){
+
+    public void addButton(JButton button1, JButton button2) {
         JPanel button = new JPanel();
         button.add(button1);
         button.add(button2);
@@ -54,7 +55,7 @@ public class SuperDialog extends JDialog {
         button.setOpaque(false);
         getContentPane().add(button);
     }
-    
+
     public void addButton(JButton button1, JButton button2, JButton button3) {
         JPanel button = new JPanel();
         button.add(button1);

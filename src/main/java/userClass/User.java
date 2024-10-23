@@ -24,7 +24,7 @@ public class User {
     }
 
     public void setLevel(int lv) {
-        if(level<lv)
+        if (level < lv)
             level = lv;
     }
 
