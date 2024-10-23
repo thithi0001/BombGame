@@ -60,7 +60,6 @@ public class LevelPanel extends JPanel {
         });
     }
 
-
     public void setUser(User a) {
 
     }
@@ -78,8 +77,8 @@ public class LevelPanel extends JPanel {
         }
     }
 
-
     public void actionLevelButton() {
+
         for (int i = 0; i < user.getLevel(); i++) {
             int a = i + 1;
             if (i < user.getLevel()) {
@@ -92,8 +91,8 @@ public class LevelPanel extends JPanel {
         }
     }
 
-
     public void resetLevelPanel(User a) {
+
         for (int i = 0; i < 3; i++) {
             remove(level[i]); //delete old button
         }
@@ -124,7 +123,6 @@ public class LevelPanel extends JPanel {
             });
         });
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
