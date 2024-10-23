@@ -7,8 +7,6 @@ import javax.swing.JPanel;
 
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.MyButton;
-import main.GamePanel;
-
 
 public class PauseDialog extends SuperDialog {
 

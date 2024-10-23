@@ -6,7 +6,6 @@ import javax.swing.*;
 import MenuSetUp.ChangePanel;
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.MyButton;
-import main.GamePanel;
 
 public class EndGameDialog extends SuperDialog {
     public MyButton next, restart, quit;
