@@ -77,7 +77,6 @@ public class LevelPanel extends JPanel {
         }
     }
 
-
     public void actionLevelButton(){
         for (int i = 0; i < user.getLevel(); i++) {
             int a = i+1;
@@ -90,7 +89,6 @@ public class LevelPanel extends JPanel {
             }
         }
     }
-
 
     public void resetLevelPanel(User a){
         for (int i = 0; i < 3; i++) {

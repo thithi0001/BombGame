@@ -20,8 +20,7 @@ public class NewGameDialog extends SuperDialog {
         okButton = new MyButton("yes");
         MyButton cancelButton = new MyButton("no");
 
-
-        // Thêm các thành phần vào dialog
+        setTitle("NEW GAME");
         setLabel();
         addButton(okButton, cancelButton);
         setBackground();

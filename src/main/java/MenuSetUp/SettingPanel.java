@@ -14,11 +14,9 @@ public class SettingPanel extends JPanel {
     MySlider musicSlider;
     MySlider SESlider;
     public SettingPanel(Sound music) {
-        
         this.music = music;
         setFocusable(false);
         setLayout(null);
-
 
         //TITLE PANEL
         JLabel setting = new JLabel("SETTING");
@@ -32,15 +30,12 @@ public class SettingPanel extends JPanel {
         back.setLocateButton(10, 10);
         add(back);
 
-        //SET SOUND
-        // music.stopMusic();
-
         //SLIDER MUSIC
         musicSlider = new MySlider(250, 25, (int) music.musicVolume, "music");
         musicSlider.setLocateMySlider((DimensionSize.screenWidth - 250) / 2
                                         ,((DimensionSize.maxScreenRow - 4) / 2) * DimensionSize.tileSize);
         musicSlider.addMySlider(this);
-
+        musicSlider.slider.setEnabled(music.Music);
         musicSlider.slider.addChangeListener((e) -> {
             music.musicVolume = musicSlider.slider.getValue();
             music.controlMusic.setValue(music.musicVolume);
@@ -51,7 +46,7 @@ public class SettingPanel extends JPanel {
         SESlider.setLocateMySlider((DimensionSize.screenWidth - 250) / 2
                                     ,((DimensionSize.maxScreenRow - 4) / 2 + 1) * DimensionSize.tileSize);
         SESlider.addMySlider(this);
-        
+        SESlider.slider.setEnabled(Sound.SE);
         SESlider.slider.addChangeListener((e) -> {
             Sound.SEVolume = SESlider.slider.getValue();
         });
@@ -70,11 +65,11 @@ public class SettingPanel extends JPanel {
         musicButton.addActionListener((e) -> {
             music.Music = !music.Music;
             //set icon
-            musicButton.setIcon(music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
-                    : new ImageIcon(Main.res + "/button/musicOffButton.png"));
+            musicButton.icon =music.Music ? new ImageIcon(Main.res + "/button/musicButton.png")
+                    : new ImageIcon(Main.res + "/button/musicOffButton.png");
             music.checkVolume();
 
-            //enabled slider(làm slider có hoặc khong thể di chuyển)
+            //slider unmovied
             musicSlider.slider.setEnabled(music.Music);
         });
     }
@@ -88,10 +83,10 @@ public class SettingPanel extends JPanel {
         seButton.addActionListener((e) -> {
             Sound.SE = !Sound.SE;
             //set icon
-            seButton.setIcon(Sound.SE ? new ImageIcon(Main.res + "/button/soundButton.png")
-                    : new ImageIcon(Main.res + "/button/soundOffButton.png"));
+            seButton.icon = Sound.SE ? new ImageIcon(Main.res + "/button/soundButton.png")
+                    : new ImageIcon(Main.res + "/button/soundOffButton.png");
 
-            //enabled slider(làm slider có hoặc khong thể di chuyển)
+            //slider unmoved
             SESlider.slider.setEnabled(Sound.SE);
         });
     }
