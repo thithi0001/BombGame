@@ -48,6 +48,7 @@ public class NormalBomb extends Bomb {
             spriteCounter = 0;
             spriteNum = 0;
             spriteTime = 1;
+            explosionSound.play();
             flame = new Flame(this, x, y, flameLength, explosion.length * (1 + spriteTime));
             return;
         }

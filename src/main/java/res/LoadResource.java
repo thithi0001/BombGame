@@ -1,5 +1,6 @@
 package res;
 
+import MenuSetUp.Sound;
 import main.Main;
 import main.UtilityTool;
 import tile.Tile;
@@ -18,6 +19,9 @@ public class LoadResource {
     public static HashMap<String, BufferedImage> itemImgMap = new HashMap<>();
     public static HashMap<String, Integer> itemPointMap = new HashMap<>();
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
+
+    // sound
+    public static Sound explosionSound = new Sound("small_explosion");
 
     // font
     public static Font Courier_New_Bold_20 = new Font("Courier New", Font.BOLD, 20);

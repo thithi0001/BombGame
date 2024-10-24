@@ -71,7 +71,7 @@ public class Player extends Entity {
         gp.bombs.addAll(bombs);
         if (keyH.enterPressed && bombs.size() < maxBombs
                 && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
-            bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
+            placingBomb();
             timer = cooldown;
         }
 
@@ -134,9 +134,7 @@ public class Player extends Entity {
 
         g2.drawImage(sprites[spriteNum], x, y, null);
 
-        for (NormalBomb bomb : bombs) {
-            bomb.draw(g2);
-        }
+        bombs.forEach(bomb -> bomb.draw(g2));
     }
 
     public void move() {
@@ -174,5 +172,9 @@ public class Player extends Entity {
 
     public void addScore(int point) {
         score += point;
+    }
+
+    public void placingBomb() {
+        bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
     }
 }

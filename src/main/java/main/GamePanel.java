@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import MenuDialog.EndGameDialog;
@@ -36,7 +35,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Clock clock = new Clock(this);
 
     public LevelGameFrame parent;
-    public JLabel scoreLabel;
     public MyButton button;
     public LevelPanel levelPanel;
 
@@ -140,8 +138,8 @@ public class GamePanel extends JPanel implements Runnable {
             if (timer >= 1e9) {
                 // System.out.println("FPS: " + drawCount);
                 clock.update();
-                System.out.println("SCORE: " + player.score);
-                System.out.println(clock.toString());
+//                System.out.println("SCORE: " + player.score);
+//                System.out.println(clock.toString());
                 drawCount = 0;
                 timer = 0;
             }

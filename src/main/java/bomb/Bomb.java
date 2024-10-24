@@ -1,10 +1,12 @@
 package bomb;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import MenuSetUp.Sound;
 import entity.Entity;
 import main.GamePanel;
+import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
@@ -42,17 +44,24 @@ public class Bomb {
     public Flame flame;
     public int flameLength = 1;
 
+    // SOUND
+    public Sound explosionSound = LoadResource.explosionSound;
+
     public Bomb() {
 
     }
 
     public int col() {
-
         return x / tileSize;
     }
 
     public int row() {
-
         return y / tileSize;
+    }
+
+    public void update() {
+    }
+
+    public void draw(Graphics2D g2) {
     }
 }
