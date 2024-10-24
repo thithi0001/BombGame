@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -20,6 +19,7 @@ import MenuSetUp.MyButton;
 import bomb.Bomb;
 import entity.Item;
 import entity.Player;
+import res.LoadResource;
 import tile.Map;
 import tile.TileManager;
 
@@ -194,7 +194,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         //draw score
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Consolas", Font.BOLD, 20));
+        g2.setFont(LoadResource.Consolas_Bold_20);
         g2.drawString("SCORE " + player.score, 10, y);
 
         //draw clock

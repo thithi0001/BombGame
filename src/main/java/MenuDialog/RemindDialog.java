@@ -11,7 +11,6 @@ import MenuSetUp.MyButton;
 import java.awt.*;
 
 import res.LoadResource;
-import userClass.UserList;
 
 public class RemindDialog extends JDialog {
     public MyButton okButton;

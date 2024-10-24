@@ -28,6 +28,7 @@ public class LoadResource {
     public static Font Courier_New_Bold_30 = new Font("Courier New", Font.BOLD, 30);
     public static Font Courier_New_Bold_38 = new Font("Courier New", Font.BOLD, 38);
     public static Font Courier_New_Italic_16 = new Font("Courier New", Font.ITALIC, 16);
+    public static Font Consolas_Bold_20 = new Font("Consolas", Font.BOLD, 20);
 
     // image icon
     public static ImageIcon musicOnBtnIcon = new ImageIcon(Main.res + "/button/musicButton.png");
