@@ -1,7 +1,6 @@
 package entity;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -49,8 +48,8 @@ public class Player extends Entity {
 
     void setDefaultValues() {
 
-        x = tileSize * 2;
-        y = tileSize * 10;
+        x = gp.map.checkPos.x * tileSize;
+        y = gp.map.checkPos.y * tileSize;
         speed = 4;
         direction = "down";
         spriteTime = 6;

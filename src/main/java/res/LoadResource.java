@@ -17,7 +17,7 @@ import static MenuSetUp.DimensionSize.tileSize;
 
 public class LoadResource {
     public static HashMap<String, BufferedImage> itemImgMap = new HashMap<>();
-    public static HashMap<String, Integer> itemPointMap = new HashMap<>();
+    public static HashMap<String, Integer> itemScoreMap = new HashMap<>();
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
 
     // sound
@@ -74,7 +74,7 @@ public class LoadResource {
                 itemName = nameAndPoint[0];
                 itemPoint = Integer.parseInt(nameAndPoint[1]);
                 itemImgMap.put(itemName, itemImage(itemName));
-                itemPointMap.put(itemName, itemPoint);
+                itemScoreMap.put(itemName, itemPoint);
             }
 
         } catch (IOException e) {

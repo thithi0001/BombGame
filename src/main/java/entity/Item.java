@@ -10,12 +10,13 @@ import static MenuSetUp.DimensionSize.tileSize;
 
 public class Item extends Entity {
 
-    public int point = 0;
+    public int score = 0;
     public BufferedImage itemImg = null;
 
-    public enum States {hidden, isPickedUp, isHit, shown}
+    public enum States {hidden, isPickedUp, shown}
 
     public States state = States.hidden;
+    public boolean isCheckPoint = false;
 
     public Item(GamePanel gp, String name) {
 
@@ -38,7 +39,7 @@ public class Item extends Entity {
     public void getItemImage() {
 
         itemImg = LoadResource.itemImgMap.get(name);
-        point = LoadResource.itemPointMap.get(name);
+        score = LoadResource.itemScoreMap.get(name);
     }
 
     public void update() {
@@ -55,11 +56,14 @@ public class Item extends Entity {
 
     @Override
     public void beingHit() {
-        super.beingHit();
-        state = States.isHit;
+        if (isCheckPoint) return;
+        isHit = true;
+        System.out.println("hit " + name);
+        state = States.hidden;
     }
 
     public void beingPickedUp() {
+        if (isCheckPoint) return;
         state = States.isPickedUp;
         System.out.println("+1 " + name);
     }

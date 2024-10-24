@@ -29,6 +29,7 @@ import static MenuSetUp.DimensionSize.screenWidth;
 public class GamePanel extends JPanel implements Runnable {
 
     public boolean isPausing = false;
+    public boolean WIN = false;
 
     // FPS
     public int FPS = 60;
@@ -42,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Map map;
     KeyHandler keyH = new KeyHandler();
     private Thread gameThread;
-    public Player player = new Player(this, keyH);
+    public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
@@ -62,7 +63,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
+
         this.map = new Map(this, mapFileName);
+        this.player = new Player(this, keyH);
+
         this.parent = parent;
         this.levelPanel = level;
         this.setLayout(null);
@@ -143,11 +147,13 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount = 0;
                 timer = 0;
             }
-            /**
-             * if isWin:
-             *      endGame("win");
-             */
 
+            if (WIN) {
+                endGame("win");
+            }
+            if (map.destructibleTiles == 0) {
+                map.completeMap();
+            }
             if (player.isDead) {
                 endGame("lose");
             }

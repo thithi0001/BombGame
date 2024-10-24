@@ -3,6 +3,7 @@ package tile;
 import entity.Item;
 import main.GamePanel;
 import main.Main;
+import res.LoadResource;
 
 import java.awt.*;
 import java.io.*;
@@ -18,13 +19,13 @@ public class Map {
     public int[][] mapTileNum;
     public ArrayList<Item> items = new ArrayList<>();
     public ArrayList<Point> itemPos = new ArrayList<>();
-//    public ArrayList<Monster> monsters = new ArrayList<>();
+    //    public ArrayList<Monster> monsters = new ArrayList<>();
     public ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 
-    public Point spawnPlayer;
-    public Point checkPoint;
+    public Point checkPos = new Point();
     String baseTile;
     int baseIndex;
+    public int destructibleTiles;
 //    Monster[] monsters;
 
     public Map(GamePanel gp, String mapFileName) {
@@ -34,7 +35,9 @@ public class Map {
         mapTileNum = new int[maxScreenCol][maxScreenRow];
 
         loadMap(Main.res + "/maps/" + mapFileName + ".txt");
+        destructibleTiles = itemPos.size();
         placeItem();
+        setupCheckPoint();
     }
 
     public void placeItem() {
@@ -53,11 +56,21 @@ public class Map {
         }
     }
 
+    public void completeMap() {
+        items.forEach(item -> {
+            if (item.name.equals("black")) {
+                item.name = "white";
+                item.itemImg = LoadResource.itemImgMap.get(item.name);
+            }
+        });
+    }
+
     public void toBaseTile(int x, int y) {
 
         gp.player.score += gp.tileManager.tile[mapTileNum[x][y]].point;
 
         mapTileNum[x][y] = baseIndex;
+        destructibleTiles--;
 
         items.forEach(item -> {
             if (item.col() == x && item.row() == y) {
@@ -73,6 +86,16 @@ public class Map {
         return 0;
     }
 
+    public void setupCheckPoint() {
+        Item item = new Item(gp, "black");
+        item.state = Item.States.shown;
+        item.isCheckPoint = true;
+        item.x = checkPos.x * tileSize;
+        item.y = checkPos.y * tileSize;
+        item.solidArea = new Rectangle(item.x, item.y, tileSize, tileSize);
+        items.add(item);
+    }
+
     public void loadMap(String filePath) {
 
         try {
@@ -85,6 +108,9 @@ public class Map {
             baseTile = br.readLine();
             baseIndex = findBaseIndex();
             String[] itemList = br.readLine().split(";");
+            String[] point = br.readLine().split(",");
+            checkPos.x = Integer.parseInt(point[1]);
+            checkPos.y = Integer.parseInt(point[0]);
             String[] tmp;
             int quantity;
             for (String item : itemList) {

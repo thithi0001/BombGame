@@ -151,12 +151,15 @@ public class CollisionChecker {
         solidArea.y += gp.player.y;
         if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
             item.beingPickedUp();
-            gp.player.addScore(item.point);
+            gp.player.addScore(item.score);
             switch (item.name) {
                 case "plus_1":
                     gp.player.addMoreFlame(1);
                     break;
                 case "ugly_key":
+                    break;
+                case "white":
+                    gp.WIN = true;
                     break;
             }
         }

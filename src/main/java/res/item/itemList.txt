@@ -1,2 +1,4 @@
 ugly_key 50
 plus_1 30
+white 0
+black 0
