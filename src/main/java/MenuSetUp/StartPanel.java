@@ -43,9 +43,8 @@ public class StartPanel extends JPanel {
         score.setLocateButton((DimensionSize.screenWidth - 206) / 2, ((DimensionSize.maxScreenRow - 5) / 2 + 4) * DimensionSize.tileSize);
         add(score);
 
-        newUser = new NewGameDialog(frame);//Dialog thong bao nhap ten nhan vat moi
+        newUser = new NewGameDialog(frame);//Dialog announce enter new player's name
         newGame.addActionListener(e -> newUser.setVisible(true));
-
     }
 
     @Override

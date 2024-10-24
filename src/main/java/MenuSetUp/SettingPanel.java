@@ -50,9 +50,7 @@ public class SettingPanel extends JPanel {
                 , ((DimensionSize.maxScreenRow - 4) / 2 + 1) * DimensionSize.tileSize);
         SESlider.addMySlider(this);
         SESlider.slider.setEnabled(Sound.SE);
-        SESlider.slider.addChangeListener((e) -> {
-            Sound.SEVolume = SESlider.slider.getValue();
-        });
+        SESlider.slider.addChangeListener((e) -> Sound.SEVolume = SESlider.slider.getValue());
 
 
         //BUTTON MUSIC AND SE

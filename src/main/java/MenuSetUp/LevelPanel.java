@@ -69,7 +69,7 @@ public class LevelPanel extends JPanel {
             String x = "level" + (i + 1);
             if (i + 1 <= a.getLevel()) level[i] = new MyButton(x);
 
-            else level[i] = new MyButton("levelBlock"); //nếu levelButton bé hơn level -> khóa button;
+            else level[i] = new MyButton("levelBlock"); //nếu levelButton bé hơn level -> block button;
             level[i].setLocateButton(((DimensionSize.maxScreenCol - 5) / 2 + i * 2) * DimensionSize.tileSize
                     , DimensionSize.screenHeight / 2);
             add(level[i]);
@@ -106,7 +106,7 @@ public class LevelPanel extends JPanel {
 
     void addActionBackButton() {
         back.addActionListener((event) -> {
-            RemindDialog saveGame = new RemindDialog(change.userList, change.frame, "save game ");
+            RemindDialog saveGame = new RemindDialog(change.frame, "save game ");
             saveGame.setVisible(true);
 
             //saveGame ok button

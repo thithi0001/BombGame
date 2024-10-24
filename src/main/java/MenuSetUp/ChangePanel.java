@@ -83,7 +83,7 @@ public class ChangePanel {
         menu.start.addActionListener((e) -> cardLayout.next(contentPane));
 
         menu.quit.addActionListener((e) -> {
-            RemindDialog a = new RemindDialog(userList, frame, "exit Game ");
+            RemindDialog a = new RemindDialog(frame, "exit Game ");
             a.setVisible(true);
 
             //SET UP BUTTON FOR RemindDialog
@@ -100,7 +100,6 @@ public class ChangePanel {
 
 class newUserAction implements ActionListener {
     NewGameDialog newUser;
-    String x;
     ChangePanel change;
     ReplaceDialog replace;
 

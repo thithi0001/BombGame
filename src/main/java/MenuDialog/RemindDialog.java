@@ -17,7 +17,7 @@ public class RemindDialog extends JDialog {
     public MyButton okButton;
     public MyButton noButton;
 
-    public RemindDialog(UserList list, JFrame parent, String note) {
+    public RemindDialog(JFrame parent, String note) {
         //create new dialog
         super(parent);
         setSize(400, 200);
@@ -30,7 +30,6 @@ public class RemindDialog extends JDialog {
         noButton = new MyButton("no");
         addButton(okButton, noButton);
         addMessage(note);
-
     }
 
     void addButton(MyButton okButton, MyButton noButton) {
