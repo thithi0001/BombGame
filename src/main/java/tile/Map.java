@@ -18,9 +18,11 @@ public class Map {
     public int[][] mapTileNum;
     public ArrayList<Item> items = new ArrayList<>();
     public ArrayList<Point> itemPos = new ArrayList<>();
-
+//    public ArrayList<Monster> monsters = new ArrayList<>();
     public ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 
+    public Point spawnPlayer;
+    public Point checkPoint;
     String baseTile;
     int baseIndex;
 //    Monster[] monsters;
