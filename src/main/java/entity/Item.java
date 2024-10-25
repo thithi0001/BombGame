@@ -1,5 +1,6 @@
 package entity;
 
+import MenuSetUp.Sound;
 import main.GamePanel;
 import res.LoadResource;
 
@@ -17,6 +18,8 @@ public class Item extends Entity {
 
     public States state = States.hidden;
     public boolean isCheckPoint = false;
+
+    Sound pickedUpSound = LoadResource.receiveItemSound;
 
     public Item(GamePanel gp, String name) {
 
@@ -64,6 +67,7 @@ public class Item extends Entity {
 
     public void beingPickedUp() {
         if (isCheckPoint) return;
+        pickedUpSound.play();
         state = States.isPickedUp;
         System.out.println("+1 " + name);
     }

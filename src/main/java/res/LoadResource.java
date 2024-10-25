@@ -22,6 +22,7 @@ public class LoadResource {
 
     // sound
     public static Sound explosionSound = new Sound("small_explosion");
+    public static Sound receiveItemSound = new Sound("coin_received");
 
     // font
     public static Font Courier_New_Bold_20 = new Font("Courier New", Font.BOLD, 20);

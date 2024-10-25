@@ -23,7 +23,6 @@ public class Sound {
     public static Boolean SE;
     public  Boolean Music;
 
-
     public Sound(String a) {
         name = a;
         file = new File(Main.res + nameFile(a));
@@ -50,7 +49,6 @@ public class Sound {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void play() {
@@ -113,4 +111,5 @@ public class Sound {
             System.out.println("Errol save setting file");
         }
     }
+
 }
