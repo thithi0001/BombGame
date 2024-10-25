@@ -53,12 +53,11 @@ public class SettingDialog extends SuperDialog {
         
         SESlider.slider.addChangeListener((e) -> {
             Sound.SEVolume = SESlider.slider.getValue();
-            Sound.controlSE.setValue(Sound.SEVolume);
         });
 
         addMusicButton(content, music);
 
-        addSEButton(content, music);
+        addSEButton(content);
 
         getContentPane().add(content);
     }
@@ -79,7 +78,7 @@ public class SettingDialog extends SuperDialog {
     }
 
 
-    void addSEButton(JPanel content, Sound music) {
+    void addSEButton(JPanel content) {
         MyButton seButton = Sound.SE ? new MyButton("sound") : new MyButton("soundOff");
         content.add(seButton);
         seButton.addActionListener((e) -> {

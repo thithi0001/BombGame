@@ -16,7 +16,7 @@ public class Sound {
     String name;
     
     public FloatControl controlMusic;
-    public static FloatControl controlSE;
+    public FloatControl controlSE;
     
     public float musicVolume;
     public static float SEVolume;
