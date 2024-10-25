@@ -2,7 +2,6 @@ package MenuSetUp;
 
 import javax.swing.JPanel;
 
-
 import main.Main;
 
 import java.awt.Graphics;
@@ -46,4 +45,5 @@ public class MenuPanel extends JPanel {
             e.printStackTrace();
         }
     }
+
 }
