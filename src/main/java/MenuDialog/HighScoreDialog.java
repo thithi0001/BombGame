@@ -8,10 +8,9 @@ import java.awt.*;
 
 import MenuSetUp.MyButton;
 import res.LoadResource;
-import userClass.User;
 import userClass.UserList;
 
-import java.util.*;
+
 
 public class HighScoreDialog extends SuperDialog {
     MyButton back;

@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 
 public class MyButton extends JButton {
     int width, height;
-    ImageIcon icon;
+    public ImageIcon icon;
 
     public MyButton(String name) {
         icon = new ImageIcon(Main.res + nameFileIcon(name));

@@ -11,15 +11,17 @@ import javax.sound.sampled.FloatControl;
 import main.Main;
 
 public class Sound {
-    Clip clip;
+    public Clip clip;
     File file;
-    FloatControl controlMusic;
-    FloatControl controlSE;
     String name;
-    float musicVolume;
+    
+    public FloatControl controlMusic;
+    public static FloatControl controlSE;
+    
+    public float musicVolume;
     public static float SEVolume;
     public static Boolean SE;
-    Boolean Music;
+    public  Boolean Music;
 
     public Sound(String a) {
         name = a;
@@ -50,8 +52,10 @@ public class Sound {
     }
 
     public void play() {
-        checkVolume();
+        checkVolume(); 
+        clip.setFramePosition(0); 
         clip.start();
+
     }
 
     public void loop() {
@@ -60,6 +64,7 @@ public class Sound {
 
     public void stopMusic() {
         clip.stop();
+       
     }
 
     public String nameFile(String a) {
@@ -71,6 +76,7 @@ public class Sound {
             if (Music) {
                 controlMusic.setValue(musicVolume);
                 clip.start();
+                clip.loop(-1);
             } else clip.stop();
         } else {
             if (SE) controlSE.setValue(SEVolume);
@@ -92,7 +98,7 @@ public class Sound {
         }
     }
 
-    void saveSetting(Sound music) {
+    public void saveSetting(Sound music) {
         try {
             FileWriter writer = new FileWriter(Main.res + "/userData/setting.txt");
             writer.write(music.musicVolume + "\n");

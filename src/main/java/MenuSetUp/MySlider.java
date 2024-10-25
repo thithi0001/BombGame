@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
 
 public class MySlider {
     JLabel nameSlider;
-    JSlider slider;
+    public JSlider slider;
 
     public MySlider(int width, int height, int value, String name) {
         slider = new JSlider(-24, 6, value);
@@ -23,7 +23,7 @@ public class MySlider {
         nameSlider = new JLabel(name);
         nameSlider.setSize(60, 35);
         nameSlider.setFont(LoadResource.Courier_New_Italic_16);
-        nameSlider.setHorizontalAlignment(SwingConstants.CENTER);
+        // nameSlider.setHorizontalAlignment(SwingConstants.CENTER);
         nameSlider.setVerticalAlignment(SwingConstants.CENTER);
         nameSlider.setOpaque(false);
     }
@@ -34,7 +34,7 @@ public class MySlider {
     }
 
     public void addMySlider(JPanel panel) {
-        panel.add(slider);
         panel.add(nameSlider);
+        panel.add(slider);
     }
 }
