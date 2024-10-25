@@ -55,7 +55,6 @@ public class Sound {
         checkVolume();
         clip.setFramePosition(0);
         clip.start();
-
     }
 
     public void loop() {

@@ -48,7 +48,7 @@ public class LevelPanel extends JPanel {
 
         //setting button
         setting = new MyButton("setting");
-        setting.setLocateButton(DimensionSize.screenWidth - 60, 10);
+        setting.setLocateButton(DimensionSize.screenWidth - 71, 10);
         add(setting);
 
         setting.addActionListener((event) -> {

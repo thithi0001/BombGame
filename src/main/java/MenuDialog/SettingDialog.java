@@ -80,7 +80,6 @@ public class SettingDialog extends SuperDialog {
         });
     }
 
-
     void addSEButton(JPanel content, Sound music) {
         MyButton seButton = Sound.SE ? new MyButton("sound") : new MyButton("soundOff");
         content.add(seButton);

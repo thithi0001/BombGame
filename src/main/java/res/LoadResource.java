@@ -22,8 +22,8 @@ public class LoadResource {
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
 
     // sound
-    public static Sound explosionSound = new Sound("small_explosion");
-    public static Sound receiveItemSound = new Sound("coin_received");
+    public static Sound explosionSound;
+    public static Sound receiveItemSound;
 
     // font
     public static Font Courier_New_Bold_20 = new Font("Courier New", Font.BOLD, 20);
@@ -33,6 +33,7 @@ public class LoadResource {
     public static Font Consolas_Bold_20 = new Font("Consolas", Font.BOLD, 20);
 
     // image icon
+    public static ImageIcon pauseBtnIcon = new ImageIcon(Main.res + "/button/pauseButton.png");
     public static ImageIcon musicOnBtnIcon = new ImageIcon(Main.res + "/button/musicButton.png");
     public static ImageIcon musicOffBtnIcon = new ImageIcon(Main.res + "/button/musicOffButton.png");
     public static ImageIcon soundOnBtnIcon = new ImageIcon(Main.res + "/button/soundButton.png");
@@ -62,12 +63,18 @@ public class LoadResource {
     static {
 
         loadBackGround();
+        loadSound();
         loadTile();
         loadPlayer();
         loadBomb();
         loadFlame();
         loadItem();
         loadMap();
+    }
+
+    static void loadSound() {
+        explosionSound = new Sound("small_explosion");
+        receiveItemSound = new Sound("coin_received");
     }
 
     static void loadBackGround() {

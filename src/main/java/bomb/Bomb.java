@@ -45,7 +45,7 @@ public class Bomb {
     public int flameLength = 1;
 
     // SOUND
-    public Sound explosionSound = LoadResource.explosionSound;
+    Sound explosionSound = LoadResource.explosionSound;
 
     public Bomb() {
 

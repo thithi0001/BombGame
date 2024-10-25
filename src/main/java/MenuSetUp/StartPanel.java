@@ -25,7 +25,7 @@ public class StartPanel extends JPanel {
         add(back);
 
         setting = new MyButton("setting");
-        setting.setLocateButton(DimensionSize.screenWidth - 60, 10);
+        setting.setLocateButton(DimensionSize.screenWidth - 71, 10);
         add(setting);
 
         newGame = new MyButton("newGame");
