@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -51,6 +52,9 @@ public class LoadResource {
     // bomb
     public static BufferedImage[] idle, explosion;
 
+    // map
+    public static int maxMap;
+
     static {
 
         loadTile();
@@ -58,6 +62,11 @@ public class LoadResource {
         loadBomb();
         loadFlame();
         loadItem();
+        loadMap();
+    }
+
+    static void loadMap() {
+        maxMap = Objects.requireNonNull(new File(Main.res + "\\maps").list()).length;
     }
 
     static void loadTile() {

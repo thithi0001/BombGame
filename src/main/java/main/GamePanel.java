@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
 
             case "lose":
-                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", parent, player.score, clock.toString(), levelPanel.change);
+                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", this);
                 loseDialog.setVisible(true);
                 break;
 

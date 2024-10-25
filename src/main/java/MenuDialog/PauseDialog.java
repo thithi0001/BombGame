@@ -50,7 +50,7 @@ public class PauseDialog extends SuperDialog {
         setBackground();
     }
 
-    void Content(JButton resume, JButton exit,JButton setting ,JButton restart) {
+    void Content(JButton resume, JButton exit, JButton setting, JButton restart) {
         JPanel content = new JPanel();
         content.setSize(150, 250);
         content.setLocation((500 - 150) / 2, 125);

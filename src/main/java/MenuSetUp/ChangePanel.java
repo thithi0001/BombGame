@@ -41,7 +41,7 @@ public class ChangePanel {
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(menu, "menu");//panel 1 in contentPane
         contentPane.add(start, "start");//panel 2 in contentPane
-        
+
         music = new Sound("Music");
         music.play();
         music.loop();

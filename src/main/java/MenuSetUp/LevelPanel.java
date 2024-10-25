@@ -65,13 +65,13 @@ public class LevelPanel extends JPanel {
     }
 
     public void addLevelButton(User a, JPanel levelButtonPanel) {
-        levelButtonPanel.setSize(DimensionSize.screenWidth - 100,DimensionSize.screenHeight -250);
+        levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
         int row = 0, col = 4;
-        if(User.maxLevel % col == 0)row = User.maxLevel/col;
-        else row = User.maxLevel/col +1;
-        
+        if (LoadResource.maxMap % col == 0) row = LoadResource.maxMap / col;
+        else row = LoadResource.maxMap / col + 1;
+
         levelButtonPanel.setLayout(new GridLayout(row, col));
-        levelButtonPanel.setLocation(50,150);
+        levelButtonPanel.setLocation(50, 150);
         levelButtonPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
             String x = "level" + (i + 1);

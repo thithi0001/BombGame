@@ -10,8 +10,6 @@ import MenuSetUp.MyButton;
 import res.LoadResource;
 import userClass.UserList;
 
-
-
 public class HighScoreDialog extends SuperDialog {
     MyButton back;
     UserList userList;

@@ -14,10 +14,11 @@ import res.LoadResource;
 public class SettingDialog extends SuperDialog {
     MySlider musicSlider;
     MySlider SESlider;
-    public SettingDialog(JFrame parent, ChangePanel change){
+
+    public SettingDialog(JFrame parent, ChangePanel change) {
         super(parent);
         setTitle("SETTING");
-         //SET BACK BUTTON
+        //SET BACK BUTTON
         MyButton back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 400);
         getContentPane().add(back);
@@ -30,15 +31,16 @@ public class SettingDialog extends SuperDialog {
 
         setBackground();
     }
-    void setContent(Sound music){
+
+    void setContent(Sound music) {
         JPanel content = new JPanel();
         content.setSize(300, 250);
         content.setLocation(100, 100);
         content.setOpaque(false);
         content.setLayout(new GridLayout(3, 2));
 
-         //SLIDER MUSIC
-        musicSlider = new MySlider(250, 25, (int)music.musicVolume, "music");
+        //SLIDER MUSIC
+        musicSlider = new MySlider(250, 25, (int) music.musicVolume, "music");
         musicSlider.addMySlider(content);
         musicSlider.slider.setEnabled(music.Music);
         musicSlider.slider.addChangeListener((e) -> {
@@ -50,7 +52,7 @@ public class SettingDialog extends SuperDialog {
         SESlider = new MySlider(250, 25, (int) Sound.SEVolume, "SE");
         SESlider.addMySlider(content);
         SESlider.slider.setEnabled(Sound.SE);
-        
+
         SESlider.slider.addChangeListener((e) -> {
             Sound.SEVolume = SESlider.slider.getValue();
             Sound.controlSE.setValue(Sound.SEVolume);
@@ -69,7 +71,7 @@ public class SettingDialog extends SuperDialog {
         musicButton.addActionListener((e) -> {
             music.Music = !music.Music;
             music.checkVolume();
-            
+
             //set icon
             musicButton.icon = music.Music ? LoadResource.musicOnBtnIcon : LoadResource.musicOffBtnIcon;
 
@@ -91,6 +93,7 @@ public class SettingDialog extends SuperDialog {
             SESlider.slider.setEnabled(Sound.SE);
         });
     }
+
     public static void main(String[] args) {
         JFrame window = new JFrame();
         ChangePanel change = new ChangePanel(window);
