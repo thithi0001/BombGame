@@ -5,10 +5,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import MenuDialog.RemindDialog;
+import MenuDialog.SettingDialog;
 import main.Main;
 import res.LoadResource;
 import userClass.User;
 
+import java.awt.GridLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ public class LevelPanel extends JPanel {
     MyButton setting;
     public User user;
     public MyButton[] level = new MyButton[3];
+    public JPanel levelButtonPanel;
     public ChangePanel change;
 
     public LevelPanel(User currentUser, ChangePanel change) {
@@ -29,7 +32,8 @@ public class LevelPanel extends JPanel {
             user = currentUser;
         } else user = new User();
         // SET UP LEVEL BUTTON
-        addLevelButton(user);
+        levelButtonPanel = new JPanel();
+        addLevelButton(user, levelButtonPanel);
         actionLevelButton();
 
         //back button
@@ -39,24 +43,20 @@ public class LevelPanel extends JPanel {
         addActionBackButton();
 
         // SET LABEL
-        JLabel lv = new JLabel("LEVEL");
-        lv.setSize(200, 100);
-        lv.setFont(LoadResource.Courier_New_Bold_38);
-        lv.setLocation((DimensionSize.screenWidth - 130) / 2, 20);
-        add(lv);
+        JLabel title = new JLabel("LEVEL");
+        title.setSize(200, 100);
+        title.setFont(LoadResource.Courier_New_Bold_38);
+        title.setLocation((DimensionSize.screenWidth - 130) / 2, 20);
+        add(title);
 
         //setting button
         setting = new MyButton("setting");
         setting.setLocateButton(DimensionSize.screenWidth - 60, 10);
         add(setting);
+
         setting.addActionListener((event) -> {
-            SettingPanel setting = new SettingPanel(change.menu.music);
-            change.contentPane.add(setting, "settingInLevel");
-            change.cardLayout.show(change.contentPane, "settingInLevel");
-            setting.back.addActionListener((e) -> {
-                change.cardLayout.previous(change.contentPane);
-                change.menu.music.saveSetting(change.menu.music);
-            });
+            SettingDialog settingDialog = new SettingDialog(change.frame, change);
+            settingDialog.setVisible(true);
         });
     }
 
@@ -64,7 +64,15 @@ public class LevelPanel extends JPanel {
 
     }
 
-    public void addLevelButton(User a) {
+    public void addLevelButton(User a, JPanel levelButtonPanel) {
+        levelButtonPanel.setSize(DimensionSize.screenWidth - 100,DimensionSize.screenHeight -250);
+        int row = 0, col = 4;
+        if(User.maxLevel % col == 0)row = User.maxLevel/col;
+        else row = User.maxLevel/col +1;
+        
+        levelButtonPanel.setLayout(new GridLayout(row, col));
+        levelButtonPanel.setLocation(50,150);
+        levelButtonPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
             String x = "level" + (i + 1);
             if (i + 1 <= a.getLevel()) level[i] = new MyButton(x);
@@ -72,9 +80,9 @@ public class LevelPanel extends JPanel {
             else level[i] = new MyButton("levelBlock"); //nếu levelButton bé hơn level -> block button;
             level[i].setLocateButton(((DimensionSize.maxScreenCol - 5) / 2 + i * 2) * DimensionSize.tileSize
                     , DimensionSize.screenHeight / 2);
-            add(level[i]);
-
+            levelButtonPanel.add(level[i]);
         }
+        add(levelButtonPanel);
     }
 
     public void actionLevelButton() {
@@ -91,13 +99,13 @@ public class LevelPanel extends JPanel {
         }
     }
 
-    public void resetLevelPanel(User a) {
+    public void resetLevelPanel(User a, JPanel levelButtonPanel) {
 
         for (int i = 0; i < 3; i++) {
             remove(level[i]); //delete old button
         }
         //add new button
-        addLevelButton(a);
+        addLevelButton(a, levelButtonPanel);
 
         //add action for new button
         actionLevelButton();

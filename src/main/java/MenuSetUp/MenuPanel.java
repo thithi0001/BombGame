@@ -13,12 +13,9 @@ import java.io.File;
 public class MenuPanel extends JPanel {
     MyButton start;
     MyButton quit;
-    Sound music;
 
     public MenuPanel(int width, int height) {
         setLayout(null);
-        music = new Sound("Music");
-        music.play();
 
         start = new MyButton("start");
         quit = new MyButton("quit");

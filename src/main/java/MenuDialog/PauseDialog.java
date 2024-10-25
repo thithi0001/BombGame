@@ -34,26 +34,32 @@ public class PauseDialog extends SuperDialog {
             newParent.setVisible(true);
         });
 
-        MyButton quit = new MyButton("exit");
-        quit.addActionListener(e -> {
+        MyButton exit = new MyButton("exit");
+        exit.addActionListener(e -> {
             parent.setVisible(false);
             parent.gamePanel.setGameThread(null);
             parent.levelPanel.change.frame.setVisible(true);
         });
-        Content(resume, quit, restart);
+        MyButton setting = new MyButton("setting");
+        setting.addActionListener((e) -> {
+            SettingDialog settingDialog = new SettingDialog(parent, parent.levelPanel.change);
+            settingDialog.setVisible(true);
+        });
+        Content(resume, exit, setting, restart);
 
         setBackground();
     }
 
-    void Content(JButton resume, JButton quit, JButton restart) {
+    void Content(JButton resume, JButton exit,JButton setting ,JButton restart) {
         JPanel content = new JPanel();
         content.setSize(150, 250);
         content.setLocation((500 - 150) / 2, 125);
         content.setOpaque(false);
-        content.setLayout(new GridLayout(3, 1));
+        content.setLayout(new GridLayout(4, 1));
         content.add(resume);
         content.add(restart);
-        content.add(quit);
+        content.add(exit);
+        content.add(setting);
         getContentPane().add(content);
     }
 
