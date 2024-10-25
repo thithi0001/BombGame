@@ -12,7 +12,7 @@ import MenuDialog.ContinueDialog;
 import MenuDialog.NoticeDialog;
 import MenuDialog.RemindDialog;
 import MenuDialog.ReplaceDialog;
-
+import MenuDialog.SettingDialog;
 import MenuDialog.HighScoreDialog;
 import MenuDialog.NewGameDialog;
 import userClass.User;
@@ -25,6 +25,7 @@ public class ChangePanel {
     public MenuPanel menu;
     public StartPanel start;
     public JFrame frame;
+    public Sound music;
 
     public ChangePanel(JFrame frame) {
 
@@ -40,6 +41,10 @@ public class ChangePanel {
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(menu, "menu");//panel 1 in contentPane
         contentPane.add(start, "start");//panel 2 in contentPane
+        
+        music = new Sound("Music");
+        music.play();
+        music.loop();
 
     }
 
@@ -71,13 +76,15 @@ public class ChangePanel {
         start.back.addActionListener(e -> cardLayout.previous(contentPane));
 
         start.setting.addActionListener(e -> {
-            SettingPanel setting = new SettingPanel(menu.music);
-            contentPane.add(setting, "setting");
-            cardLayout.show(contentPane, "setting");
-            setting.back.addActionListener((event) -> {
-                cardLayout.show(contentPane, "start");
-                menu.music.saveSetting(menu.music);
-            });
+            // SettingPanel setting = new SettingPanel(music);
+            // contentPane.add(setting, "setting");
+            // cardLayout.show(contentPane, "setting");
+            // setting.back.addActionListener((event) -> {
+            //     cardLayout.show(contentPane, "start");
+            //     music.saveSetting(music);
+            // });
+            SettingDialog settingDialog = new SettingDialog(frame, this);
+            settingDialog.setVisible(true);
         });
         // // SET UP MENU PANEL BUTTON
         menu.start.addActionListener((e) -> cardLayout.next(contentPane));

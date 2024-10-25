@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable {
                 // UNLOCK NEW LEVEL
                 if (levelPanel.user.getLevel() < 3) {
                     levelPanel.user.setLevel(parent.lv + 1);
-                    levelPanel.resetLevelPanel(levelPanel.user);
+                    levelPanel.resetLevelPanel(levelPanel.user, levelPanel.levelButtonPanel);
                 }
                 // READ SCORE
                 levelPanel.user.setScore(parent.lv, player.score);

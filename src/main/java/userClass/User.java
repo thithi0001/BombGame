@@ -7,7 +7,8 @@ public class User {
     String userName;
     int level;
     int[] lvScore;
-
+    public static int maxLevel = 4;
+ 
     public User() {
         level = 1;
         lvScore = new int[3];
