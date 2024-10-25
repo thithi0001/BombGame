@@ -39,6 +39,10 @@ public class LoadResource {
     public static ImageIcon soundOffBtnIcon = new ImageIcon(Main.res + "/button/soundOffButton.png");
     public static ImageIcon dialogBackground = new ImageIcon(Main.res + "/background/dialogBackground.png");
 
+    // logo, background
+    public static BufferedImage logo;
+    public static BufferedImage background;
+
     // tiles
     public static Tile[] tiles = new Tile[10];
 
@@ -57,12 +61,22 @@ public class LoadResource {
 
     static {
 
+        loadBackGround();
         loadTile();
         loadPlayer();
         loadBomb();
         loadFlame();
         loadItem();
         loadMap();
+    }
+
+    static void loadBackGround() {
+        try {
+            logo = ImageIO.read(new File(Main.res + "/background/logo1.png"));
+            background = ImageIO.read(new File(Main.res + "/background/background.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     static void loadMap() {

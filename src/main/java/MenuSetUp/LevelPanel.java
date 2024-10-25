@@ -6,15 +6,11 @@ import javax.swing.JPanel;
 
 import MenuDialog.RemindDialog;
 import MenuDialog.SettingDialog;
-import main.Main;
 import res.LoadResource;
 import userClass.User;
 
 import java.awt.GridLayout;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
 
 public class LevelPanel extends JPanel {
     MyButton back;
@@ -31,6 +27,7 @@ public class LevelPanel extends JPanel {
         if (currentUser != null) {
             user = currentUser;
         } else user = new User();
+
         // SET UP LEVEL BUTTON
         levelButtonPanel = new JPanel();
         addLevelButton(user, levelButtonPanel);
@@ -134,16 +131,10 @@ public class LevelPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
-        BufferedImage background;
-        try {
-            File a = new File(Main.res + "/background/background.png");
-            background = ImageIO.read(a);
-            g.drawImage(background, 0, 0, DimensionSize.screenWidth
-                    , DimensionSize.screenHeight, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        g.drawImage(LoadResource.background, 0, 0, DimensionSize.screenWidth
+                , DimensionSize.screenHeight, null);
     }
 }
 

@@ -15,6 +15,7 @@ public class HighScoreDialog extends SuperDialog {
     UserList userList;
 
     public HighScoreDialog(JFrame parent, UserList userList) {
+
         super(parent);
         this.userList = userList;
 
@@ -31,14 +32,15 @@ public class HighScoreDialog extends SuperDialog {
         getContentPane().add(back);
 
         setBackground();
-
     }
 
     void setContent() {
+
         JPanel content = new JPanel();
         content.setSize(150, 200);
         content.setLocation(150, 100);
         content.setOpaque(false);
+
         //ADD USER INTO CONTENT PANEL
         int numHighScore;
         if (userList.size <= 5) numHighScore = userList.size;

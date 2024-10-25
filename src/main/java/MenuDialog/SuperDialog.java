@@ -7,12 +7,12 @@ import res.LoadResource;
 
 public class SuperDialog extends JDialog {
     public SuperDialog(JFrame parent) {
+
         super(parent);
         setSize(500, 520);
         setResizable(false);
         setLayout(null);
         setLocationRelativeTo(null);
-
     }
 
     public void setBackground() {

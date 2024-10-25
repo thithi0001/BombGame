@@ -1,16 +1,13 @@
 package MenuSetUp;
 
-import java.io.File;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import MenuDialog.NewGameDialog;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-import main.Main;
+import res.LoadResource;
 
 public class StartPanel extends JPanel {
     MyButton back;
@@ -49,14 +46,8 @@ public class StartPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
-        BufferedImage background;
-        try {
-            File a = new File(Main.res + "/background/background.png");
-            background = ImageIO.read(a);
-            g.drawImage(background, 0, 0, DimensionSize.screenWidth, DimensionSize.screenHeight, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        g.drawImage(LoadResource.background, 0, 0, DimensionSize.screenWidth, DimensionSize.screenHeight, null);
     }
 }
