@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void addButton() {
         button = new MyButton("pause");
-        button.setLocateButton(screenHeight - 60, 10);
+        button.setLocateButton(screenWidth - 60, 10);
         this.add(button);
         button.addActionListener(e -> endGame("uncompleted"));
     }
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
                 break;
 
             case "lose":
-                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", parent, player.score, clock.toString(), levelPanel.change);
+                EndGameDialog loseDialog = new EndGameDialog("YOU LOSE", this);
                 loseDialog.setVisible(true);
                 break;
 
@@ -183,14 +183,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
-        drawUI(g2, new MyButton("pause"), screenHeight - 60, 20);
+        drawUI(g2);
 
         g2.dispose();// save memories
     }
 
-    void drawUI(Graphics2D g2, MyButton button, int x, int y) {
+    void drawUI(Graphics2D g2) {
+        int y = 20;
         //draw button
-        g2.drawImage(button.getIcon().getImage(), x, 0, 50, 50, null);
+        g2.drawImage(button.getIcon().getImage(), button.getLocation().x, y, 50, 50, null);
 
         //draw score
         g2.setColor(Color.BLACK);

@@ -3,6 +3,7 @@ package bomb;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import MenuSetUp.Sound;
 import entity.Entity;
 import main.GamePanel;
 import res.LoadResource;
@@ -42,14 +43,7 @@ public class NormalBomb extends Bomb {
         checkPlayer();
         // countDown--;
         if (--countDown == 0) {
-
-            exploding = true;
-            sprites = explosion;
-            spriteCounter = 0;
-            spriteNum = 0;
-            spriteTime = 1;
-            explosionSound.play();
-            flame = new Flame(this, x, y, flameLength, explosion.length * (1 + spriteTime));
+            explode();
             return;
         }
 
@@ -70,6 +64,16 @@ public class NormalBomb extends Bomb {
             spriteCounter = 0;
         }
 
+    }
+
+    void explode() {
+        exploding = true;
+        sprites = explosion;
+        spriteCounter = 0;
+        spriteNum = 0;
+        spriteTime = 1;
+        explosionSound.play();
+        flame = new Flame(this, x, y, flameLength, explosion.length * (1 + spriteTime));
     }
 
     public void checkPlayer() {

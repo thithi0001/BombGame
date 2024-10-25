@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -21,8 +22,8 @@ public class LoadResource {
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
 
     // sound
-    public static Sound explosionSound = new Sound("small_explosion");
-    public static Sound receiveItemSound = new Sound("coin_received");
+    public static Sound explosionSound;
+    public static Sound receiveItemSound;
 
     // font
     public static Font Courier_New_Bold_20 = new Font("Courier New", Font.BOLD, 20);
@@ -32,11 +33,16 @@ public class LoadResource {
     public static Font Consolas_Bold_20 = new Font("Consolas", Font.BOLD, 20);
 
     // image icon
+    public static ImageIcon pauseBtnIcon = new ImageIcon(Main.res + "/button/pauseButton.png");
     public static ImageIcon musicOnBtnIcon = new ImageIcon(Main.res + "/button/musicButton.png");
     public static ImageIcon musicOffBtnIcon = new ImageIcon(Main.res + "/button/musicOffButton.png");
     public static ImageIcon soundOnBtnIcon = new ImageIcon(Main.res + "/button/soundButton.png");
     public static ImageIcon soundOffBtnIcon = new ImageIcon(Main.res + "/button/soundOffButton.png");
     public static ImageIcon dialogBackground = new ImageIcon(Main.res + "/background/dialogBackground.png");
+
+    // logo, background
+    public static BufferedImage logo;
+    public static BufferedImage background;
 
     // tiles
     public static Tile[] tiles = new Tile[10];
@@ -51,13 +57,37 @@ public class LoadResource {
     // bomb
     public static BufferedImage[] idle, explosion;
 
+    // map
+    public static int maxMap;
+
     static {
 
+        loadBackGround();
+        loadSound();
         loadTile();
         loadPlayer();
         loadBomb();
         loadFlame();
         loadItem();
+        loadMap();
+    }
+
+    static void loadSound() {
+        explosionSound = new Sound("small_explosion");
+        receiveItemSound = new Sound("coin_received");
+    }
+
+    static void loadBackGround() {
+        try {
+            logo = ImageIO.read(new File(Main.res + "/background/logo1.png"));
+            background = ImageIO.read(new File(Main.res + "/background/background.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void loadMap() {
+        maxMap = Objects.requireNonNull(new File(Main.res + "\\maps").list()).length;
     }
 
     static void loadTile() {

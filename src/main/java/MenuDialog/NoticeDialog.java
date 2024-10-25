@@ -18,7 +18,6 @@ public class NoticeDialog extends JDialog {
         setLocationRelativeTo(null);
         setBackground(Color.WHITE);
 
-
         addMessage();
 
         MyButton okButton = new MyButton("yes");

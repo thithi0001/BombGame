@@ -14,14 +14,14 @@ public class Sound {
     public Clip clip;
     File file;
     String name;
-    
+
     public FloatControl controlMusic;
     public FloatControl controlSE;
     
     public float musicVolume;
     public static float SEVolume;
     public static Boolean SE;
-    public  Boolean Music;
+    public Boolean Music;
 
     public Sound(String a) {
         name = a;
@@ -52,10 +52,9 @@ public class Sound {
     }
 
     public void play() {
-        checkVolume(); 
-        clip.setFramePosition(0); 
+        checkVolume();
+        clip.setFramePosition(0);
         clip.start();
-
     }
 
     public void loop() {
@@ -64,7 +63,6 @@ public class Sound {
 
     public void stopMusic() {
         clip.stop();
-       
     }
 
     public String nameFile(String a) {

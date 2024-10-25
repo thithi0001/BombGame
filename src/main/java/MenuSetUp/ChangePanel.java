@@ -41,7 +41,7 @@ public class ChangePanel {
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(menu, "menu");//panel 1 in contentPane
         contentPane.add(start, "start");//panel 2 in contentPane
-        
+
         music = new Sound("Music");
         music.play();
         music.loop();
@@ -56,39 +56,26 @@ public class ChangePanel {
         start.newUser.okButton.addActionListener(NA);
         start.newUser.textField.addActionListener(NA);
 
-
         //SET UP DIALOG REPLACE IF USER HAS EXISTED
         replace.okButton.addActionListener(new replaceAction(this, replace));
 
-
         //SET UP OTHER BUTTON IN START PANEL
-
         start.score.addActionListener(e -> {
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
             highScore.setVisible(true);
         });
-
         start.continueButton.addActionListener(e -> {
             ContinueDialog dialog = new ContinueDialog(frame, this);
             dialog.setVisible(true);
         });
-
         start.back.addActionListener(e -> cardLayout.previous(contentPane));
-
         start.setting.addActionListener(e -> {
-            // SettingPanel setting = new SettingPanel(music);
-            // contentPane.add(setting, "setting");
-            // cardLayout.show(contentPane, "setting");
-            // setting.back.addActionListener((event) -> {
-            //     cardLayout.show(contentPane, "start");
-            //     music.saveSetting(music);
-            // });
             SettingDialog settingDialog = new SettingDialog(frame, this);
             settingDialog.setVisible(true);
         });
-        // // SET UP MENU PANEL BUTTON
-        menu.start.addActionListener((e) -> cardLayout.next(contentPane));
 
+        // SET UP MENU PANEL BUTTON
+        menu.start.addActionListener((e) -> cardLayout.next(contentPane));
         menu.quit.addActionListener((e) -> {
             RemindDialog a = new RemindDialog(frame, "exit Game ");
             a.setVisible(true);
@@ -118,6 +105,7 @@ class newUserAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         String x = newUser.textField.getText();
         if (x.isEmpty()) {
             NoticeDialog note = new NoticeDialog(change.frame);
@@ -139,8 +127,8 @@ class newUserAction implements ActionListener {
                 change.cardLayout.show(change.contentPane, "newLevel");
             }
         }
-
     }
+
 }
 
 class replaceAction implements ActionListener {

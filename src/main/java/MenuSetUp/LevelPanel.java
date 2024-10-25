@@ -6,15 +6,11 @@ import javax.swing.JPanel;
 
 import MenuDialog.RemindDialog;
 import MenuDialog.SettingDialog;
-import main.Main;
 import res.LoadResource;
 import userClass.User;
 
 import java.awt.GridLayout;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
 
 public class LevelPanel extends JPanel {
     MyButton back;
@@ -31,6 +27,7 @@ public class LevelPanel extends JPanel {
         if (currentUser != null) {
             user = currentUser;
         } else user = new User();
+
         // SET UP LEVEL BUTTON
         levelButtonPanel = new JPanel();
         addLevelButton(user, levelButtonPanel);
@@ -51,7 +48,7 @@ public class LevelPanel extends JPanel {
 
         //setting button
         setting = new MyButton("setting");
-        setting.setLocateButton(DimensionSize.screenWidth - 60, 10);
+        setting.setLocateButton(DimensionSize.screenWidth - 71, 10);
         add(setting);
 
         setting.addActionListener((event) -> {
@@ -65,13 +62,13 @@ public class LevelPanel extends JPanel {
     }
 
     public void addLevelButton(User a, JPanel levelButtonPanel) {
-        levelButtonPanel.setSize(DimensionSize.screenWidth - 100,DimensionSize.screenHeight -250);
+        levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
         int row = 0, col = 4;
-        if(User.maxLevel % col == 0)row = User.maxLevel/col;
-        else row = User.maxLevel/col +1;
-        
+        if (LoadResource.maxMap % col == 0) row = LoadResource.maxMap / col;
+        else row = LoadResource.maxMap / col + 1;
+
         levelButtonPanel.setLayout(new GridLayout(row, col));
-        levelButtonPanel.setLocation(50,150);
+        levelButtonPanel.setLocation(50, 150);
         levelButtonPanel.setOpaque(false);
         for (int i = 0; i < 3; i++) {
             String x = "level" + (i + 1);
@@ -134,16 +131,10 @@ public class LevelPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
-        BufferedImage background;
-        try {
-            File a = new File(Main.res + "/background/background.png");
-            background = ImageIO.read(a);
-            g.drawImage(background, 0, 0, DimensionSize.screenWidth
-                    , DimensionSize.screenHeight, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        g.drawImage(LoadResource.background, 0, 0, DimensionSize.screenWidth
+                , DimensionSize.screenHeight, null);
     }
 }
 
