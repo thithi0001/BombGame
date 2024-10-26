@@ -1,4 +1,5 @@
 ugly_key 50
 plus_1 30
+changeToTimeBomb 20
 white 0
 black 0
