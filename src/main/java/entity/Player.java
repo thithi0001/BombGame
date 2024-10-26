@@ -21,8 +21,8 @@ public class Player extends Entity {
 
     ArrayList<Bomb> bombs = new ArrayList<>();
     private String bombType = "normal";
-    private int maxBombs = 3;
-    private int flameLength = 3;
+    private int maxBombs;
+    private int flameLength;
     double cooldownInSecond;
     double cooldownInFrame;
     int cooldown;
@@ -53,11 +53,13 @@ public class Player extends Entity {
 
     void setDefaultValues() {
 
-        x = gp.map.checkPos.x * tileSize;
-        y = gp.map.checkPos.y * tileSize;
+        maxBombs = 1;
+        flameLength = 1;
         speed = 4;
         direction = "down";
         spriteTime = 6;
+        x = gp.map.checkPos.x * tileSize;
+        y = gp.map.checkPos.y * tileSize;
     }
 
     void getPlayerImage() {

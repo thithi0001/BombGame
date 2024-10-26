@@ -15,6 +15,7 @@ public class SettingDialog extends SuperDialog {
     MySlider musicSlider;
     MySlider SESlider;
     public MyButton back;
+
     public SettingDialog(JFrame parent, ChangePanel change) {
         super(parent);
         setTitle("SETTING");

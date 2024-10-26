@@ -12,7 +12,7 @@ public class Entity {
     GamePanel gp;
     public String name;
     public int x, y;
-    public int speed;
+    protected int speed;
 
     public BufferedImage[] sprites;
     public String direction;// direction of sprites
@@ -44,5 +44,17 @@ public class Entity {
 
     public void beingHit() {
         System.out.println("hit " + name);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int n) {
+        speed = n;
+    }
+
+    public void addSpeed(int n) {
+        speed += n;
     }
 }

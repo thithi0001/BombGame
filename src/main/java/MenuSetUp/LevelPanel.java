@@ -56,7 +56,7 @@ public class LevelPanel extends JPanel {
             change.frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(change.frame, change);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(e -> change.frame.setEnabled(true) );
+            settingDialog.back.addActionListener(e -> change.frame.setEnabled(true));
         });
     }
 
