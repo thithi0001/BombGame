@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import entity.Entity;
 import main.GamePanel;
+import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -21,10 +22,7 @@ public class NormalBomb extends Bomb {
         spriteTime = 6;// draw 1 sprite after every 6 frames
 
         solidArea = new Rectangle(x, y, tileSize, tileSize);
-
-        countdownInSecond = 3;
-        countdownInFrame = countdownInSecond * gp.FPS;
-        countDown = (int) countdownInFrame;
+        countDown = UtilityTool.convertTime(2.0);
 
         getBombImage();
     }

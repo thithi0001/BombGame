@@ -27,8 +27,6 @@ public class Bomb {
     public int spriteCounter = 0;// should be frame counter
 
     // COUNTDOWN
-    double countdownInSecond;
-    double countdownInFrame;
     protected int countDown;
 
     // STATE

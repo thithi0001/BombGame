@@ -9,6 +9,7 @@ import bomb.NormalBomb;
 import bomb.TimeBomb;
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -23,11 +24,11 @@ public class Player extends Entity {
     private String bombType = "normal";
     private int maxBombs;
     private int flameLength;
-    double cooldownInSecond;
-    double cooldownInFrame;
     int cooldown;
     int timer = 0;
+    int invincibleTime = 0;
 
+    private boolean beingHit = false;
     private boolean hasShield = false;
     public int score = 0;
 
@@ -40,10 +41,6 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
         this.name = "player";
-
-        cooldownInSecond = 0.1;
-        cooldownInFrame = cooldownInSecond * gp.FPS;
-        cooldown = (int) cooldownInFrame;
 
         solidArea = new Rectangle(12, 20, 24, 24);
 
@@ -58,6 +55,7 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
         spriteTime = 6;
+        cooldown = UtilityTool.convertTime(0.1);
         x = gp.map.checkPos.x * tileSize;
         y = gp.map.checkPos.y * tileSize;
     }
@@ -83,6 +81,10 @@ public class Player extends Entity {
 
         bombs.forEach(Bomb::update);
         bombs.removeIf(bomb -> bomb.exploded);
+
+        if (hasShield && beingHit) {
+            enterInvincibleTime();
+        }
 
         if (timer > 0) {
             timer--;
@@ -164,13 +166,22 @@ public class Player extends Entity {
 
     @Override
     public void beingHit() {
+
         super.beingHit();
+        beingHit = true;
         if (hasShield) {
-            hasShield = false;
             System.out.println("Hit shield!");
             return;
         }
         isAlive = false;
+    }
+
+    void enterInvincibleTime() {
+        invincibleTime--;
+        if (invincibleTime == 0) {
+            hasShield = false;
+            beingHit = false;
+        }
     }
 
     public KeyHandler getKeyHandler() {
@@ -179,6 +190,7 @@ public class Player extends Entity {
 
     public void setHasShield(boolean bool) {
         hasShield = bool;
+        invincibleTime = UtilityTool.convertTime(1.0);
     }
 
     public void setBombType(String newType) {

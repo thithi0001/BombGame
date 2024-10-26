@@ -61,4 +61,9 @@ public class UtilityTool {
 
         return sprites;
     }
+
+    public static int convertTime(double timeInSecond) {
+        double timeInFrame = timeInSecond * GamePanel.FPS;
+        return (int) timeInFrame;
+    }
 }

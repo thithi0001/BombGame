@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean WIN = false;
 
     // FPS
-    public int FPS = 60;
+    public static int FPS = 60;
     public Clock clock = new Clock(this);
 
     public LevelGameFrame parent;

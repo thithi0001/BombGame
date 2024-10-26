@@ -1,5 +1,5 @@
 grass
-2 coin;3 plus_flame;1 clock;1 shoe;2 plus_bomb; 1 shield
+2 coin;3 plus_flame;1 clock;1 shoe;2 plus_bomb;1 shield
 1,1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
