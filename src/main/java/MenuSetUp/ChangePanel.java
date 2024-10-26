@@ -52,7 +52,6 @@ public class ChangePanel {
         ReplaceDialog replace = new ReplaceDialog(frame);
         
         //SET UP OTHER BUTTON IN START PANEL
-        
         menu.newGame.addActionListener(event-> {
             NewGameDialog newUser = new NewGameDialog(frame);
             frame.setEnabled(false);
@@ -112,9 +111,7 @@ public class ChangePanel {
                 a.setVisible(false);
             });
         });
-
     }
-
 }
 
 class newUserAction implements ActionListener {

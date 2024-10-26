@@ -30,7 +30,8 @@ public class LevelPanel extends JPanel {
 
         // SET UP LEVEL BUTTON
         levelButtonPanel = new JPanel();
-        addLevelButton(user, levelButtonPanel);
+        addButton(user, levelButtonPanel);
+        add(levelButtonPanel);
         actionLevelButton();
 
         //back button
@@ -59,11 +60,7 @@ public class LevelPanel extends JPanel {
         });
     }
 
-    public void setUser(User a) {
-
-    }
-
-    public void addLevelButton(User a, JPanel levelButtonPanel) {
+    public void addButton(User a, JPanel levelButtonPanel) {
         levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
         int row = 0, col = 4;
         if (LoadResource.maxMap % col == 0) row = LoadResource.maxMap / col;
@@ -81,12 +78,10 @@ public class LevelPanel extends JPanel {
                     , DimensionSize.screenHeight / 2);
             levelButtonPanel.add(level[i]);
         }
-        add(levelButtonPanel);
     }
 
     public void actionLevelButton() {
-
-        for (int i = 0; i < user.getLevel(); i++) {
+        for (int i = 0; i < LoadResource.maxMap; i++) {
             int a = i + 1;
             if (i < user.getLevel()) {
                 level[i].addActionListener(e -> {
@@ -99,16 +94,14 @@ public class LevelPanel extends JPanel {
     }
 
     public void resetLevelPanel(User a, JPanel levelButtonPanel) {
-
-        for (int i = 0; i < 3; i++) {
-            remove(level[i]); //delete old button
+        for (int i = 0; i < LoadResource.maxMap; i++) {
+            levelButtonPanel.remove(level[i]); //delete old button
         }
         //add new button
-        addLevelButton(a, levelButtonPanel);
+        addButton(a, levelButtonPanel);
 
         //add action for new button
         actionLevelButton();
-
     }
 
     void addActionBackButton() {
