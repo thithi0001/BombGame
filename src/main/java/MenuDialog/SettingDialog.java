@@ -92,11 +92,4 @@ public class SettingDialog extends SuperDialog {
             SESlider.slider.setEnabled(Sound.SE);
         });
     }
-
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        ChangePanel change = new ChangePanel(window);
-        SettingDialog a = new SettingDialog(window, change);
-        a.setVisible(true);
-    }
 }

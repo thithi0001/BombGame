@@ -22,8 +22,8 @@ public class ChangePanel {
     public Container contentPane;
     public CardLayout cardLayout;
     public UserList userList;
+    public HomePanel home;
     public MenuPanel menu;
-    public StartPanel start;
     public JFrame frame;
     public Sound music;
 
@@ -35,12 +35,12 @@ public class ChangePanel {
         contentPane.setLayout(cardLayout);
         userList = new UserList();
 
-        menu = new MenuPanel(DimensionSize.screenWidth, DimensionSize.screenHeight);
-        start = new StartPanel(frame);
+        home = new HomePanel(DimensionSize.screenWidth, DimensionSize.screenHeight);
+        menu = new MenuPanel(frame);
 
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
-        contentPane.add(menu, "menu");//panel 1 in contentPane
-        contentPane.add(start, "start");//panel 2 in contentPane
+        contentPane.add(home, "menu");//panel 1 in contentPane
+        contentPane.add(menu, "start");//panel 2 in contentPane
 
         music = new Sound("Music");
         music.play();
@@ -53,7 +53,7 @@ public class ChangePanel {
         
         //SET UP OTHER BUTTON IN START PANEL
         
-        start.newGame.addActionListener(event-> {
+        menu.newGame.addActionListener(event-> {
             NewGameDialog newUser = new NewGameDialog(frame);
             frame.setEnabled(false);
             newUser.setVisible(true);
@@ -76,20 +76,20 @@ public class ChangePanel {
             });
         });
 
-        start.continueButton.addActionListener(e -> {
+        menu.continueButton.addActionListener(e -> {
             frame.setEnabled(false);
             ContinueDialog dialog = new ContinueDialog(frame, this);
             dialog.setVisible(true);
         });
 
-        start.score.addActionListener(e -> {
+        menu.score.addActionListener(e -> {
             frame.setEnabled(false);
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
             highScore.setVisible(true);
         });
         
-        start.back.addActionListener(e -> cardLayout.previous(contentPane));
-        start.setting.addActionListener(e -> {
+        menu.back.addActionListener(e -> cardLayout.previous(contentPane));
+        menu.setting.addActionListener(e -> {
             frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(frame, this);
             settingDialog.setVisible(true);
@@ -97,8 +97,8 @@ public class ChangePanel {
         });
 
         // SET UP MENU PANEL BUTTON
-        menu.start.addActionListener((e) -> cardLayout.next(contentPane));
-        menu.quit.addActionListener((e) -> {
+        home.start.addActionListener((e) -> cardLayout.next(contentPane));
+        home.quit.addActionListener((e) -> {
             RemindDialog a = new RemindDialog(frame, "exit Game ");
             a.setVisible(true);
             frame.setEnabled(false);
