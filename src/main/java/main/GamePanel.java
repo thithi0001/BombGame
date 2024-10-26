@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);// this can be focused to receive key input
 
         this.map = new Map(this, mapFileName);
+        this.player = new Player(this, keyH);
         this.setLayout(null);
         addButton();
     }
@@ -194,13 +195,19 @@ public class GamePanel extends JPanel implements Runnable {
         //draw button
         g2.drawImage(button.getIcon().getImage(), button.getLocation().x, y, 50, 50, null);
 
-        //draw score
+        g2.setColor(Color.WHITE);
+        int len = ("SCORE " + player.score).length();
+        g2.fillRect(10, y - 16, len * 11 + 2, 20);
+        len = clock.toString().length();
+        g2.fillRect((DimensionSize.screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
         g2.setColor(Color.BLACK);
         g2.setFont(LoadResource.Consolas_Bold_20);
+
+        //draw score
         g2.drawString("SCORE " + player.score, 10, y);
 
         //draw clock
-        g2.drawString(clock.toString(), (DimensionSize.screenWidth - clock.toString().length()) / 2, y);
+        g2.drawString(clock.toString(), (DimensionSize.screenWidth - len) / 2, y);
     }
 
     public static class Clock {
