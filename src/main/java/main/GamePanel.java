@@ -108,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             case "uncompleted":
                 isPausing = true;
+                parent.setEnabled(false);
                 PauseDialog pauseDialog = new PauseDialog(parent);
                 pauseDialog.setVisible(true);
                 break;

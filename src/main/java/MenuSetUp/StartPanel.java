@@ -3,8 +3,6 @@ package MenuSetUp;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import MenuDialog.NewGameDialog;
-
 import java.awt.*;
 
 import res.LoadResource;
@@ -15,7 +13,6 @@ public class StartPanel extends JPanel {
     MyButton newGame;
     MyButton score;
     MyButton continueButton;
-    NewGameDialog newUser;
 
     public StartPanel(JFrame frame) {
         setLayout(null);
@@ -40,8 +37,6 @@ public class StartPanel extends JPanel {
         score.setLocateButton((DimensionSize.screenWidth - 206) / 2, ((DimensionSize.maxScreenRow - 5) / 2 + 4) * DimensionSize.tileSize);
         add(score);
 
-        newUser = new NewGameDialog(frame);//Dialog announce enter new player's name
-        newGame.addActionListener(e -> newUser.setVisible(true));
     }
 
     @Override

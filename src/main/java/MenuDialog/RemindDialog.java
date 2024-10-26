@@ -23,7 +23,7 @@ public class RemindDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         setBackground(Color.WHITE);
-
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         //add 
         okButton = new MyButton("yes");
         noButton = new MyButton("no");

@@ -12,24 +12,19 @@ import res.LoadResource;
 public class NewGameDialog extends SuperDialog {
     public JTextField textField;
     public MyButton okButton;
+    public MyButton cancelButton;
 
     public NewGameDialog(JFrame parent) {
         super(parent);
 
         // BUTTON
         okButton = new MyButton("yes");
-        MyButton cancelButton = new MyButton("no");
+        cancelButton = new MyButton("no");
 
         setTitle("NEW GAME");
         setLabel();
         addButton(okButton, cancelButton);
-        setBackground();
-
-        //BUTTON ACTION
-        cancelButton.addActionListener(e -> {
-            setVisible(false);
-            textField.setText("");
-        });
+        setBackground();       
     }
 
     void setLabel() {

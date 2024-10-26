@@ -52,8 +52,10 @@ public class LevelPanel extends JPanel {
         add(setting);
 
         setting.addActionListener((event) -> {
+            change.frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(change.frame, change);
             settingDialog.setVisible(true);
+            settingDialog.back.addActionListener(e -> change.frame.setEnabled(true) );
         });
     }
 
@@ -113,16 +115,18 @@ public class LevelPanel extends JPanel {
         back.addActionListener((event) -> {
             RemindDialog saveGame = new RemindDialog(change.frame, "save game ");
             saveGame.setVisible(true);
-
+            change.frame.setEnabled(false);
             //saveGame ok button
             saveGame.okButton.addActionListener(e -> {
                 change.userList.addUser(user);
                 change.userList.saveGame();
+                change.frame.setEnabled(true);
                 change.cardLayout.show(change.contentPane, "start");
                 saveGame.setVisible(false);
             });
             //saveGame no button
             saveGame.noButton.addActionListener(e -> {
+                change.frame.setEnabled(true);
                 change.cardLayout.show(change.contentPane, "start");
                 saveGame.setVisible(false);
             });
