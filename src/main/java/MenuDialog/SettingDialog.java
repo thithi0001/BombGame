@@ -14,12 +14,12 @@ import res.LoadResource;
 public class SettingDialog extends SuperDialog {
     MySlider musicSlider;
     MySlider SESlider;
-
+    public MyButton back;
     public SettingDialog(JFrame parent, ChangePanel change) {
         super(parent);
         setTitle("SETTING");
         //SET BACK BUTTON
-        MyButton back = new MyButton("back");
+        back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 400);
         getContentPane().add(back);
         back.addActionListener(e -> {
@@ -91,12 +91,5 @@ public class SettingDialog extends SuperDialog {
             //slider unmoved
             SESlider.slider.setEnabled(Sound.SE);
         });
-    }
-
-    public static void main(String[] args) {
-        JFrame window = new JFrame();
-        ChangePanel change = new ChangePanel(window);
-        SettingDialog a = new SettingDialog(window, change);
-        a.setVisible(true);
     }
 }

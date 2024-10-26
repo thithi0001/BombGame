@@ -28,7 +28,10 @@ public class HighScoreDialog extends SuperDialog {
         //SET BACK BUTTON
         back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 400);
-        back.addActionListener(e -> setVisible(false));
+        back.addActionListener(e -> {
+            parent.setEnabled(true);
+            setVisible(false);
+        });
         getContentPane().add(back);
 
         setBackground();

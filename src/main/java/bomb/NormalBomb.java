@@ -3,7 +3,6 @@ package bomb;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import MenuSetUp.Sound;
 import entity.Entity;
 import main.GamePanel;
 import res.LoadResource;

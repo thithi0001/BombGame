@@ -35,9 +35,12 @@ public class ContinueDialog extends SuperDialog {
         setBackground();
 
         //SET BUTTON ACTION
-        noButton.addActionListener(e -> setVisible(false));
-        okButton.addActionListener(e -> {
+        noButton.addActionListener(e -> {
+            parent.setEnabled(true);
             setVisible(false);
+        });
+        okButton.addActionListener(e -> {
+            parent.setEnabled(true);
             User A = userBox.getItemAt(userBox.getSelectedIndex());
             User currentUser = new User(A.getUserName());
             currentUser.setLevel(A.getLevel());
@@ -46,6 +49,7 @@ public class ContinueDialog extends SuperDialog {
             }
             change.contentPane.add(new LevelPanel(currentUser, change), "level");
             change.cardLayout.show(change.contentPane, "level");
+            setVisible(false);
         });
     }
 }

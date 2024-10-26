@@ -1,28 +1,42 @@
 package MenuSetUp;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.*;
 
 import res.LoadResource;
 
-import java.awt.Graphics;
-
 public class MenuPanel extends JPanel {
-    MyButton start;
-    MyButton quit;
+    MyButton back;
+    MyButton setting;
+    MyButton newGame;
+    MyButton score;
+    MyButton continueButton;
 
-    public MenuPanel(int width, int height) {
-
+    public MenuPanel(JFrame frame) {
         setLayout(null);
 
-        start = new MyButton("start");
-        quit = new MyButton("quit");
+        back = new MyButton("back");
+        back.setLocateButton(10, 10);
+        add(back);
 
-        //thiet lap vi tri
-        start.setLocateButton(DimensionSize.screenWidth / 2 - 71, (DimensionSize.maxScreenRow - 4) * DimensionSize.tileSize - 71);
-        quit.setLocateButton(DimensionSize.screenWidth / 2 - 71, (DimensionSize.maxScreenRow - 2) * DimensionSize.tileSize - 71);
+        setting = new MyButton("setting");
+        setting.setLocateButton(DimensionSize.screenWidth - 71, 10);
+        add(setting);
 
-        add(start);
-        add(quit);
+        newGame = new MyButton("newGame");
+        newGame.setLocateButton((DimensionSize.screenWidth - 206) / 2, ((DimensionSize.maxScreenRow - 5) / 2) * DimensionSize.tileSize);
+        add(newGame);
+
+        continueButton = new MyButton("continue");
+        continueButton.setLocateButton((DimensionSize.screenWidth - 206) / 2, ((DimensionSize.maxScreenRow - 5) / 2 + 2) * DimensionSize.tileSize);
+        add(continueButton);
+
+        score = new MyButton("score");
+        score.setLocateButton((DimensionSize.screenWidth - 206) / 2, ((DimensionSize.maxScreenRow - 5) / 2 + 4) * DimensionSize.tileSize);
+        add(score);
+
     }
 
     @Override
@@ -30,7 +44,5 @@ public class MenuPanel extends JPanel {
 
         super.paintComponent(g);
         g.drawImage(LoadResource.background, 0, 0, DimensionSize.screenWidth, DimensionSize.screenHeight, null);
-        g.drawImage(LoadResource.logo, 0, 0, DimensionSize.screenWidth, DimensionSize.screenHeight, null);
     }
-
 }

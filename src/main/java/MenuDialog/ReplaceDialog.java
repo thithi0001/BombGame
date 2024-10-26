@@ -16,14 +16,13 @@ public class ReplaceDialog extends JDialog {
         setSize(400, 200);
         setResizable(false);
         setLocationRelativeTo(null);
-
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addMessage();
 
         okButton = new MyButton("yes");
         cancelButton = new MyButton("no");
         addButton(okButton, cancelButton);
 
-        cancelButton.addActionListener(e -> setVisible(false));
         okButton.addActionListener(e -> setVisible(false));
     }
 

@@ -11,6 +11,7 @@ import MenuSetUp.MyButton;
 import res.LoadResource;
 
 public class NoticeDialog extends JDialog {
+    public MyButton okButton;
     public NoticeDialog(JFrame parent) {
         super(parent);
         setSize(400, 200);
@@ -20,9 +21,9 @@ public class NoticeDialog extends JDialog {
 
         addMessage();
 
-        MyButton okButton = new MyButton("yes");
+        okButton = new MyButton("yes");
         getContentPane().add(okButton, BorderLayout.SOUTH);
-        okButton.addActionListener(e -> setVisible(false));
+        
     }
 
     void addMessage() {

@@ -40,10 +40,13 @@ public class PauseDialog extends SuperDialog {
             parent.gamePanel.setGameThread(null);
             parent.levelPanel.change.frame.setVisible(true);
         });
+
         MyButton setting = new MyButton("setting");
         setting.addActionListener((e) -> {
+            setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(parent, parent.levelPanel.change);
             settingDialog.setVisible(true);
+            settingDialog.back.addActionListener(event -> setEnabled(true) );
         });
         Content(resume, exit, setting, restart);
 
