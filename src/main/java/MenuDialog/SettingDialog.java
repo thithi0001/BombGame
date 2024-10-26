@@ -42,7 +42,7 @@ public class SettingDialog extends SuperDialog {
         //SLIDER MUSIC
         musicSlider = new MySlider(250, 25, (int) music.musicVolume, "music");
         musicSlider.addMySlider(content);
-        musicSlider.slider.setEnabled(music.Music);
+        musicSlider.slider.setEnabled(music.isMusicOn);
         musicSlider.slider.addChangeListener((e) -> {
             music.musicVolume = musicSlider.slider.getValue();
             music.controlMusic.setValue(music.musicVolume);
@@ -65,17 +65,17 @@ public class SettingDialog extends SuperDialog {
     }
 
     void addMusicButton(JPanel content, Sound music) {
-        MyButton musicButton = music.Music ? new MyButton("music") : new MyButton("musicOff");
+        MyButton musicButton = music.isMusicOn ? new MyButton("music") : new MyButton("musicOff");
         content.add(musicButton);
         musicButton.addActionListener((e) -> {
-            music.Music = !music.Music;
+            music.isMusicOn = !music.isMusicOn;
             music.checkVolume();
 
             //set icon
-            musicButton.icon = music.Music ? LoadResource.musicOnBtnIcon : LoadResource.musicOffBtnIcon;
+            musicButton.icon = music.isMusicOn ? LoadResource.musicOnBtnIcon : LoadResource.musicOffBtnIcon;
 
             //slider unmoved
-            musicSlider.slider.setEnabled(music.Music);
+            musicSlider.slider.setEnabled(music.isMusicOn);
         });
     }
 

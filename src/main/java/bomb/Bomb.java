@@ -27,9 +27,9 @@ public class Bomb {
     public int spriteCounter = 0;// should be frame counter
 
     // COUNTDOWN
-    public double countdownInSecond;
-    public double countdownInFrame;
-    public int countDown;
+    double countdownInSecond;
+    double countdownInFrame;
+    protected int countDown;
 
     // STATE
     public boolean exploding = false;
@@ -45,10 +45,18 @@ public class Bomb {
     public int flameLength = 1;
 
     // SOUND
-    Sound explosionSound = LoadResource.explosionSound;
+    Sound explosionSound;
 
     public Bomb() {
+    }
 
+    public Bomb(GamePanel gp, int x, int y, Entity owner, int flameLength) {
+        this.gp = gp;
+        this.x = x;
+        this.y = y;
+        this.owner = owner;
+        this.flameLength = flameLength;
+        explosionSound = LoadResource.explosionSound;
     }
 
     public int col() {
@@ -63,5 +71,31 @@ public class Bomb {
     }
 
     public void draw(Graphics2D g2) {
+    }
+
+    void explode() {
+        exploding = true;
+        sprites = explosion;
+        spriteCounter = 0;
+        spriteNum = 0;
+        explosionSound.play();
+    }
+
+    public void setCountDown(int secondLeft) {
+        countDown = secondLeft;
+    }
+
+    public void checkPlayer() {
+
+        if (letPlayerPassThrough) {
+
+            Rectangle playerSolidArea = new Rectangle(owner.solidArea);
+            playerSolidArea.x += owner.x;
+            playerSolidArea.y += owner.y;
+
+            if (!playerSolidArea.intersects(solidArea)) {
+                letPlayerPassThrough = false;
+            }
+        }
     }
 }

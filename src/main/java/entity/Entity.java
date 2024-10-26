@@ -23,8 +23,7 @@ public class Entity {
     public Rectangle solidArea;
     public boolean collisionOn = true;
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
-    public boolean isHit = false;
-    public boolean isDead = false;
+    public boolean isAlive = true;
 
     public void resetCollision(boolean state) {
         canMoveUp = state;
@@ -44,7 +43,6 @@ public class Entity {
     }
 
     public void beingHit() {
-        isHit = true;
         System.out.println("hit " + name);
     }
 }

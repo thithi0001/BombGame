@@ -55,6 +55,7 @@ public class Flame {
 
         CollisionChecker.checkEntityForFlame(this, creator.owner);
         gp.map.items.forEach(item -> CollisionChecker.checkItemForFlame(this, item));
+        gp.bombs.forEach(bomb -> CollisionChecker.checkBombForFlame(this, bomb));
 
         duration--;
         if (++spriteCounter > spriteTime) {
@@ -74,6 +75,12 @@ public class Flame {
         drawLeft(g2);
         drawRight(g2);
         solidAreaIsCreated = true;
+    }
+
+    public void drawDebug(Graphics2D g2) {
+        g2.setColor(Color.BLUE);
+        g2.fillRect(verticalSolidArea.x, verticalSolidArea.y, verticalSolidArea.width, verticalSolidArea.height);
+        g2.fillRect(horizontalSolidArea.x, horizontalSolidArea.y, horizontalSolidArea.width, horizontalSolidArea.height);
     }
 
     void drawUp(Graphics2D g2) {
