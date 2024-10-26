@@ -24,9 +24,12 @@ public class TileManager {
 
     public void getTileImage() {
 
-        setup(0, "grass", false, false);
-        setup(1, "water", true, false);
-        setup(2, "wood_box", true, true, 20);
+//        setup(0, "grass", false, false);
+//        setup(1, "water", true, false);
+//        setup(2, "wood_box", true, true, 20);
+        setupNoScale(0, "grass_2", false, false);
+        setup(1, "wall", true, false);
+        setup(2, "wood", true, true, 20);
     }
 
     public void setup(int index, String imageName, boolean collision, boolean destructible, int point) {
@@ -41,6 +44,20 @@ public class TileManager {
             tile[index].name = imageName;
             tile[index].image = ImageIO.read(new File(Main.res + "\\tiles\\" + imageName + ".png"));
             tile[index].image = UtilityTool.scaleImage(tile[index].image, tileSize, tileSize);
+            tile[index].collision = collision;
+            tile[index].destructible = destructible;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setupNoScale(int index, String imageName, boolean collision, boolean destructible) {
+
+        try {
+            tile[index] = new Tile();
+            tile[index].name = imageName;
+            tile[index].image = ImageIO.read(new File(Main.res + "\\tiles\\" + imageName + ".png"));
             tile[index].collision = collision;
             tile[index].destructible = destructible;
 

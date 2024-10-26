@@ -70,7 +70,7 @@ public class Sound {
     }
 
     public void checkVolume() {
-        if (name.equals("isMusicOn")) {
+        if (name.equals("Music")) {
             if (isMusicOn) {
                 controlMusic.setValue(musicVolume);
                 clip.start();
