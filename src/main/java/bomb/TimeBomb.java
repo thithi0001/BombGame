@@ -1,37 +1,33 @@
 package bomb;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-
 import entity.Entity;
+import entity.Player;
 import main.GamePanel;
 import res.LoadResource;
 
+import java.awt.*;
+
 import static MenuSetUp.DimensionSize.tileSize;
 
-public class NormalBomb extends Bomb {
+public class TimeBomb extends Bomb {
 
-    public NormalBomb() {
+    public TimeBomb() {
     }
 
-    public NormalBomb(GamePanel gp, int x, int y, Entity owner, int flameLength) {
+    public TimeBomb(GamePanel gp, int x, int y, Entity owner, int flameLength) {
 
         super(gp, x, y, owner, flameLength);
-        name = "normal bomb";
+        name = "time bomb";
         spriteTime = 6;// draw 1 sprite after every 6 frames
 
         solidArea = new Rectangle(x, y, tileSize, tileSize);
-
-        countdownInSecond = 3;
-        countdownInFrame = countdownInSecond * gp.FPS;
-        countDown = (int) countdownInFrame;
 
         getBombImage();
     }
 
     void getBombImage() {
 
-        idle = LoadResource.normalBombIdle;
+        idle = LoadResource.timeBombIdle;
         explosion = LoadResource.explosion;
         sprites = idle;
     }
@@ -41,9 +37,11 @@ public class NormalBomb extends Bomb {
 
         checkPlayer();
 
-        if (--countDown == 0) {
-            explode();
-            return;
+        if (owner instanceof Player) {
+            if (((Player) owner).getKeyHandler().activateBomb) {
+                explode();
+                return;
+            }
         }
 
         if (exploding) {

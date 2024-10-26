@@ -155,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (map.destructibleTiles == 0) {
                 map.completeMap();
             }
-            if (player.isDead) {
+            if (!player.isAlive) {
                 endGame("lose");
             }
         }

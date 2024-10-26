@@ -60,8 +60,7 @@ public class Item extends Entity {
     @Override
     public void beingHit() {
         if (isCheckPoint) return;
-        isHit = true;
-        System.out.println("hit " + name);
+        super.beingHit();
         state = States.hidden;
     }
 

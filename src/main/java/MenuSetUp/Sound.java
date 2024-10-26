@@ -17,11 +17,11 @@ public class Sound {
 
     public FloatControl controlMusic;
     public FloatControl controlSE;
-    
+
     public float musicVolume;
     public static float SEVolume;
     public static Boolean SE;
-    public Boolean Music;
+    public Boolean isMusicOn;
 
     public Sound(String a) {
         name = a;
@@ -30,7 +30,7 @@ public class Sound {
         readSetting(this);
         if (name.equals("Music")) {
             controlMusic = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            if (Music) {
+            if (isMusicOn) {
                 controlMusic.setValue(musicVolume);
             } else controlMusic.setValue(-80);
         } else {
@@ -70,8 +70,8 @@ public class Sound {
     }
 
     public void checkVolume() {
-        if (name.equals("Music")) {
-            if (Music) {
+        if (name.equals("isMusicOn")) {
+            if (isMusicOn) {
                 controlMusic.setValue(musicVolume);
                 clip.start();
                 clip.loop(-1);
@@ -88,7 +88,7 @@ public class Sound {
             Scanner in = new Scanner(file);
             x.musicVolume = in.nextFloat();
             Sound.SEVolume = in.nextFloat();
-            x.Music = in.nextBoolean();
+            x.isMusicOn = in.nextBoolean();
             Sound.SE = in.nextBoolean();
             in.close();
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class Sound {
             FileWriter writer = new FileWriter(Main.res + "/userData/setting.txt");
             writer.write(music.musicVolume + "\n");
             writer.write(Sound.SEVolume + "\n");
-            writer.write(music.Music + "\n");
+            writer.write(music.isMusicOn + "\n");
             writer.write(Sound.SE + "\n");
             writer.close();
 

@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import bomb.Bomb;
 import bomb.NormalBomb;
+import bomb.TimeBomb;
 import main.GamePanel;
 import main.KeyHandler;
 import res.LoadResource;
@@ -13,22 +15,25 @@ import static MenuSetUp.DimensionSize.tileSize;
 
 public class Player extends Entity {
 
-    KeyHandler keyH;
+    private final KeyHandler keyH;
 
     BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
-    // idle, death will be up direction
-    // bombing, riding animal, kicking bomb, picking up bomb will depend on the
-    // direction
 
-    public ArrayList<NormalBomb> bombs = new ArrayList<>();
-    private int maxBombs = 1;
+    ArrayList<Bomb> bombs = new ArrayList<>();
+    private String bombType = "normal";
+    private int maxBombs = 3;
     private int flameLength = 3;
     double cooldownInSecond;
     double cooldownInFrame;
     int cooldown;
     int timer = 0;
 
+    private boolean hasShield = false;
     public int score = 0;
+
+    public Player() {
+        keyH = new KeyHandler();
+    }
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -74,7 +79,7 @@ public class Player extends Entity {
             timer = cooldown;
         }
 
-        bombs.forEach(NormalBomb::update);
+        bombs.forEach(Bomb::update);
         bombs.removeIf(bomb -> bomb.exploded);
 
         if (timer > 0) {
@@ -158,7 +163,24 @@ public class Player extends Entity {
     @Override
     public void beingHit() {
         super.beingHit();
-        isDead = true;
+        if (hasShield) {
+            hasShield = false;
+            System.out.println("Hit shield!");
+            return;
+        }
+        isAlive = false;
+    }
+
+    public KeyHandler getKeyHandler() {
+        return keyH;
+    }
+
+    public void setHasShield(boolean bool) {
+        hasShield = bool;
+    }
+
+    public void setBombType(String newType) {
+        bombType = newType;
     }
 
     public void addMoreBombs(int n) {
@@ -174,6 +196,15 @@ public class Player extends Entity {
     }
 
     public void placingBomb() {
-        bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
+        switch (bombType) {
+            case "time":
+                bombs.add(new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
+                break;
+            case "normal":
+                bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
+                break;
+        }
     }
+
+
 }

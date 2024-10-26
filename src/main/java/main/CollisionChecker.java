@@ -4,6 +4,7 @@ import bomb.Bomb;
 import bomb.Flame;
 import entity.Entity;
 import entity.Item;
+import entity.Player;
 
 import java.awt.Rectangle;
 
@@ -124,6 +125,15 @@ public class CollisionChecker {
         }
     }
 
+    public static void checkBombForFlame(Flame flame, Bomb bomb) {
+
+        if ((flame.verticalSolidArea.intersects(bomb.solidArea)
+                || flame.horizontalSolidArea.intersects(bomb.solidArea))
+                && !bomb.exploding) {
+            bomb.setCountDown(1);
+        }
+    }
+
     public static void checkEntityForFlame(Flame flame, Entity entity) {
 
         Rectangle solidArea = new Rectangle(entity.solidArea);
@@ -146,18 +156,29 @@ public class CollisionChecker {
 
     public void checkPlayerForItem(Item item) {
 
-        Rectangle solidArea = new Rectangle(gp.player.solidArea);
-        solidArea.x += gp.player.x;
-        solidArea.y += gp.player.y;
+        Player player = gp.player;
+        Rectangle solidArea = new Rectangle(player.solidArea);
+        solidArea.x += player.x;
+        solidArea.y += player.y;
         if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
             item.beingPickedUp();
-            gp.player.addScore(item.score);
+            player.addScore(item.score);
             switch (item.name) {
                 case "plus_1":
-                    gp.player.addMoreFlame(1);
+                    player.addMoreFlame(1);
                     break;
+
                 case "ugly_key":
                     break;
+
+                case "changeToTimeBomb":
+                    player.setBombType("time");
+                    break;
+
+                case "shield":
+                    player.setHasShield(true);
+                    break;
+
                 case "white":
                     gp.WIN = true;
                     break;

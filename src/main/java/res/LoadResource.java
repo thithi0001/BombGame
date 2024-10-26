@@ -55,7 +55,9 @@ public class LoadResource {
     public static BufferedImage[] verticalBody, horizontalBody;
 
     // bomb
-    public static BufferedImage[] idle, explosion;
+    public static BufferedImage[] normalBombIdle;
+    public static BufferedImage[] explosion;
+    public static BufferedImage[] timeBombIdle;
 
     // map
     public static int maxMap;
@@ -137,8 +139,9 @@ public class LoadResource {
     }
 
     static void loadBomb() {
-        idle = UtilityTool.loadSpriteSheet("\\bomb\\normal\\bomb_64_x_16_.png");
+        normalBombIdle = UtilityTool.loadSpriteSheet("\\bomb\\normal\\bomb_64_x_16_.png");
         explosion = UtilityTool.loadSpriteSheet("\\bomb\\normal\\explosion_128_x_16_.png");
+        timeBombIdle = UtilityTool.loadSpriteSheet("\\bomb\\time\\noDetonator_black_version_timeBomb_128_x_16_.png");
     }
 
     static void loadPlayer() {
@@ -148,3 +151,4 @@ public class LoadResource {
         playerRight = UtilityTool.loadSpriteSheet("\\player\\right_32_x_16_.png");
     }
 }
+;

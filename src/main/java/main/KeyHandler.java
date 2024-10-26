@@ -13,6 +13,7 @@ public class KeyHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean enterPressed;
     public boolean upTyped, downTyped, leftTyped, rightTyped;
+    public boolean activateBomb;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -56,6 +57,8 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_ENTER:
                 enterPressed = true;
                 break;
+            case KeyEvent.VK_R:
+                activateBomb = true;
         }
 
         movePressed = upPressed || downPressed || leftPressed || rightPressed;
@@ -94,6 +97,8 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_RIGHT:
                 rightTyped = false;
                 break;
+            case KeyEvent.VK_R:
+                activateBomb = false;
         }
 
         movePressed = upPressed || downPressed || leftPressed || rightPressed;

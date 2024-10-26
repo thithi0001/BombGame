@@ -1,5 +1,5 @@
 grass
-2 ugly_key;1 plus_1
+2 ugly_key;1 plus_1;1 changeToTimeBomb
 1,1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
