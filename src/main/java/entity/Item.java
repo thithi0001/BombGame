@@ -39,7 +39,7 @@ public class Item extends Entity {
         getItemImage();
     }
 
-    public void getItemImage() {
+    void getItemImage() {
 
         itemImg = LoadResource.itemImgMap.get(name);
         score = LoadResource.itemScoreMap.get(name);

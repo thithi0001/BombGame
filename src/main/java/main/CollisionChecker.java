@@ -31,11 +31,12 @@ public class CollisionChecker {
         int entityTopRow = entityTopY / tileSize;
         int entityBotRow = entityBotY / tileSize;
 
+        int eSpeed = entity.getSpeed();
         int tile1, tile2;
 
         switch (entity.direction) {
             case "up":
-                entityTopRow = (entityTopY - entity.speed) / tileSize;
+                entityTopRow = (entityTopY - eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityTopRow];
                 if (gp.tileManager.tile[tile1].collision || gp.tileManager.tile[tile2].collision) {
@@ -43,7 +44,7 @@ public class CollisionChecker {
                 }
                 break;
             case "down":
-                entityBotRow = (entityBotY + entity.speed) / tileSize;
+                entityBotRow = (entityBotY + eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityBotRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityBotRow];
                 if (gp.tileManager.tile[tile1].collision || gp.tileManager.tile[tile2].collision) {
@@ -51,7 +52,7 @@ public class CollisionChecker {
                 }
                 break;
             case "left":
-                entityLeftCol = (entityLeftX - entity.speed) / tileSize;
+                entityLeftCol = (entityLeftX - eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityLeftCol][entityBotRow];
                 if (gp.tileManager.tile[tile1].collision || gp.tileManager.tile[tile2].collision) {
@@ -59,7 +60,7 @@ public class CollisionChecker {
                 }
                 break;
             case "right":
-                entityRightCol = (entityRightX + entity.speed) / tileSize;
+                entityRightCol = (entityRightX + eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityRightCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityBotRow];
                 if (gp.tileManager.tile[tile1].collision || gp.tileManager.tile[tile2].collision) {
@@ -85,13 +86,14 @@ public class CollisionChecker {
     public void checkBombForMoving(Entity entity) {
 
         if (!entity.collisionOn) return;
+        int eSpeed = entity.getSpeed();
 
         Rectangle solidArea = new Rectangle(entity.solidArea);
         solidArea.x += entity.x;
         solidArea.y += entity.y;
         switch (entity.direction) {
             case "up":
-                solidArea.y -= entity.speed;
+                solidArea.y -= eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveUp = false;
@@ -99,7 +101,7 @@ public class CollisionChecker {
                 });
                 break;
             case "down":
-                solidArea.y += entity.speed;
+                solidArea.y += eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveDown = false;
@@ -107,7 +109,7 @@ public class CollisionChecker {
                 });
                 break;
             case "left":
-                solidArea.x -= entity.speed;
+                solidArea.x -= eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveLeft = false;
@@ -115,7 +117,7 @@ public class CollisionChecker {
                 });
                 break;
             case "right":
-                solidArea.x += entity.speed;
+                solidArea.x += eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveRight = false;
@@ -147,7 +149,7 @@ public class CollisionChecker {
 
     public static void checkItemForFlame(Flame flame, Item item) {
 
-        if (item.state == Item.States.shown && flame.duration > 1
+        if (item.state == Item.States.shown && flame.getDuration() > 1
                 && (flame.verticalSolidArea.intersects(item.solidArea)
                 || flame.horizontalSolidArea.intersects(item.solidArea))) {
             item.beingHit();
@@ -164,14 +166,19 @@ public class CollisionChecker {
             item.beingPickedUp();
             player.addScore(item.score);
             switch (item.name) {
-                case "plus_1":
+                case "plus_flame":
                     player.addMoreFlame(1);
                     break;
 
-                case "ugly_key":
+                case "plus_bomb":
+                    player.addMoreBombs(1);
                     break;
 
-                case "changeToTimeBomb":
+                case "shoe":
+                    player.addSpeed(2);
+                    break;
+
+                case "clock":
                     player.setBombType("time");
                     break;
 
@@ -179,8 +186,11 @@ public class CollisionChecker {
                     player.setHasShield(true);
                     break;
 
-                case "white":
+                case "opening_door":
                     gp.WIN = true;
+                    break;
+
+                default:
                     break;
             }
         }

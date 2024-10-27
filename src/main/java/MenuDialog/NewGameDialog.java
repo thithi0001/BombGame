@@ -24,7 +24,7 @@ public class NewGameDialog extends SuperDialog {
         setTitle("NEW GAME");
         setLabel();
         addButton(okButton, cancelButton);
-        setBackground();       
+        setBackground();
     }
 
     void setLabel() {

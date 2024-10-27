@@ -16,7 +16,7 @@ public class LevelPanel extends JPanel {
     MyButton back;
     MyButton setting;
     public User user;
-    public MyButton[] level = new MyButton[3];
+    MyButton[] level = new MyButton[3];
     public JPanel levelButtonPanel;
     public ChangePanel change;
 
@@ -56,7 +56,7 @@ public class LevelPanel extends JPanel {
             change.frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(change.frame, change);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(e -> change.frame.setEnabled(true) );
+            settingDialog.back.addActionListener(e -> change.frame.setEnabled(true));
         });
     }
 

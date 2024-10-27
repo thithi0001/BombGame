@@ -19,14 +19,14 @@ public class Flame {
 
     BufferedImage[] headUp, headDown, headLeft, headRight;
     BufferedImage[] verticalBody, horizontalBody;
-    public int spriteTime = 3;// time between 2 sprites
-    public int spriteNum = 0;// index of the using sprite
-    public int spriteCounter = 0;// should be frame counter
-    public int duration;
+    int spriteTime = 3;// time between 2 sprites
+    int spriteNum = 0;// index of the using sprite
+    int spriteCounter = 0;// should be frame counter
+    private int duration;
 
     public Rectangle verticalSolidArea, horizontalSolidArea;
     boolean solidAreaIsCreated = false;
-    public int length;
+    int length;
 
     public Flame(Bomb creator, int x, int y, int length, int duration) {
 
@@ -223,5 +223,9 @@ public class Flame {
         if (!solidAreaIsCreated) {
             horizontalSolidArea.width += offset;
         }
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }

@@ -10,7 +10,7 @@ import main.GamePanel;
 import res.LoadResource;
 
 public class EndGameDialog extends SuperDialog {
-    public MyButton next, restart, quit;
+    MyButton next, restart, quit;
 
     public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change) {
         super(parent);

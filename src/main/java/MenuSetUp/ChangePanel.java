@@ -22,8 +22,8 @@ public class ChangePanel {
     public Container contentPane;
     public CardLayout cardLayout;
     public UserList userList;
-    public HomePanel home;
-    public MenuPanel menu;
+    HomePanel home;
+    MenuPanel menu;
     public JFrame frame;
     public Sound music;
 
@@ -50,13 +50,13 @@ public class ChangePanel {
 
     public void actionChange() {
         ReplaceDialog replace = new ReplaceDialog(frame);
-        
+
         //SET UP OTHER BUTTON IN START PANEL
-        menu.newGame.addActionListener(event-> {
+        menu.newGame.addActionListener(event -> {
             NewGameDialog newUser = new NewGameDialog(frame);
             frame.setEnabled(false);
             newUser.setVisible(true);
-            
+
             // SET UP DIALOG NEW GAME
             newUserAction NA = new newUserAction(newUser, this, replace);
             newUser.okButton.addActionListener(NA);
@@ -68,7 +68,7 @@ public class ChangePanel {
             });
 
             //SET UP DIALOG REPLACE IF USER HAS EXISTED
-            replace.okButton.addActionListener(new replaceAction(newUser,this, replace));
+            replace.okButton.addActionListener(new replaceAction(newUser, this, replace));
             replace.cancelButton.addActionListener(e -> {
                 newUser.setEnabled(true);
                 replace.setVisible(false);
@@ -86,13 +86,13 @@ public class ChangePanel {
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
             highScore.setVisible(true);
         });
-        
+
         menu.back.addActionListener(e -> cardLayout.previous(contentPane));
         menu.setting.addActionListener(e -> {
             frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(frame, this);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(event -> frame.setEnabled(true) );
+            settingDialog.back.addActionListener(event -> frame.setEnabled(true));
         });
 
         // SET UP MENU PANEL BUTTON
@@ -163,6 +163,7 @@ class replaceAction implements ActionListener {
     ChangePanel changePanel;
     ReplaceDialog replace;
     NewGameDialog newUser;
+
     public replaceAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
         this.changePanel = change;
         this.replace = replace;

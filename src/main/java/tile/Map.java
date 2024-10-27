@@ -58,8 +58,8 @@ public class Map {
 
     public void completeMap() {
         items.forEach(item -> {
-            if (item.name.equals("black")) {
-                item.name = "white";
+            if (item.name.equals("closing_door")) {
+                item.name = "opening_door";
                 item.itemImg = LoadResource.itemImgMap.get(item.name);
             }
         });
@@ -87,7 +87,7 @@ public class Map {
     }
 
     public void setupCheckPoint() {
-        Item item = new Item(gp, "black");
+        Item item = new Item(gp, "closing_door");
         item.state = Item.States.shown;
         item.isCheckPoint = true;
         item.x = checkPos.x * tileSize;

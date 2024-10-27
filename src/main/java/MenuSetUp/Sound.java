@@ -11,7 +11,7 @@ import javax.sound.sampled.FloatControl;
 import main.Main;
 
 public class Sound {
-    public Clip clip;
+    Clip clip;
     File file;
     String name;
 

@@ -12,13 +12,13 @@ public class Entity {
     GamePanel gp;
     public String name;
     public int x, y;
-    public int speed;
+    protected int speed;
 
-    public BufferedImage[] sprites;
+    protected BufferedImage[] sprites;
     public String direction;// direction of sprites
-    public int spriteTime;// time between 2 sprites
-    public int spriteNum = 0;// index of the using sprite
-    public int spriteCounter = 0;// should be frame counter
+    protected int spriteTime;// time between 2 sprites
+    protected int spriteNum = 0;// index of the using sprite
+    protected int spriteCounter = 0;// should be frame counter
 
     public Rectangle solidArea;
     public boolean collisionOn = true;
@@ -44,5 +44,17 @@ public class Entity {
 
     public void beingHit() {
         System.out.println("hit " + name);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int n) {
+        speed = n;
+    }
+
+    public void addSpeed(int n) {
+        speed += n;
     }
 }

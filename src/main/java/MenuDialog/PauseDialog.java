@@ -46,7 +46,7 @@ public class PauseDialog extends SuperDialog {
             setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(parent, parent.levelPanel.change);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(event -> setEnabled(true) );
+            settingDialog.back.addActionListener(event -> setEnabled(true));
         });
         Content(resume, exit, setting, restart);
 

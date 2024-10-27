@@ -12,7 +12,9 @@ import res.LoadResource;
 
 public class NoticeDialog extends JDialog {
     public MyButton okButton;
+
     public NoticeDialog(JFrame parent) {
+
         super(parent);
         setSize(400, 200);
         setResizable(false);
@@ -23,7 +25,6 @@ public class NoticeDialog extends JDialog {
 
         okButton = new MyButton("yes");
         getContentPane().add(okButton, BorderLayout.SOUTH);
-        
     }
 
     void addMessage() {
