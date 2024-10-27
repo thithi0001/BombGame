@@ -19,6 +19,7 @@ import MenuSetUp.MyButton;
 import bomb.Bomb;
 import entity.Item;
 import entity.Player;
+import entity.Monster;
 import res.LoadResource;
 import tile.Map;
 import tile.TileManager;
@@ -46,7 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
-
+    public Monster monster;
+    
     public GamePanel(String mapFileName) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
@@ -71,6 +73,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.levelPanel = level;
         this.setLayout(null);
         addButton();
+
+        monster = new Monster(this, 5, 5);
     }
 
     public void addButton() {
@@ -165,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         bombs.clear();
         player.update();
+        monster.update();
         map.items.forEach(Item::update);
     }
 
@@ -183,7 +188,7 @@ public class GamePanel extends JPanel implements Runnable {
         map.draw(g2);
 
         player.draw(g2);
-
+        monster.draw(g2);
         drawUI(g2);
 
         g2.dispose();// save memories
