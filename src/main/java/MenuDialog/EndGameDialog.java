@@ -95,7 +95,7 @@ public class EndGameDialog extends SuperDialog {
         labelPanel.setSize(500, 520);
         labelPanel.setLocation(10, 0);
 
-        Font font = LoadResource.Courier_New_Bold_20;
+        Font font = LoadResource.dialogContent;
         JLabel nameLabel = new JLabel(name);
         nameLabel.setFont(font);
         nameLabel.setSize(150, 30);
