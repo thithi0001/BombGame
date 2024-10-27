@@ -14,7 +14,7 @@ public class Item extends Entity {
     public int score = 0;
     public BufferedImage itemImg = null;
 
-    public enum States {hidden, isPickedUp, shown}
+    public enum States {hidden, isPickedUp, shown, isHit}
 
     public States state = States.hidden;
     public boolean isCheckPoint = false;
@@ -61,7 +61,7 @@ public class Item extends Entity {
     public void beingHit() {
         if (isCheckPoint) return;
         super.beingHit();
-        state = States.hidden;
+        state = States.isHit;
     }
 
     public void beingPickedUp() {

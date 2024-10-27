@@ -12,28 +12,10 @@ public class KeyHandler implements KeyListener {
     public boolean movePressed;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean enterPressed;
-    public boolean upTyped, downTyped, leftTyped, rightTyped;
     public boolean activateBomb;
 
     @Override
     public void keyTyped(KeyEvent e) {
-
-        int code = e.getKeyCode();
-
-        switch (code) {
-            case KeyEvent.VK_UP:
-                upTyped = true;
-                break;
-            case KeyEvent.VK_DOWN:
-                downTyped = true;
-                break;
-            case KeyEvent.VK_LEFT:
-                leftTyped = true;
-                break;
-            case KeyEvent.VK_RIGHT:
-                rightTyped = true;
-                break;
-        }
     }
 
     @Override
@@ -43,21 +25,31 @@ public class KeyHandler implements KeyListener {
 
         switch (code) {
             case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
                 upPressed = true;
                 break;
+
             case KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN:
                 downPressed = true;
                 break;
+
             case KeyEvent.VK_A:
+            case KeyEvent.VK_LEFT:
                 leftPressed = true;
                 break;
+
             case KeyEvent.VK_D:
+            case KeyEvent.VK_RIGHT:
                 rightPressed = true;
                 break;
+
             case KeyEvent.VK_ENTER:
                 enterPressed = true;
                 break;
-            case KeyEvent.VK_R:
+
+            case KeyEvent.VK_E:
+            case KeyEvent.VK_SPACE:
                 activateBomb = true;
         }
 
@@ -71,33 +63,31 @@ public class KeyHandler implements KeyListener {
 
         switch (code) {
             case KeyEvent.VK_W:
+            case KeyEvent.VK_UP:
                 upPressed = false;
                 break;
+
             case KeyEvent.VK_S:
+            case KeyEvent.VK_DOWN:
                 downPressed = false;
                 break;
+
             case KeyEvent.VK_A:
+            case KeyEvent.VK_LEFT:
                 leftPressed = false;
                 break;
+
             case KeyEvent.VK_D:
+            case KeyEvent.VK_RIGHT:
                 rightPressed = false;
                 break;
-            case KeyEvent.VK_ENTER:
+
+                case KeyEvent.VK_ENTER:
                 enterPressed = false;
                 break;
-            case KeyEvent.VK_UP:
-                upTyped = false;
-                break;
-            case KeyEvent.VK_DOWN:
-                downTyped = false;
-                break;
-            case KeyEvent.VK_LEFT:
-                leftTyped = false;
-                break;
-            case KeyEvent.VK_RIGHT:
-                rightTyped = false;
-                break;
-            case KeyEvent.VK_R:
+
+            case KeyEvent.VK_E:
+            case KeyEvent.VK_SPACE:
                 activateBomb = false;
         }
 

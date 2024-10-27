@@ -1,4 +1,4 @@
-grass
+grass_2
 4 coin;2 plus_flame;1 clock;1 shoe;2 plus_bomb;3 shield
 1,14;10,1;10,14
 1,1

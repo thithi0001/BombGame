@@ -8,13 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import MenuDialog.ContinueDialog;
-import MenuDialog.NoticeDialog;
-import MenuDialog.RemindDialog;
-import MenuDialog.ReplaceDialog;
-import MenuDialog.SettingDialog;
-import MenuDialog.HighScoreDialog;
-import MenuDialog.NewGameDialog;
+import MenuDialog.*;
 import userClass.User;
 import userClass.UserList;
 
@@ -110,6 +104,11 @@ public class ChangePanel {
                 frame.setEnabled(true);
                 a.setVisible(false);
             });
+        });
+        home.instruction.addActionListener((e) -> {
+            frame.setEnabled(false);
+            InstructionDialog a = new InstructionDialog(frame);
+            a.setVisible(true);
         });
     }
 }

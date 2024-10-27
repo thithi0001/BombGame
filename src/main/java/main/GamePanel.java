@@ -154,7 +154,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (WIN) {
                 endGame("win");
             }
-            if (map.destructibleTiles == 0) {
+            if (map.monsters.isEmpty()) {
                 map.completeMap();
             }
             if (!player.isAlive) {

@@ -157,13 +157,19 @@ public class CollisionChecker {
         }
     }
 
+    // Thinh
     public void checkPlayerForMonster(Monster monster) {
 
         Player player = gp.player;
         Rectangle solidArea = new Rectangle(player.solidArea);
         solidArea.x += player.x;
-        solidArea.y = player.y;
-        if (solidArea.intersects(monster.solidArea)) {
+        solidArea.y += player.y;
+
+        Rectangle mSolidArea = new Rectangle(monster.solidArea);
+        mSolidArea.x += monster.x;
+        mSolidArea.y += monster.y;
+
+        if (solidArea.intersects(mSolidArea)) {
             player.beingHit();
         }
     }

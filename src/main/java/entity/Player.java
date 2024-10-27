@@ -142,7 +142,7 @@ public class Player extends Entity {
 
         g2.drawImage(sprites[spriteNum], x, y, null);
         if (hasShield) {
-            g2.drawImage(LoadResource.itemImgMap.get("protection_effect"), x, y, null);
+            g2.drawImage(LoadResource.itemImgMap.get("protection_effect_2"), x, y, null);
         }
 
         bombs.forEach(bomb -> bomb.draw(g2));

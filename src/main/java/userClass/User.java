@@ -30,7 +30,7 @@ public class User {
 
     public void setScore(int lv, int score) {
 
-        lvScore[lv - 1] += score;
+        lvScore[lv - 1] = score;
     }
 
     public int getLevel() {
@@ -44,7 +44,7 @@ public class User {
     public int getScore() {
         int score = 0;
         for (int j : lvScore) {
-            score = j;
+            score += j;
         }
         return score;
     }
