@@ -19,12 +19,12 @@ public class Bomb {
     public int x, y;
 
     // ANIMATION
-    public BufferedImage[] sprites = null;
-    public BufferedImage[] idle = null;
-    public BufferedImage[] explosion = null;
-    public int spriteTime;// time between 2 sprites
-    public int spriteNum = 0;// index of the using sprite
-    public int spriteCounter = 0;// should be frame counter
+    protected BufferedImage[] sprites = null;
+    protected BufferedImage[] idle = null;
+    protected BufferedImage[] explosion = null;
+    protected int spriteTime;// time between 2 sprites
+    protected int spriteNum = 0;// index of the using sprite
+    protected int spriteCounter = 0;// should be frame counter
 
     // COUNTDOWN
     protected int countDown;
@@ -83,7 +83,7 @@ public class Bomb {
         countDown = secondLeft;
     }
 
-    public void checkPlayer() {
+    void checkPlayer() {
 
         if (letPlayerPassThrough) {
 

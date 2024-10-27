@@ -14,11 +14,11 @@ public class Entity {
     public int x, y;
     protected int speed;
 
-    public BufferedImage[] sprites;
+    protected BufferedImage[] sprites;
     public String direction;// direction of sprites
-    public int spriteTime;// time between 2 sprites
-    public int spriteNum = 0;// index of the using sprite
-    public int spriteCounter = 0;// should be frame counter
+    protected int spriteTime;// time between 2 sprites
+    protected int spriteNum = 0;// index of the using sprite
+    protected int spriteCounter = 0;// should be frame counter
 
     public Rectangle solidArea;
     public boolean collisionOn = true;

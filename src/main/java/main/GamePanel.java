@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
         addButton();
     }
 
-    public void addButton() {
+    void addButton() {
         button = new MyButton("pause");
         button.setLocateButton(screenWidth - 60, 10);
         this.add(button);
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
     }
 
-    public void endGame(String result) {
+    void endGame(String result) {
         // result: win, lose, uncompleted
         switch (result) {
             case "win":

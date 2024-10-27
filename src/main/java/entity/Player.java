@@ -148,7 +148,7 @@ public class Player extends Entity {
         bombs.forEach(bomb -> bomb.draw(g2));
     }
 
-    public void move() {
+    void move() {
 
         switch (direction) {
             case "up":

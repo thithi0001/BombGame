@@ -149,7 +149,7 @@ public class CollisionChecker {
 
     public static void checkItemForFlame(Flame flame, Item item) {
 
-        if (item.state == Item.States.shown && flame.duration > 1
+        if (item.state == Item.States.shown && flame.getDuration() > 1
                 && (flame.verticalSolidArea.intersects(item.solidArea)
                 || flame.horizontalSolidArea.intersects(item.solidArea))) {
             item.beingHit();

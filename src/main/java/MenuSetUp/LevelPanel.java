@@ -16,7 +16,7 @@ public class LevelPanel extends JPanel {
     MyButton back;
     MyButton setting;
     public User user;
-    public MyButton[] level = new MyButton[3];
+    MyButton[] level = new MyButton[3];
     public JPanel levelButtonPanel;
     public ChangePanel change;
 

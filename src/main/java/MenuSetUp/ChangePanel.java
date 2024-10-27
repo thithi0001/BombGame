@@ -22,8 +22,8 @@ public class ChangePanel {
     public Container contentPane;
     public CardLayout cardLayout;
     public UserList userList;
-    public HomePanel home;
-    public MenuPanel menu;
+    HomePanel home;
+    MenuPanel menu;
     public JFrame frame;
     public Sound music;
 

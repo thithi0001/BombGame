@@ -10,7 +10,7 @@ import userClass.*;
 
 
 public class ContinueDialog extends SuperDialog {
-    public MyButton okButton;
+    MyButton okButton;
     UserList userList;
 
     public ContinueDialog(JFrame parent, ChangePanel change) {
