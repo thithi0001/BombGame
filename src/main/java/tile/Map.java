@@ -18,17 +18,17 @@ public class Map {
     GamePanel gp;
     String mapFileName;
     public int[][] mapTileNum;
+
     public ArrayList<Item> items = new ArrayList<>();
-    public ArrayList<Point> itemPos = new ArrayList<>();
-    //    public ArrayList<Monster> monsters = new ArrayList<>();
-    public ArrayList<Point> monsterSpawnPos = new ArrayList<>();
-    public Monster monster;
+    ArrayList<Point> itemPos = new ArrayList<>();
+
+    public ArrayList<Monster> monsters = new ArrayList<>();
+    ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 
     public Point checkPos = new Point();
     String baseTile;
     int baseIndex;
     public int destructibleTiles;
-//    Monster[] monsters;
 
     public Map(GamePanel gp, String mapFileName) {
 
@@ -39,12 +39,15 @@ public class Map {
         loadMap(Main.res + "/maps/" + mapFileName + ".txt");
         destructibleTiles = itemPos.size();
         placeItem();
+        spawnMonster();
         setupCheckPoint();
-
-        monster = new Monster(gp, 13, 10);
     }
 
-    public void placeItem() {
+    void spawnMonster() {
+        monsterSpawnPos.forEach(m -> monsters.add(new Monster(gp, m.x, m.y)));
+    }
+
+    void placeItem() {
 
         if (itemPos.isEmpty()) return;
         Random rand = new Random();
@@ -84,14 +87,14 @@ public class Map {
         });
     }
 
-    public int findBaseIndex() {
+    int findBaseIndex() {
         for (int i = 0; i < gp.tileManager.tile.length; i++) {
             if (gp.tileManager.tile[i].name.equals(baseTile)) return i;
         }
         return 0;
     }
 
-    public void setupCheckPoint() {
+    void setupCheckPoint() {
         Item item = new Item(gp, "closing_door");
         item.state = Item.States.shown;
         item.isCheckPoint = true;
@@ -101,7 +104,16 @@ public class Map {
         items.add(item);
     }
 
-    public void loadMap(String filePath) {
+    void getMonster(String[] arr) {
+        String[] pos;
+        for (String str : arr) {
+            pos = str.split(",");
+            monsterSpawnPos.add(new Point(Integer.parseInt(pos[1]),
+                    Integer.parseInt(pos[0])));
+        }
+    }
+
+    void loadMap(String filePath) {
 
         try {
             InputStream is = new FileInputStream(filePath);
@@ -110,12 +122,18 @@ public class Map {
             int col = 0;
             int row = 0;
 
+            // find baseTile
             baseTile = br.readLine();
             baseIndex = findBaseIndex();
+            // get items' position
             String[] itemList = br.readLine().split(";");
+            // get monsters' position
+            getMonster(br.readLine().split(";"));
+            // get checkPoint's position
             String[] point = br.readLine().split(",");
             checkPos.x = Integer.parseInt(point[1]);
             checkPos.y = Integer.parseInt(point[0]);
+            // get item's quantity
             String[] tmp;
             int quantity;
             for (String item : itemList) {
@@ -151,6 +169,11 @@ public class Map {
         }
     }
 
+    public void update() {
+        items.forEach(Item::update);
+        monsters.forEach(Monster::update);
+    }
+
     public void draw(Graphics2D g2) {
 
         int col = 0;
@@ -180,7 +203,11 @@ public class Map {
             }
         });
 
-        monster.draw(g2);
+        monsters.forEach(m -> {
+            if (m.isAlive) {
+                m.draw(g2);
+            }
+        });
     }
 
 }
