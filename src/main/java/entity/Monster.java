@@ -13,7 +13,10 @@ import java.util.Random;
 public class Monster extends Entity {
     GamePanel gp;
     Random random;
-
+    
+    private int changeDirection = 2;
+    boolean moved;
+    
     public Monster(GamePanel gp, int x, int y) {
 
         this.gp = gp;
@@ -45,11 +48,11 @@ public class Monster extends Entity {
         gp.cChecker.checkTile(this);
         gp.cChecker.checkBombForMoving(this);
 
-        move();
-
-        if (!canMoveUp && !canMoveDown && !canMoveLeft && !canMoveRight) {
-            randomMove();
+        if (random.nextInt(100) < changeDirection) {
+            randomMove();            
         }
+
+        move();
 
         if (++spriteCounter > spriteTime) {
 
@@ -62,8 +65,6 @@ public class Monster extends Entity {
         }
 
     }
-
-    boolean moved;
 
     void randomMove() {
         int randomDirection = random.nextInt(4);

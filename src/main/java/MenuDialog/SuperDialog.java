@@ -27,7 +27,7 @@ public class SuperDialog extends JDialog {
 
     public void setTitle(String Title) {
         JLabel title = new JLabel(Title);
-        title.setFont(LoadResource.Courier_New_Bold_30);
+        title.setFont(LoadResource.dialogTitle);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
         title.setSize(200, 30);

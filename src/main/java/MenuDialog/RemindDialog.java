@@ -45,7 +45,7 @@ public class RemindDialog extends JDialog {
         message.setText("Do you want " + note + "?");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(LoadResource.Courier_New_Bold_20);
+        message.setFont(LoadResource.dialogContent);
         getContentPane().add(message);
     }
 }

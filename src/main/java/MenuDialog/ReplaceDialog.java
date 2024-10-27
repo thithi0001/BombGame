@@ -31,7 +31,7 @@ public class ReplaceDialog extends JDialog {
         message.setText("<html>Player's name has existed.<br>Do you want to replace it?</html>");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(LoadResource.Courier_New_Bold_20);
+        message.setFont(LoadResource.dialogContent);
         getContentPane().add(message);
     }
 

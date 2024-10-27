@@ -52,14 +52,14 @@ public class HighScoreDialog extends SuperDialog {
             if (userList.list.get(i).getScore() == 0) break;
             JLabel name = new JLabel();
             name.setText(userList.list.get(i).getUserName());
-            name.setFont(LoadResource.Courier_New_Bold_20);
+            name.setFont(LoadResource.dialogContent);
             content.add(name);
 
             Border border = new BevelBorder(1);
             JLabel score = new JLabel();
             score.setText(" " + userList.list.get(i).getScore());
             score.setBorder(border);
-            score.setFont(LoadResource.Courier_New_Bold_20);
+            score.setFont(LoadResource.dialogContent);
             content.add(score);
         }
         content.setLayout(new GridLayout(5, 2, 10, 10));
