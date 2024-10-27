@@ -29,14 +29,14 @@ public class NewGameDialog extends SuperDialog {
 
     void setLabel() {
         JLabel label = new JLabel("Enter name :");
-        label.setFont(LoadResource.Courier_New_Bold_20);
+        label.setFont(LoadResource.dialogContent);
         label.setSize(150, 30);
         label.setLocation((500 - 350) / 2, 180);
 
         textField = new JTextField();
         textField.setSize(200, 30);
         textField.setLocation((500 - 350) / 2 + 150, 180);
-        textField.setFont(LoadResource.Courier_New_Bold_20);
+        textField.setFont(LoadResource.dialogContent);
         textField.setOpaque(true);
         textField.setBorder(null);
 

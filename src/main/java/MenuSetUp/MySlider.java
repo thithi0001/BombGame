@@ -22,7 +22,7 @@ public class MySlider {
         //SET LABEL
         nameSlider = new JLabel(name);
         nameSlider.setSize(60, 35);
-        nameSlider.setFont(LoadResource.Courier_New_Italic_16);
+        nameSlider.setFont(LoadResource.settingContent);
         // nameSlider.setHorizontalAlignment(SwingConstants.CENTER);
         nameSlider.setVerticalAlignment(SwingConstants.CENTER);
         nameSlider.setOpaque(false);

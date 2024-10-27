@@ -201,7 +201,7 @@ public class GamePanel extends JPanel implements Runnable {
         len = clock.toString().length();
         g2.fillRect((DimensionSize.screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
         g2.setColor(Color.BLACK);
-        g2.setFont(LoadResource.Consolas_Bold_20);
+        g2.setFont(LoadResource.gameStatus);
 
         //draw score
         g2.drawString("SCORE " + player.score, 10, y);

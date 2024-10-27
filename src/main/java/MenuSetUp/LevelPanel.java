@@ -43,7 +43,7 @@ public class LevelPanel extends JPanel {
         // SET LABEL
         JLabel title = new JLabel("LEVEL");
         title.setSize(200, 100);
-        title.setFont(LoadResource.Courier_New_Bold_38);
+        title.setFont(LoadResource.panelTitle);
         title.setLocation((DimensionSize.screenWidth - 130) / 2, 20);
         add(title);
 

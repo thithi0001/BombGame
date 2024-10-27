@@ -32,7 +32,7 @@ public class NoticeDialog extends JDialog {
         message.setText("Please enter Player's name ");
         message.setHorizontalAlignment(SwingConstants.CENTER);
         message.setVerticalAlignment(SwingConstants.CENTER);
-        message.setFont(LoadResource.Courier_New_Bold_20);
+        message.setFont(LoadResource.dialogContent);
         getContentPane().add(message);
     }
 }
