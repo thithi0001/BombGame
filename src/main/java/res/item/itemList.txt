@@ -4,6 +4,6 @@ plus_flame 20
 plus_bomb 10
 shield 20
 clock 10
-protection_effect 0
+protection_effect_2 0
 opening_door 0
 closing_door 0
