@@ -10,13 +10,8 @@ public class CreditDialog extends SuperDialog {
         super(parent);
         setTitle("CREDIT");
 
-        JTextArea content = new JTextArea();
-        content.setSize(350  , 325);
-        content.setLocation(75, 75);
-        content.setEditable(false);
-        content.setOpaque(false);
-        getContentPane().add(content);
-
+        setContent();
+        
         MyButton back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 425);
         getContentPane().add(back);
@@ -26,6 +21,16 @@ public class CreditDialog extends SuperDialog {
         });
 
         setBackground();
+    }
+    void setContent(){
+        JTextArea content = new JTextArea();
+        content.setSize(350  , 325);
+        content.setLocation(75, 75);
+        content.setEditable(false);
+        content.setLineWrap(true);//DISPLAY MULTIPLE LINE
+        content.setOpaque(false);
+        getContentPane().add(content);
+
     }
 
     public static void main(String[] args) {
