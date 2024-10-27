@@ -52,7 +52,7 @@ public class Player extends Entity {
 
         maxBombs = 1;
         flameLength = 1;
-        speed = 4;
+        speed = 3;
         direction = "down";
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
@@ -222,6 +222,5 @@ public class Player extends Entity {
                 break;
         }
     }
-
 
 }

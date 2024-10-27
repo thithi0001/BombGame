@@ -2,14 +2,12 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
-import java.awt.Color;
 import java.util.Random;
 
 public class Monster extends Entity {

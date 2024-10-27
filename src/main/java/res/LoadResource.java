@@ -37,7 +37,6 @@ public class LoadResource {
     public static Font Consolas_Bold_20 = new Font("Consolas", Font.BOLD, 20);
 
     // image icon
-    public static ImageIcon pauseBtnIcon = new ImageIcon(Main.res + "/button/pauseButton.png");
     public static ImageIcon musicOnBtnIcon = new ImageIcon(Main.res + "/button/musicButton.png");
     public static ImageIcon musicOffBtnIcon = new ImageIcon(Main.res + "/button/musicOffButton.png");
     public static ImageIcon soundOnBtnIcon = new ImageIcon(Main.res + "/button/soundButton.png");
