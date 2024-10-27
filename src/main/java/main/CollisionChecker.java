@@ -186,7 +186,7 @@ public class CollisionChecker {
                     player.setHasShield(true);
                     break;
 
-                case "white":
+                case "opening_door":
                     gp.WIN = true;
                     break;
 
