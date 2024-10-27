@@ -30,8 +30,8 @@ public class SuperDialog extends JDialog {
         title.setFont(LoadResource.dialogTitle);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
-        title.setSize(200, 30);
-        title.setLocation(150, 25);
+        title.setSize(300, 30);
+        title.setLocation(100, 25);
         getContentPane().add(title);
     }
 
