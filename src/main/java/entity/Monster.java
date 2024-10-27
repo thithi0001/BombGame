@@ -45,12 +45,13 @@ public class Monster extends Entity {
 
     public void update() {
 
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkBombForMoving(this);
-
         if (random.nextInt(100) < changeDirection) {
             randomMove();
         }
+
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkBombForMoving(this);
+        gp.cChecker.checkPlayerForMonster(this);
 
         move();
 
@@ -131,7 +132,9 @@ public class Monster extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        g2.drawImage(sprites[spriteNum], x, y, null);
+        if (isAlive) {
+            g2.drawImage(sprites[spriteNum], x, y, null);
+        }
     }
 
     @Override

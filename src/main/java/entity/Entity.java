@@ -13,7 +13,7 @@ public class Entity {
     public String name;
     public int x, y;
     protected int speed;
-    final int maxSpeed = 5;
+    final int maxSpeed = 4;
 
     protected BufferedImage[] sprites;
     public String direction;// direction of sprites

@@ -171,7 +171,9 @@ public class Map {
 
     public void update() {
         items.forEach(Item::update);
+        items.removeIf(item -> item.state == Item.States.isHit);
         monsters.forEach(Monster::update);
+        monsters.removeIf(monster -> !monster.isAlive);
     }
 
     public void draw(Graphics2D g2) {
