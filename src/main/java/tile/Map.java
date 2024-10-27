@@ -1,6 +1,7 @@
 package tile;
 
 import entity.Item;
+import entity.Monster;
 import main.GamePanel;
 import main.Main;
 import res.LoadResource;
@@ -21,6 +22,7 @@ public class Map {
     public ArrayList<Point> itemPos = new ArrayList<>();
     //    public ArrayList<Monster> monsters = new ArrayList<>();
     public ArrayList<Point> monsterSpawnPos = new ArrayList<>();
+    public Monster monster;
 
     public Point checkPos = new Point();
     String baseTile;
@@ -38,6 +40,8 @@ public class Map {
         destructibleTiles = itemPos.size();
         placeItem();
         setupCheckPoint();
+
+        monster = new Monster(gp, 13, 10);
     }
 
     public void placeItem() {
@@ -174,6 +178,8 @@ public class Map {
                 item.draw(g2);
             }
         });
+
+        monster.draw(g2);
     }
 
 }

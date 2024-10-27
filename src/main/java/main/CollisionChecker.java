@@ -197,22 +197,5 @@ public class CollisionChecker {
             }
         }
     }
-    public void checkPlayerForMonster(Monster monster,Entity entity) {
-            Rectangle monsterArea = new Rectangle(gp.monster.solidArea);
-            monsterArea.x += gp.monster.x;
-            monsterArea.y += gp.monster.y;
-            //monsterArea.x += gp.monster.x;
-            //monsterArea.y += gp.monster.y;
-    
-            Rectangle solidArea = new Rectangle(gp.player.solidArea);
-            solidArea.x += gp.player.x;
-            solidArea.y += gp.player.y;
-            if (monsterArea.intersects(solidArea)) {
-    
-                
-                entity.beingHit();
-                // monster.direction = monster.randomMove();
-    
-            }
-        }
+
 }

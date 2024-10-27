@@ -164,7 +164,7 @@ public class Player extends Entity {
                 if (canMoveRight) x += speed;
                 break;
         }
-        resetCollision(true);
+        resetCollision();
     }
 
     @Override

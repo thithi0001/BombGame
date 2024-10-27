@@ -25,11 +25,11 @@ public class Entity {
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
     public boolean isAlive = true;
 
-    public void resetCollision(boolean state) {
-        canMoveUp = state;
-        canMoveDown = state;
-        canMoveLeft = state;
-        canMoveRight = state;
+    protected void resetCollision() {
+        canMoveUp = true;
+        canMoveDown = true;
+        canMoveLeft = true;
+        canMoveRight = true;
     }
 
     public int col() {

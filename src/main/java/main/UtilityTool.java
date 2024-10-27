@@ -37,14 +37,15 @@ public class UtilityTool {
         }
 
         int col = 0;
-        int row = 0;
+        int sizeOfEachSprite = originalTileSize;
         String[] tmp = spriteSheetPath.split("_");
         for (String str : tmp) {
             try {
                 if (col == 0) {
-                    col = Integer.parseInt(str) / originalTileSize;
+                    col = Integer.parseInt(str);
                 } else {
-                    row = Integer.parseInt(str) / originalTileSize;
+                    sizeOfEachSprite = Integer.parseInt(str);
+                    col /= sizeOfEachSprite;
                     break;
                 }
             } catch (NumberFormatException _) {
@@ -52,10 +53,10 @@ public class UtilityTool {
             }
         }
 
-        BufferedImage[] sprites = new BufferedImage[col * row];
+        BufferedImage[] sprites = new BufferedImage[col];
         for (int i = 0; i < sprites.length; i++) {
             assert spriteSheet != null;
-            sprites[i] = spriteSheet.getSubimage(i * originalTileSize, 0, originalTileSize, originalTileSize);
+            sprites[i] = spriteSheet.getSubimage(i * sizeOfEachSprite, 0, sizeOfEachSprite, sizeOfEachSprite);
             sprites[i] = scaleImage(sprites[i], tileSize, tileSize);
         }
 

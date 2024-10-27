@@ -17,9 +17,13 @@ import java.util.Scanner;
 import static MenuSetUp.DimensionSize.tileSize;
 
 public class LoadResource {
+    // item
     public static HashMap<String, BufferedImage> itemImgMap = new HashMap<>();
     public static HashMap<String, Integer> itemScoreMap = new HashMap<>();
+
+    // monster
     public static HashMap<String, BufferedImage> monsterImgMap = new HashMap<>();
+    public static HashMap<String, Integer> monsterScoreMap = new HashMap<>();
 
     // sound
     public static Sound explosionSound;
@@ -62,6 +66,9 @@ public class LoadResource {
     // map
     public static int maxMap;
 
+    public static BufferedImage[] slime;
+    public static BufferedImage[] monster;
+
     static {
 
         loadBackGround();
@@ -71,7 +78,13 @@ public class LoadResource {
         loadBomb();
         loadFlame();
         loadItem();
+        loadMonster();
         loadMap();
+    }
+
+    static void loadMonster() {
+        slime = UtilityTool.loadSpriteSheet("\\monster\\jumping_slime_288_x_48_.png");
+        monster = UtilityTool.loadSpriteSheet("\\monster\\monster_blue_96_x_24_.png");
     }
 
     static void loadSound() {
