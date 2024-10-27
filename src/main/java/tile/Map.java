@@ -46,6 +46,7 @@ public class Map {
 
     public void placeItem() {
 
+        if (itemPos.isEmpty()) return;
         Random rand = new Random();
         Point p;
         int pIndex;

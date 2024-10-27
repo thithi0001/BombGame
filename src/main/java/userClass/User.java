@@ -43,8 +43,8 @@ public class User {
 
     public int getScore() {
         int score = 0;
-        for (int i = 0; i < lvScore.length; i++) {
-            score += lvScore[i];
+        for (int j : lvScore) {
+            score = j;
         }
         return score;
     }

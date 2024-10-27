@@ -4,11 +4,10 @@ import bomb.Bomb;
 import bomb.Flame;
 import entity.Entity;
 import entity.Item;
+import entity.Monster;
 import entity.Player;
 
 import java.awt.Rectangle;
-
-import entity.Monster;
 
 import static MenuSetUp.DimensionSize.tileSize;
 
@@ -158,6 +157,17 @@ public class CollisionChecker {
         }
     }
 
+    public void checkPlayerForMonster(Monster monster) {
+
+        Player player = gp.player;
+        Rectangle solidArea = new Rectangle(player.solidArea);
+        solidArea.x += player.x;
+        solidArea.y = player.y;
+        if (solidArea.intersects(monster.solidArea)) {
+            player.beingHit();
+        }
+    }
+
     public void checkPlayerForItem(Item item) {
 
         Player player = gp.player;
@@ -177,7 +187,7 @@ public class CollisionChecker {
                     break;
 
                 case "shoe":
-                    player.addSpeed(2);
+                    player.addSpeed(1);
                     break;
 
                 case "clock":
