@@ -18,6 +18,7 @@ import MenuSetUp.MyButton;
 
 import bomb.Bomb;
 import entity.Item;
+import entity.Monster;
 import entity.Player;
 import res.LoadResource;
 import tile.Map;
@@ -166,8 +167,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         bombs.clear();
         player.update();
-        map.items.forEach(Item::update);
-        map.monster.update();
+        map.update();
     }
 
     public void paintComponent(Graphics g) {
