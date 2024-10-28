@@ -185,6 +185,7 @@ public class GamePanel extends JPanel implements Runnable {
         map.draw(g2);
 
         player.draw(g2);
+
         drawUI(g2);
 
         g2.dispose();// save memories
