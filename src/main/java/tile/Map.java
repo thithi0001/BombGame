@@ -171,7 +171,7 @@ public class Map {
 
     public void update() {
         items.forEach(Item::update);
-        items.removeIf(item -> item.state == Item.States.isHit);
+        items.removeIf(item -> item.state == Item.States.isHit || item.state == Item.States.isPickedUp);
         monsters.forEach(Monster::update);
         monsters.removeIf(monster -> !monster.isAlive);
     }

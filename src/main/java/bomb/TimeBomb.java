@@ -38,7 +38,7 @@ public class TimeBomb extends Bomb {
         checkPlayer();
 
         if (owner instanceof Player) {
-            if (((Player) owner).getKeyHandler().activateBomb) {
+            if (((Player) owner).getKeyHandler().activateBomb && !exploding) {
                 explode();
                 return;
             }
