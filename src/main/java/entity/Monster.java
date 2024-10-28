@@ -36,7 +36,7 @@ public class Monster extends Entity {
 
     public void setDefaultValues() {
 
-        speed = 2;
+        speed = 1;
         direction = "down";
         spriteTime = 6;
         x = x * tileSize;
