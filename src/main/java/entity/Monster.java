@@ -14,7 +14,7 @@ public class Monster extends Entity {
     GamePanel gp;
     Random random;
 
-    private int changeDirection = 2;
+    protected int changeDirection = 2;
     boolean moved;
 
     public Monster(GamePanel gp, int x, int y) {
@@ -34,9 +34,9 @@ public class Monster extends Entity {
         sprites = LoadResource.monster;
     }
 
-    private void setDefaultValues() {
+    public void setDefaultValues() {
 
-        speed = 1;
+        speed = 2;
         direction = "down";
         spriteTime = 6;
         x = x * tileSize;
