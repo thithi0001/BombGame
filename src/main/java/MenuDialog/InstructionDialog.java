@@ -45,7 +45,8 @@ public class InstructionDialog extends SuperDialog {
                 + E or SPACE bar: Activate time
                 bomb
                 -------------------------------
-                RULE: To gain your victory
+                RULE:
+                To gain your victory
                 + Eliminate all monster in map
                 + Don't touch any monster
                 + Don't get hit by bomb
