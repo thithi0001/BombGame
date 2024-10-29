@@ -22,6 +22,7 @@ public class CollisionChecker {
 
     public void checkTile(Entity entity) {
 
+        if (!entity.collisionOn) return;
         int entityLeftX = entity.x + entity.solidArea.x;
         int entityRightX = entityLeftX + entity.solidArea.width - 2;
         int entityTopY = entity.y + entity.solidArea.y;
