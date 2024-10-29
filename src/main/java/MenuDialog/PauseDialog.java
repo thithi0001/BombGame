@@ -19,7 +19,6 @@ public class PauseDialog extends SuperDialog {
             setVisible(false);
             parent.gamePanel.isPausing = false;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
-
             parent.setVisible(false);
             newParent.setVisible(true);
         });
