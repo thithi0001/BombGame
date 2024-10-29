@@ -29,9 +29,9 @@ public class TileManager {
         setup(2, "wood", true, true, 20);
     }
 
-    public void setup(int index, String imageName, boolean collision, boolean destructible, int point) {
+    public void setup(int index, String imageName, boolean collision, boolean destructible, int score) {
         setup(index, imageName, collision, destructible);
-        tile[index].point = point;
+        tile[index].score = score;
     }
 
     public void setup(int index, String imageName, boolean collision, boolean destructible) {

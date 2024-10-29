@@ -22,6 +22,7 @@ public class Player extends Entity {
 
     ArrayList<Bomb> bombs = new ArrayList<>();
     private String bombType = "normal";
+    public BufferedImage statusBombTypeImg = LoadResource.itemImgMap.get("plus_bomb");
     private int maxBombs;
     private int flameLength;
     int cooldown;
@@ -191,6 +192,14 @@ public class Player extends Entity {
         return keyH;
     }
 
+    public int getFlameLength() {
+        return flameLength;
+    }
+
+    public int getMaxBombs() {
+        return maxBombs;
+    }
+
     public void setHasShield(boolean bool) {
         hasShield = bool;
         invincibleTime = UtilityTool.convertTime(1.0);
@@ -198,6 +207,7 @@ public class Player extends Entity {
 
     public void setBombType(String newType) {
         bombType = newType;
+        statusBombTypeImg = LoadResource.timeBombIdle[0];
     }
 
     public void addMoreBombs(int n) {

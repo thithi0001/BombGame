@@ -17,15 +17,12 @@ import MenuSetUp.LevelPanel;
 import MenuSetUp.MyButton;
 
 import bomb.Bomb;
-import entity.Item;
-import entity.Monster;
 import entity.Player;
 import res.LoadResource;
 import tile.Map;
 import tile.TileManager;
 
-import static MenuSetUp.DimensionSize.screenHeight;
-import static MenuSetUp.DimensionSize.screenWidth;
+import static MenuSetUp.DimensionSize.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -192,6 +189,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void drawUI(Graphics2D g2) {
+        int x;
         int y = 20;
         //draw button
         g2.drawImage(button.getIcon().getImage(), button.getLocation().x, y, 50, 50, null);
@@ -204,11 +202,31 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.BLACK);
         g2.setFont(LoadResource.gameStatus);
 
-        //draw score
+        // draw score
         g2.drawString("SCORE " + player.score, 10, y);
 
-        //draw clock
+        // draw clock
         g2.drawString(clock.toString(), (DimensionSize.screenWidth - len) / 2, y);
+
+        // draw status
+        x = tileSize;
+        y = screenHeight - tileSize;
+        g2.setColor(LoadResource.statusBg);
+        g2.fillRect(x, y, tileSize * 3 + 24, tileSize);
+
+        y += 12;
+        int size = 24;
+        int offset = size + 31;
+        g2.drawImage(LoadResource.itemImgMap.get("plus_flame"), x, y, size, size, null);
+        g2.drawImage(player.statusBombTypeImg, x + offset, y, size, size, null);
+        g2.drawImage(LoadResource.itemImgMap.get("shoe"), x + offset * 2, y, size, size, null);
+
+        x = x + size;
+        y += size - 4;
+        g2.setColor(Color.BLACK);
+        g2.drawString("x" + player.getFlameLength(), x, y);
+        g2.drawString("x" + player.getMaxBombs(), x + offset, y);
+        g2.drawString("x" + player.getSpeed(), x + offset * 2, y);
     }
 
     public static class Clock {
