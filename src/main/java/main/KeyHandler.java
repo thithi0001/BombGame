@@ -82,7 +82,7 @@ public class KeyHandler implements KeyListener {
                 rightPressed = false;
                 break;
 
-                case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_ENTER:
                 enterPressed = false;
                 break;
 

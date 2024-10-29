@@ -2,6 +2,7 @@ package tile;
 
 import entity.Item;
 import entity.Monster;
+import entity.MonsterBoss;
 import main.GamePanel;
 import main.Main;
 import res.LoadResource;
@@ -22,6 +23,7 @@ public class Map {
     public ArrayList<Item> items = new ArrayList<>();
     ArrayList<Point> itemPos = new ArrayList<>();
 
+//    public MonsterBoss boss;
     public ArrayList<Monster> monsters = new ArrayList<>();
     ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 
@@ -40,6 +42,7 @@ public class Map {
         destructibleTiles = itemPos.size();
         placeItem();
         spawnMonster();
+//        boss = new MonsterBoss(gp, 8, 6);
         setupCheckPoint();
     }
 
@@ -60,7 +63,7 @@ public class Map {
             item.y = p.y * tileSize;
             item.solidArea = new Rectangle(item.x, item.y, tileSize, tileSize);
             itemPos.remove(pIndex);
-            System.out.println(p.y + "," + p.x);
+//            System.out.println(p.y + "," + p.x);
         }
     }
 
@@ -174,6 +177,8 @@ public class Map {
         items.removeIf(item -> item.state == Item.States.isHit || item.state == Item.States.isPickedUp);
         monsters.forEach(Monster::update);
         monsters.removeIf(monster -> !monster.isAlive);
+//        if (boss.isAlive)
+//            boss.update();
     }
 
     public void draw(Graphics2D g2) {
@@ -210,6 +215,8 @@ public class Map {
                 m.draw(g2);
             }
         });
+//        if (boss.isAlive)
+//            boss.draw(g2);
     }
 
 }
