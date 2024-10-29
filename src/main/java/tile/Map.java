@@ -2,7 +2,6 @@ package tile;
 
 import entity.Item;
 import entity.Monster;
-import entity.MonsterBoss;
 import main.GamePanel;
 import main.Main;
 import res.LoadResource;
@@ -78,7 +77,7 @@ public class Map {
 
     public void toBaseTile(int x, int y) {
 
-        gp.player.score += gp.tileManager.tile[mapTileNum[x][y]].point;
+        gp.player.score += gp.tileManager.tile[mapTileNum[x][y]].score;
 
         mapTileNum[x][y] = baseIndex;
         destructibleTiles--;
@@ -107,7 +106,7 @@ public class Map {
         items.add(item);
     }
 
-    void getMonster(String[] arr) {
+    void getMonsterPos(String[] arr) {
         String[] pos;
         for (String str : arr) {
             pos = str.split(",");
@@ -131,7 +130,7 @@ public class Map {
             // get items' position
             String[] itemList = br.readLine().split(";");
             // get monsters' position
-            getMonster(br.readLine().split(";"));
+            getMonsterPos(br.readLine().split(";"));
             // get checkPoint's position
             String[] point = br.readLine().split(",");
             checkPos.x = Integer.parseInt(point[1]);

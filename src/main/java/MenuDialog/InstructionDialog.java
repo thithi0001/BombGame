@@ -40,13 +40,13 @@ public class InstructionDialog extends SuperDialog {
         content.setText("""
                 CONTROL:
                 + WASD or ARROW keys: Move
-                + ENTER: Place bomb
-                + E or SPACE bar: Activate time
+                + SPACE: Place bomb
+                + R or ENTER: Activate time
                 bomb
                 -------------------------------
                 RULE:
                 To gain your victory
-                + Eliminate all monster in map
+                + Eliminate all monsters in map
                 + Don't touch any monster
                 + Don't get hit by bomb
                 """);

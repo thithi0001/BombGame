@@ -44,12 +44,12 @@ public class KeyHandler implements KeyListener {
                 rightPressed = true;
                 break;
 
-            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_SPACE:
                 enterPressed = true;
                 break;
 
-            case KeyEvent.VK_E:
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_R:
+            case KeyEvent.VK_ENTER:
                 activateBomb = true;
         }
 
@@ -82,12 +82,12 @@ public class KeyHandler implements KeyListener {
                 rightPressed = false;
                 break;
 
-            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_SPACE:
                 enterPressed = false;
                 break;
 
-            case KeyEvent.VK_E:
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_R:
+            case KeyEvent.VK_ENTER:
                 activateBomb = false;
         }
 
