@@ -55,6 +55,9 @@ public class LoadResource {
     public static Tile[] tiles = new Tile[10];
 
     // player
+    public static PlayerDirectory[] charactersSprites;
+    public static String character;
+    public static int characterIndex;
     public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
 
     // flame
@@ -83,6 +86,7 @@ public class LoadResource {
         loadItem();
         loadMonster();
         loadMap();
+        loadPlayer2();
     }
 
     static void loadMonster() {
@@ -161,10 +165,20 @@ public class LoadResource {
     }
 
     static void loadPlayer() {
-        playerUp = UtilityTool.loadSpriteSheet("\\player\\up_32_x_16_.png");
-        playerDown = UtilityTool.loadSpriteSheet("\\player\\down_32_x_16_.png");
-        playerLeft = UtilityTool.loadSpriteSheet("\\player\\left_32_x_16_.png");
-        playerRight = UtilityTool.loadSpriteSheet("\\player\\right_32_x_16_.png");
+        playerUp = UtilityTool.loadSpriteSheet("\\player\\White-guy\\up_32_x_16_.png");
+        playerDown = UtilityTool.loadSpriteSheet("\\player\\White-guy\\down_32_x_16_.png");
+        playerLeft = UtilityTool.loadSpriteSheet("\\player\\White-guy\\left_32_x_16_.png");
+        playerRight = UtilityTool.loadSpriteSheet("\\player\\White-guy\\right_32_x_16_.png");
     }
+
+    static void loadPlayer2() {
+
+        String[] characters = Objects.requireNonNull(new File(Main.res + "\\player").list());
+        charactersSprites = new PlayerDirectory[characters.length];
+        for (int i = 0; i < characters.length; i++) {
+            charactersSprites[i] = new PlayerDirectory(characters[i]);
+        }
+    }
+
 }
-;
+

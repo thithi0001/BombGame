@@ -32,7 +32,6 @@ public class InstructionDialog extends SuperDialog {
         content.setEditable(false);
         content.setLineWrap(true);//DISPLAY MULTIPLE LINE
         content.setOpaque(false);
-        content.setCursor(null);
         getContentPane().add(content);
         content.setSelectedTextColor(Color.RED);
         content.setSelectionColor(Color.PINK);
@@ -40,8 +39,8 @@ public class InstructionDialog extends SuperDialog {
         content.setText("""
                 CONTROL:
                 + WASD or ARROW keys: Move
-                + SPACE: Place bomb
-                + R or ENTER: Activate time
+                + ENTER: Place bomb
+                + R or SPACE: Activate time
                 bomb
                 -------------------------------
                 RULE:
