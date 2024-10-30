@@ -39,8 +39,8 @@ public class InstructionDialog extends SuperDialog {
         content.setText("""
                 CONTROL:
                 + WASD or ARROW keys: Move
-                + SPACE: Place bomb
-                + R or ENTER: Activate time
+                + ENTER: Place bomb
+                + R or SPACE: Activate time
                 bomb
                 -------------------------------
                 RULE:
