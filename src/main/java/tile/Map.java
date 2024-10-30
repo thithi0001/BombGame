@@ -22,7 +22,7 @@ public class Map {
     public ArrayList<Item> items = new ArrayList<>();
     ArrayList<Point> itemPos = new ArrayList<>();
 
-//    public MonsterBoss boss;
+    //    public MonsterBoss boss;
     public ArrayList<Monster> monsters = new ArrayList<>();
     ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 

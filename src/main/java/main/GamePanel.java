@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void endGame(String result) {
-        // result: win, lose, uncompleted
+
         switch (result) {
             case "win":
                 // UNLOCK NEW LEVEL
@@ -168,8 +168,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        // DRAW ORDER
-        // background outside the tile map
+        // DRAW ORDER:
         // tileMap
         // player and monster
         // bomb and item

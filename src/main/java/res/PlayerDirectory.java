@@ -10,7 +10,7 @@ import java.util.Objects;
 public class PlayerDirectory {
 
     private final String character;
-    public BufferedImage[] up, down, left , right;
+    public BufferedImage[] up, down, left, right;
 
     public PlayerDirectory(String directoryName) {
         character = directoryName;
