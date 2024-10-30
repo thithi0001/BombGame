@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import MenuDialog.EndGameDialog;
 import MenuDialog.PauseDialog;
-import MenuSetUp.DimensionSize;
 import MenuSetUp.LevelGameFrame;
 import MenuSetUp.LevelPanel;
 import MenuSetUp.MyButton;
@@ -31,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS
     public static int FPS = 60;
+    int countFPS = 0;
     public Clock clock = new Clock(this);
 
     public LevelGameFrame parent;
@@ -122,7 +122,6 @@ public class GamePanel extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        int drawCount = 0;
 
         while (gameThread != null) {
             if (isPausing) continue;
@@ -136,15 +135,12 @@ public class GamePanel extends JPanel implements Runnable {
                 update();
                 repaint();// call paintComponent
                 delta--;
-                drawCount++;
+                countFPS++;
             }
 
             if (timer >= 1e9) {
-                // System.out.println("FPS: " + drawCount);
                 clock.update();
-//                System.out.println("SCORE: " + player.score);
-//                System.out.println(clock.toString());
-                drawCount = 0;
+                countFPS = 0;
                 timer = 0;
             }
 
@@ -198,7 +194,9 @@ public class GamePanel extends JPanel implements Runnable {
         int len = ("SCORE " + player.score).length();
         g2.fillRect(10, y - 16, len * 11 + 2, 20);
         len = clock.toString().length();
-        g2.fillRect((DimensionSize.screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
+        g2.fillRect((screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
+//        g2.fillRect(screenWidth / 2 + tileSize * 2, y - 16, 45, 20);
+
         g2.setColor(Color.BLACK);
         g2.setFont(LoadResource.gameStatus);
 
@@ -206,11 +204,14 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawString("SCORE " + player.score, 10, y);
 
         // draw clock
-        g2.drawString(clock.toString(), (DimensionSize.screenWidth - len) / 2, y);
+        g2.drawString(clock.toString(), (screenWidth - len) / 2, y);
+
+        // draw FPS
+//        g2.drawString(Integer.toString(countFPS), screenWidth / 2 + tileSize * 2, y);
 
         // draw status
-        x = tileSize;
-        y = screenHeight - tileSize;
+        x = tileSize * 3;
+        y = 0;
         g2.setColor(LoadResource.statusBg);
         g2.fillRect(x, y, tileSize * 3 + 24, tileSize);
 
