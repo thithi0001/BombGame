@@ -58,22 +58,22 @@ public class SkinPanel extends JPanel {
         g.drawString(name, screenWidth / 2 - name.length() * 6, 100);
 
         int imgSize = 128;
-        g.drawImage(LoadResource.playerSpriteMap[currentCharacterIndex].down[0], (screenWidth - imgSize) / 2, 200, imgSize, imgSize, null);
+        g.drawImage(LoadResource.charactersSprites[currentCharacterIndex].down[0], (screenWidth - imgSize) / 2, 200, imgSize, imgSize, null);
     }
 
     void toNextCharacter() {
         currentCharacterIndex++;
-        if (currentCharacterIndex == LoadResource.playerSpriteMap.length)
+        if (currentCharacterIndex == LoadResource.charactersSprites.length)
             currentCharacterIndex = 0;
-        currentCharacter = LoadResource.playerSpriteMap[currentCharacterIndex].getCharacter();
+        currentCharacter = LoadResource.charactersSprites[currentCharacterIndex].getCharacter();
         setCharacter();
     }
 
     void toPreviousCharacter() {
         currentCharacterIndex--;
         if (currentCharacterIndex < 0)
-            currentCharacterIndex = LoadResource.playerSpriteMap.length - 1;
-        currentCharacter = LoadResource.playerSpriteMap[currentCharacterIndex].getCharacter();
+            currentCharacterIndex = LoadResource.charactersSprites.length - 1;
+        currentCharacter = LoadResource.charactersSprites[currentCharacterIndex].getCharacter();
         setCharacter();
     }
 
