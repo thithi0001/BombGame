@@ -63,10 +63,10 @@ public class Player extends Entity {
 
     void getPlayerImage() {
 
-        playerUp = LoadResource.playerUp;
-        playerDown = LoadResource.playerDown;
-        playerLeft = LoadResource.playerLeft;
-        playerRight = LoadResource.playerRight;
+        playerUp = LoadResource.playerSpriteMap[LoadResource.characterIndex].up;
+        playerDown = LoadResource.playerSpriteMap[LoadResource.characterIndex].down;
+        playerLeft = LoadResource.playerSpriteMap[LoadResource.characterIndex].left;
+        playerRight = LoadResource.playerSpriteMap[LoadResource.characterIndex].right;
         sprites = playerDown;
     }
 
