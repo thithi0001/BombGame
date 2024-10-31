@@ -38,6 +38,7 @@ public class SkinPanel extends JPanel {
             repaint();
         });
         add(right);
+
     }
 
     private void setCharacter() {
