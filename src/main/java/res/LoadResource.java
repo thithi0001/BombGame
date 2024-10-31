@@ -56,7 +56,8 @@ public class LoadResource {
 
     // player
     public static PlayerDirectory[] charactersSprites;
-    public static String character;
+    static final String defaultCharacter = "White-guy";
+    public static String character = defaultCharacter;
     public static int characterIndex;
     public static BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
 
@@ -80,7 +81,7 @@ public class LoadResource {
         loadBackGround();
         loadSound();
         loadTile();
-        loadPlayer();
+//        loadPlayer();
         loadBomb();
         loadFlame();
         loadItem();
@@ -176,7 +177,10 @@ public class LoadResource {
         String[] characters = Objects.requireNonNull(new File(Main.res + "\\player").list());
         charactersSprites = new PlayerDirectory[characters.length];
         for (int i = 0; i < characters.length; i++) {
+
             charactersSprites[i] = new PlayerDirectory(characters[i]);
+            if (characters[i].equals(defaultCharacter))
+                characterIndex = i;
         }
     }
 

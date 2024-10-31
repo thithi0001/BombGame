@@ -11,8 +11,8 @@ import static MenuSetUp.DimensionSize.screenWidth;
 
 public class SkinPanel extends JPanel {
     MyButton left, right, back;
-    private String currentCharacter = "White-guy";
-    private int currentCharacterIndex = 2;
+    private String currentCharacter = LoadResource.character;
+    private int currentCharacterIndex = LoadResource.characterIndex;
 
     public SkinPanel() {
         setLayout(null);
@@ -78,17 +78,4 @@ public class SkinPanel extends JPanel {
         setCharacter();
     }
 
-    public static void main(String[] args) {
-
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(DimensionSize.screenWidth, DimensionSize.screenHeight);
-        window.setResizable(false);
-        window.setTitle("TEST");
-
-        SkinPanel skin = new SkinPanel();
-        window.add(skin);
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-    }
 }
