@@ -37,7 +37,7 @@ public class ChangePanel {
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(home, "menu");//panel 1 in contentPane
         contentPane.add(menu, "start");//panel 2 in contentPane
-        contentPane.add(skinPanel, "choseSkin");//panel 3 in contentPane
+        contentPane.add(skinPanel, "chooseSkin");//panel 3 in contentPane
 
         music = new Sound("Music");
         music.play();
@@ -121,6 +121,7 @@ class newUserAction implements ActionListener {
     ChangePanel change;
     ReplaceDialog replace;
     InstructionDialog a;
+
     public newUserAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
         this.newUser = newUser;
         this.change = change;
