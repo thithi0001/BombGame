@@ -18,6 +18,7 @@ public class ChangePanel {
     public UserList userList;
     HomePanel home;
     MenuPanel menu;
+    public SkinPanel skinPanel;
     public JFrame frame;
     public Sound music;
 
@@ -31,10 +32,12 @@ public class ChangePanel {
 
         home = new HomePanel(DimensionSize.screenWidth, DimensionSize.screenHeight);
         menu = new MenuPanel(frame);
+        skinPanel = new SkinPanel();
 
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
         contentPane.add(home, "menu");//panel 1 in contentPane
         contentPane.add(menu, "start");//panel 2 in contentPane
+        contentPane.add(skinPanel, "choseSkin");//panel 3 in contentPane
 
         music = new Sound("Music");
         music.play();
@@ -43,9 +46,30 @@ public class ChangePanel {
     }
 
     public void actionChange() {
-        ReplaceDialog replace = new ReplaceDialog(frame);
+        // SET UP HOME PANEL BUTTON
+        home.start.addActionListener((e) -> cardLayout.next(contentPane));
+        home.quit.addActionListener((e) -> {
+            RemindDialog a = new RemindDialog(frame, "exit Game ");
+            a.setVisible(true);
+            frame.setEnabled(false);
+            //SET UP BUTTON FOR RemindDialog
+            a.okButton.addActionListener(event -> {
+                userList.saveGame();
+                System.exit(0);
+            });
+            a.noButton.addActionListener(event -> {
+                frame.setEnabled(true);
+                a.setVisible(false);
+            });
+        });
+        home.instruction.addActionListener((e) -> {
+            frame.setEnabled(false);
+            InstructionDialog a = new InstructionDialog(frame);
+            a.setVisible(true);
+        });
 
-        //SET UP OTHER BUTTON IN START PANEL
+        //SET UP MENU PANEL BUTTON
+        ReplaceDialog replace = new ReplaceDialog(frame);
         menu.newGame.addActionListener(event -> {
             NewGameDialog newUser = new NewGameDialog(frame);
             frame.setEnabled(false);
@@ -89,27 +113,6 @@ public class ChangePanel {
             settingDialog.back.addActionListener(event -> frame.setEnabled(true));
         });
 
-        // SET UP MENU PANEL BUTTON
-        home.start.addActionListener((e) -> cardLayout.next(contentPane));
-        home.quit.addActionListener((e) -> {
-            RemindDialog a = new RemindDialog(frame, "exit Game ");
-            a.setVisible(true);
-            frame.setEnabled(false);
-            //SET UP BUTTON FOR RemindDialog
-            a.okButton.addActionListener(event -> {
-                userList.saveGame();
-                System.exit(0);
-            });
-            a.noButton.addActionListener(event -> {
-                frame.setEnabled(true);
-                a.setVisible(false);
-            });
-        });
-        home.instruction.addActionListener((e) -> {
-            frame.setEnabled(false);
-            InstructionDialog a = new InstructionDialog(frame);
-            a.setVisible(true);
-        });
     }
 }
 
@@ -117,11 +120,12 @@ class newUserAction implements ActionListener {
     NewGameDialog newUser;
     ChangePanel change;
     ReplaceDialog replace;
-
+    InstructionDialog a;
     public newUserAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
         this.newUser = newUser;
         this.change = change;
         this.replace = replace;
+        a = new InstructionDialog(change.frame);
     }
 
     @Override
@@ -148,9 +152,9 @@ class newUserAction implements ActionListener {
             if (!check) {
                 User A = new userClass.User(x);
                 newUser.textField.setText("");
-                change.frame.setEnabled(true);
-                change.contentPane.add(new LevelPanel(A, change), "newLevel");
-                change.cardLayout.show(change.contentPane, "newLevel");
+                a.setVisible(true);
+                change.contentPane.add(new LevelPanel(A, change), "level");
+                change.cardLayout.show(change.contentPane, "level");
                 newUser.setVisible(false);
             }
         }
@@ -159,12 +163,12 @@ class newUserAction implements ActionListener {
 }
 
 class replaceAction implements ActionListener {
-    ChangePanel changePanel;
+    ChangePanel change;
     ReplaceDialog replace;
     NewGameDialog newUser;
 
     public replaceAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
-        this.changePanel = change;
+        this.change = change;
         this.replace = replace;
         this.newUser = newUser;
     }
@@ -172,11 +176,15 @@ class replaceAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String x = newUser.textField.getText();
+        User userReplace = new User(x);
+        change.userList.addUser(userReplace);
+        change.userList.saveGame();
         newUser.setVisible(false);
-        changePanel.frame.setEnabled(true);
         newUser.textField.setText("");
-        changePanel.contentPane.add(new LevelPanel(new User(x), changePanel), "level");
-        changePanel.cardLayout.show(changePanel.contentPane, "level");
+        change.contentPane.add(new LevelPanel(userReplace, change), "level");
+        change.cardLayout.show(change.contentPane, "level");
+        InstructionDialog a = new InstructionDialog(change.frame);
+        a.setVisible(true);
         replace.setVisible(false);
     }
 }
