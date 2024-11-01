@@ -54,7 +54,7 @@ public class SkinPanel extends JPanel {
 
         String name = currentCharacter.replace('-', ' ');
         g.setColor(Color.BLACK);
-        g.setFont(LoadResource.instructionContent);
+        g.setFont(LoadResource.textDialogContent);
 //        g.drawString("|", screenWidth / 2, 80);
         g.drawString(name, screenWidth / 2 - name.length() * 6, 100);
 

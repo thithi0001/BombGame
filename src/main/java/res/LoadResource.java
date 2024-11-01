@@ -31,7 +31,7 @@ public class LoadResource {
 
     // font
     public static Font dialogContent = new Font("Courier New", Font.BOLD, 20);
-    public static Font instructionContent = new Font("Courier New", Font.BOLD, 22);
+    public static Font textDialogContent = new Font("Courier New", Font.BOLD, 22);
     public static Font dialogTitle = new Font("Courier New", Font.BOLD, 30);
     public static Font panelTitle = new Font("Courier New", Font.BOLD, 38);
     public static Font settingContent = new Font("Courier New", Font.ITALIC, 16);
