@@ -35,7 +35,7 @@ public class InstructionDialog extends SuperDialog {
         getContentPane().add(content);
         content.setSelectedTextColor(Color.RED);
         content.setSelectionColor(Color.PINK);
-        content.setFont(LoadResource.textDialogContent);
+        content.setFont(LoadResource.informationFont);
         content.setText("""
                 CONTROL:
                 + WASD or ARROW keys: Move

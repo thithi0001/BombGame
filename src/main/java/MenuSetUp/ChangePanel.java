@@ -67,6 +67,11 @@ public class ChangePanel {
             InstructionDialog a = new InstructionDialog(frame);
             a.setVisible(true);
         });
+        home.credits.addActionListener((e)->{
+            frame.setEnabled(false);
+            CreditDialog a = new CreditDialog(frame);
+            a.setVisible(true);
+        });
 
         //SET UP MENU PANEL BUTTON
         ReplaceDialog replace = new ReplaceDialog(frame);
