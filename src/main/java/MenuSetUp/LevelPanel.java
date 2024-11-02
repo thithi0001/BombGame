@@ -1,7 +1,5 @@
 package MenuSetUp;
 
-
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,6 +14,7 @@ import java.awt.Graphics;
 public class LevelPanel extends JPanel {
     MyButton back;
     MyButton setting;
+    MyButton skin;
     public User user;
     MyButton[] level = new MyButton[3];
     public JPanel levelButtonPanel;
@@ -48,13 +47,13 @@ public class LevelPanel extends JPanel {
         title.setLocation((DimensionSize.screenWidth - 130) / 2, 20);
         add(title);
 
-        //Avartar Button
-        JButton avartar = new JButton("Avartar");
-        avartar.setBounds(DimensionSize.screenWidth - 141, 10, 50 , 50);
-        add(avartar);
-        avartar.addActionListener(e -> {
-            change.cardLayout.show(change.contentPane,"choseSkin");
-            change.skinPanel.back.addActionListener((event) -> change.cardLayout.show(change.contentPane,"level"));
+        // skin button
+        skin = new MyButton("avatar");
+        skin.setLocateButton(DimensionSize.screenWidth - 71, 71);
+        add(skin);
+        skin.addActionListener(e -> {
+            change.cardLayout.show(change.contentPane, "chooseSkin");
+            change.skinPanel.back.addActionListener((event) -> change.cardLayout.show(change.contentPane, "level"));
         });
 
         //setting button
