@@ -11,7 +11,7 @@ import static MenuSetUp.DimensionSize.tileSize;
 import java.util.Random;
 
 public class Monster extends Entity {
-    
+
     Random random;
 
     protected int changeDirection = 2;
