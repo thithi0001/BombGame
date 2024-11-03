@@ -1,7 +1,8 @@
 package userClass;
 
-import java.io.File;
 import java.util.*;
+
+import res.LoadResource;
 
 public class User {
     String userName;
@@ -10,26 +11,21 @@ public class User {
 
     public User() {
         level = 1;
-        lvScore = new int[3];
+        lvScore = new int[LoadResource.maxMap];
     }
 
     public User(String userName) {
         this.userName = userName;
         level = 1;
-        lvScore = new int[3];
-    }
-
-    public void setLevel() {
-        level++;
+        lvScore = new int[LoadResource.maxMap];
     }
 
     public void setLevel(int lv) {
-        if (level < lv)
+        if (level < lv && lv <= LoadResource.maxMap)
             level = lv;
     }
 
     public void setScore(int lv, int score) {
-
         lvScore[lv - 1] = score;
     }
 
@@ -51,10 +47,6 @@ public class User {
 
     public String getUserName() {
         return userName;
-    }
-
-    public void saveUser(File a) {
-
     }
 
     public static User getUser(Scanner in) {
