@@ -16,7 +16,7 @@ public class LevelPanel extends JPanel {
     MyButton setting;
     MyButton skin;
     public User user;
-    MyButton[] level = new MyButton[3];
+    MyButton[] level = new MyButton[LoadResource.maxMap];
     public JPanel levelButtonPanel;
     public ChangePanel change;
 
@@ -69,21 +69,18 @@ public class LevelPanel extends JPanel {
     }
 
     public void addButton(User a, JPanel levelButtonPanel) {
-        levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
-        int row = 0, col = 4;
-        if (LoadResource.maxMap % col == 0) row = LoadResource.maxMap / col;
-        else row = LoadResource.maxMap / col + 1;
-
-        levelButtonPanel.setLayout(new GridLayout(row, col));
+        int row = 0;
+        row = LoadResource.maxMap/4 + 1;
+        levelButtonPanel.setLayout(new GridLayout(row, 4));
         levelButtonPanel.setLocation(50, 150);
+        levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
         levelButtonPanel.setOpaque(false);
-        for (int i = 0; i < 3; i++) {
+        
+        for (int i = 0; i < LoadResource.maxMap; i++) {
             String x = "level" + (i + 1);
-            if (i + 1 <= a.getLevel()) level[i] = new MyButton(x);
+            if (i < a.getLevel()) level[i] = new MyButton(x);
 
-            else level[i] = new MyButton("levelBlock"); //nếu levelButton bé hơn level -> block button;
-            level[i].setLocateButton(((DimensionSize.maxScreenCol - 5) / 2 + i * 2) * DimensionSize.tileSize
-                    , DimensionSize.screenHeight / 2);
+            else level[i] = new MyButton("levelBlock"); //if levelButton > level -> block button;
             levelButtonPanel.add(level[i]);
         }
     }
@@ -93,8 +90,8 @@ public class LevelPanel extends JPanel {
             int a = i + 1;
             if (i < user.getLevel()) {
                 level[i].addActionListener(e -> {
-                    LevelGameFrame lv1 = new LevelGameFrame(a, this);
-                    lv1.setVisible(true);
+                    LevelGameFrame lv = new LevelGameFrame(a, this);
+                    lv.setVisible(true);
                     change.frame.setVisible(false);
                 });
             }
@@ -122,13 +119,13 @@ public class LevelPanel extends JPanel {
                 change.userList.addUser(user);
                 change.userList.saveGame();
                 change.frame.setEnabled(true);
-                change.cardLayout.show(change.contentPane, "start");
+                change.cardLayout.show(change.contentPane, "menu");
                 saveGame.setVisible(false);
             });
             //saveGame no button
             saveGame.noButton.addActionListener(e -> {
                 change.frame.setEnabled(true);
-                change.cardLayout.show(change.contentPane, "start");
+                change.cardLayout.show(change.contentPane, "menu");
                 saveGame.setVisible(false);
             });
         });

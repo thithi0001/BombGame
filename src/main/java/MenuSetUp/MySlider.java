@@ -16,14 +16,11 @@ public class MySlider {
         slider = new JSlider(-24, 6, value);
         slider.setUI(new SliderUI(slider));
         slider.setOpaque(false);
-        slider.setSize(width - 55, height);
-
 
         //SET LABEL
         nameSlider = new JLabel(name);
         nameSlider.setSize(60, 35);
         nameSlider.setFont(LoadResource.settingContent);
-        // nameSlider.setHorizontalAlignment(SwingConstants.CENTER);
         nameSlider.setVerticalAlignment(SwingConstants.CENTER);
         nameSlider.setOpaque(false);
     }

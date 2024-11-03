@@ -35,8 +35,8 @@ public class ChangePanel {
         skinPanel = new SkinPanel();
 
         contentPane.setPreferredSize(new Dimension(DimensionSize.screenWidth, DimensionSize.screenHeight));
-        contentPane.add(home, "menu");//panel 1 in contentPane
-        contentPane.add(menu, "start");//panel 2 in contentPane
+        contentPane.add(home, "home");//panel 1 in contentPane
+        contentPane.add(menu, "menu");//panel 2 in contentPane
         contentPane.add(skinPanel, "chooseSkin");//panel 3 in contentPane
 
         music = new Sound("Music");
@@ -165,18 +165,18 @@ class newUserAction implements ActionListener {
             }
         }
     }
-
 }
 
 class replaceAction implements ActionListener {
     ChangePanel change;
     ReplaceDialog replace;
     NewGameDialog newUser;
-
+    InstructionDialog a;
     public replaceAction(NewGameDialog newUser, ChangePanel change, ReplaceDialog replace) {
         this.change = change;
         this.replace = replace;
         this.newUser = newUser;
+        a = new InstructionDialog(change.frame);
     }
 
     @Override
@@ -185,12 +185,11 @@ class replaceAction implements ActionListener {
         User userReplace = new User(x);
         change.userList.addUser(userReplace);
         change.userList.saveGame();
-        newUser.setVisible(false);
-        newUser.textField.setText("");
         change.contentPane.add(new LevelPanel(userReplace, change), "level");
         change.cardLayout.show(change.contentPane, "level");
-        InstructionDialog a = new InstructionDialog(change.frame);
         a.setVisible(true);
+        newUser.setVisible(false);
+        newUser.textField.setText("");
         replace.setVisible(false);
     }
 }
