@@ -79,8 +79,8 @@ public class Bomb {
         explosionSound.play();
     }
 
-    public void setCountDown(int secondLeft) {
-        countDown = secondLeft;
+    public void setCountDown(int frameLeft) {
+        countDown = frameLeft;
     }
 
     void checkPlayer() {
