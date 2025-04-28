@@ -85,7 +85,7 @@ public class CollisionChecker {
         return canPlaceBomb;
     }
 
-    public void checkBombForMoving(Entity entity) {
+    public void checkBombForEntity(Entity entity) {
 
         if (!entity.collisionOn) return;
         int eSpeed = entity.getSpeed();

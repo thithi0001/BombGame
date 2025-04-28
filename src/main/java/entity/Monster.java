@@ -1,7 +1,6 @@
 package entity;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import main.GamePanel;
 import res.LoadResource;
@@ -23,7 +22,6 @@ public class Monster extends Entity {
         this.name = "monster";
         this.x = x;
         this.y = y;
-        this.solidArea = new Rectangle(0, 0, tileSize, tileSize);
         random = new Random();
 
         setDefaultValues();
@@ -41,6 +39,7 @@ public class Monster extends Entity {
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
+        solidArea = new Rectangle(x + 12, y + 20, 24, 24);
     }
 
     public void update() {
@@ -50,7 +49,7 @@ public class Monster extends Entity {
         }
 
         gp.cChecker.checkTile(this);
-        gp.cChecker.checkBombForMoving(this);
+        gp.cChecker.checkBombForEntity(this);
         gp.cChecker.checkPlayerForMonster(this);
 
         move();

@@ -5,10 +5,6 @@ import entity.Player;
 import main.GamePanel;
 import res.LoadResource;
 
-import java.awt.*;
-
-import static MenuSetUp.DimensionSize.tileSize;
-
 public class TimeBomb extends Bomb {
 
     public TimeBomb() {
@@ -19,8 +15,6 @@ public class TimeBomb extends Bomb {
         super(gp, x, y, owner, flameLength);
         name = "time bomb";
         spriteTime = 6;// draw 1 sprite after every 6 frames
-
-        solidArea = new Rectangle(x, y, tileSize, tileSize);
 
         getBombImage();
     }
@@ -35,7 +29,7 @@ public class TimeBomb extends Bomb {
     @Override
     public void update() {
 
-        checkPlayer();
+        super.update();
 
         if (owner instanceof Player) {
             if (((Player) owner).getKeyHandler().activateBomb && !exploding) {
@@ -61,15 +55,6 @@ public class TimeBomb extends Bomb {
             spriteCounter = 0;
         }
 
-    }
-
-    @Override
-    public void draw(Graphics2D g2) {
-
-        g2.drawImage(sprites[spriteNum], x, y, null);
-        if (exploding) {
-            flame.draw(g2);
-        }
     }
 
     @Override

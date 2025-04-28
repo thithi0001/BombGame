@@ -11,8 +11,9 @@ public class Entity {
 
     GamePanel gp;
     public String name;
-    public int x, y;
+    public int x, y;// x = column, y = row
     protected int speed;
+//    final int[] speedLevel = {1, 2, 3, 4, 6, 8, 12, 16, 24, 48};
     final int maxSpeed = 4;
 
     protected BufferedImage[] sprites;

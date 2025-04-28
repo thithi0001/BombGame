@@ -21,14 +21,14 @@ public class Player extends Entity {
     BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
 
     ArrayList<Bomb> bombs = new ArrayList<>();
-    private String bombType = "normal";
     public BufferedImage statusBombTypeImg = LoadResource.itemImgMap.get("plus_bomb");
-    private int maxBombs;
-    private int flameLength;
     int cooldown;
     int timer = 0;
     int invincibleTime = 0;
 
+    private int maxBombs;
+    private int flameLength;
+    private String bombType;
     private boolean beingHit = false;
     private boolean hasShield = false;
     public int score = 0;
@@ -43,8 +43,6 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.name = "player";
 
-        solidArea = new Rectangle(12, 20, 24, 24);
-
         setDefaultValues();
         getPlayerImage();
     }
@@ -53,12 +51,14 @@ public class Player extends Entity {
 
         maxBombs = 1;
         flameLength = 1;
+        bombType = "normal";
         speed = 2;
         direction = "down";
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
         x = gp.map.checkPos.x * tileSize;
         y = gp.map.checkPos.y * tileSize;
+        solidArea = new Rectangle(x + 12, y + 20, 24, 24);
     }
 
     void getPlayerImage() {
@@ -72,7 +72,7 @@ public class Player extends Entity {
 
     public void update() {
 
-        // placing bomb
+        // place bomb
         gp.bombs.addAll(bombs);
         if (keyH.enterPressed && bombs.size() < maxBombs
                 && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
@@ -108,7 +108,7 @@ public class Player extends Entity {
 
             // CHECK COLLISION
             gp.cChecker.checkTile(this);
-            gp.cChecker.checkBombForMoving(this);
+            gp.cChecker.checkBombForEntity(this);
 
             move();
         }
@@ -222,7 +222,7 @@ public class Player extends Entity {
         score += point;
     }
 
-    public void placingBomb() {
+    void placeBomb() {
         switch (bombType) {
             case "time":
                 bombs.add(new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));

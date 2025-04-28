@@ -39,7 +39,7 @@ public class Bomb {
     public boolean letPlayerPassThrough = true;
 
     // FLAME
-    public Flame flame;
+    public Flame flame = null;
     public int flameLength = 1;
 
     // SOUND

@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS
     public static int FPS = 60;
-    int countFPS = 0;
+    int countFPS = 0, shownFPS = FPS;
     public Clock clock = new Clock(this);
 
     public LevelGameFrame parent;
@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileManager = new TileManager(this);
     public Map map;
     KeyHandler keyH = new KeyHandler();
+    Gizmo gizmo = new Gizmo(this);
     private Thread gameThread;
     public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -140,6 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1e9) {
                 clock.update();
+                shownFPS = countFPS;
                 countFPS = 0;
                 timer = 0;
             }
@@ -178,6 +180,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
+        if (keyH.gizmoOn)
+            gizmo.draw(g2);
+
         drawUI(g2);
 
         g2.dispose();// save memories
@@ -194,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.fillRect(10, y - 16, len * 11 + 2, 20);
         len = clock.toString().length();
         g2.fillRect((screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
-//        g2.fillRect(screenWidth / 2 + tileSize * 2, y - 16, 45, 20);
+        g2.fillRect(screenWidth / 2 + tileSize * 2, y - 16, 75, 20);
 
         g2.setColor(Color.BLACK);
         g2.setFont(LoadResource.gameStatus);
@@ -206,7 +211,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawString(clock.toString(), (screenWidth - len) / 2, y);
 
         // draw FPS
-//        g2.drawString(Integer.toString(countFPS), screenWidth / 2 + tileSize * 2, y);
+        g2.drawString("FPS " + shownFPS, screenWidth / 2 + tileSize * 2, y);
 
         // draw status
         x = tileSize * 3;

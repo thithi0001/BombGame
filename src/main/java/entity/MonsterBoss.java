@@ -40,7 +40,7 @@ public class MonsterBoss extends Monster {
             randomMove();
         }
 
-        gp.cChecker.checkBombForMoving(this);
+        gp.cChecker.checkBombForEntity(this);
         gp.cChecker.checkPlayerForMonster(this);
 
         move();
