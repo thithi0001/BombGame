@@ -79,12 +79,6 @@ public class Flame {
         solidAreaIsCreated = true;
     }
 
-    public void drawDebug(Graphics2D g2) {
-        g2.setColor(Color.BLUE);
-        g2.fillRect(verticalSolidArea.x, verticalSolidArea.y, verticalSolidArea.width, verticalSolidArea.height);
-        g2.fillRect(horizontalSolidArea.x, horizontalSolidArea.y, horizontalSolidArea.width, horizontalSolidArea.height);
-    }
-
     void drawUp(Graphics2D g2) {
 
         Tile tile;

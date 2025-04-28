@@ -16,7 +16,6 @@ public class CollisionChecker {
     GamePanel gp;
 
     public CollisionChecker(GamePanel gp) {
-
         this.gp = gp;
     }
 
@@ -209,10 +208,84 @@ public class CollisionChecker {
                     gp.WIN = true;
                     break;
 
+                case "glove":
+                    player.setHasGlove();
+                    break;
+
                 default:
                     break;
             }
         }
     }
 
+    public boolean checkTileForBomb(Bomb bomb) {
+        int row =  bomb.y / tileSize;
+        int col = bomb.x / tileSize;
+        switch (bomb.direction) {
+            case "up":
+                row = (bomb.y - bomb.speed) / tileSize;
+                break;
+            case "down":
+                row += 1;
+                break;
+            case "left":
+                col = (bomb.x - bomb.speed) / tileSize;
+                break;
+            case "right":
+                col += 1;
+                break;
+        }
+        int tile = gp.map.mapTileNum[col][row];
+        return gp.tileManager.tile[tile].collision;
+    }
+
+    public boolean checkBombForBomb(Bomb bomb) {
+        Rectangle solidArea = new Rectangle(bomb.solidArea);
+        switch (bomb.direction) {
+            case "up":
+                solidArea.y -= bomb.speed;
+                solidArea.height = bomb.speed;
+                break;
+            case "down":
+                solidArea.y += tileSize;
+                solidArea.height = bomb.speed;
+                break;
+            case "left":
+                solidArea.x -= bomb.speed;
+                solidArea.width = bomb.speed;
+                break;
+            case "right":
+                solidArea.x += tileSize;
+                solidArea.width = bomb.speed;
+                break;
+        }
+
+        for (int i = 0; i < gp.bombs.size(); i++)
+            if (solidArea.intersects(gp.bombs.get(i).solidArea))
+                return true;
+        return false;
+    }
+
+    public boolean checkMonsterForBomb(Bomb bomb) {
+        Rectangle solidArea = new Rectangle(bomb.solidArea);
+        switch (bomb.direction) {
+            case "up":
+                solidArea.y -= bomb.speed;
+                break;
+            case "down":
+                solidArea.y += bomb.speed;
+                break;
+            case "left":
+                solidArea.x -= bomb.speed;
+                break;
+            case "right":
+                solidArea.x += bomb.speed;
+                break;
+        }
+
+        for (int i = 0; i < gp.map.monsters.size(); i++)
+            if (solidArea.intersects(gp.map.monsters.get(i).solidArea))
+                return true;
+        return false;
+    }
 }

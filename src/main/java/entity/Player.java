@@ -31,6 +31,9 @@ public class Player extends Entity {
     private String bombType;
     private boolean beingHit = false;
     private boolean hasShield = false;
+    private boolean hasGlove = false;
+    private boolean canKickBomb = true;
+    private boolean holdingBomb = false;
     public int score = 0;
 
     public Player() {
@@ -78,6 +81,20 @@ public class Player extends Entity {
                 && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
             placingBomb();
             timer = cooldown;
+        }
+
+        // pick up and throw bomb
+        if (keyH.useGlove && hasGlove) {
+            if (hasBombHere && !holdingBomb) {
+                pickUpBomb();
+            } else if (holdingBomb) {
+                throwBomb();
+            }
+        }
+
+        // kick bomb
+        if (keyH.kickBomb && canKickBomb) {
+            kickBomb();
         }
 
         bombs.forEach(Bomb::update);
@@ -205,6 +222,14 @@ public class Player extends Entity {
         invincibleTime = UtilityTool.convertTime(1.0);
     }
 
+    public void setHasGlove() {
+        hasGlove = true;
+    }
+
+    public void activeKickBomb() {
+        canKickBomb = true;
+    }
+
     public void setBombType(String newType) {
         bombType = newType;
         statusBombTypeImg = LoadResource.timeBombIdle[0];
@@ -233,4 +258,44 @@ public class Player extends Entity {
         }
     }
 
+    void pickUpBomb() {
+
+    }
+
+    void throwBomb() {
+
+    }
+
+    void kickBomb() {
+        // find
+        int col = col(), row = row();
+        Bomb bomb = null;
+        switch (direction) {
+            case "up":
+                row -= 1;
+                break;
+            case "down":
+                row += 1;
+                break;
+            case "left":
+                col -= 1;
+                break;
+            case "right":
+                col += 1;
+                break;
+        }
+        for (int i = 0; i < gp.bombs.size(); i++) {
+            Bomb b = gp.bombs.get(i);
+            if (col == b.col() && row == b.row()) {
+                bomb = b;
+                break;
+            }
+        }
+
+        // kick
+        if (bomb == null) return;
+        bomb.moving = true;
+        bomb.direction = direction;
+        bomb.move();
+    }
 }

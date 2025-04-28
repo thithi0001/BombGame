@@ -12,7 +12,8 @@ public class KeyHandler implements KeyListener {
     public boolean movePressed;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean enterPressed;
-    public boolean activateBomb;
+    public boolean activateBomb, useGlove, kickBomb;
+    public boolean gizmoOn = false;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -51,6 +52,15 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_R:
             case KeyEvent.VK_SPACE:
                 activateBomb = true;
+                break;
+
+//            case KeyEvent.:
+//                useGlove = true;
+//                break;
+
+            case KeyEvent.VK_BACK_SLASH:
+                kickBomb = true;
+                break;
         }
 
         movePressed = upPressed || downPressed || leftPressed || rightPressed;
@@ -89,6 +99,19 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_R:
             case KeyEvent.VK_SPACE:
                 activateBomb = false;
+                break;
+
+//            case KeyEvent.VK_BACK_SLASH:
+//                useGlove = false;
+//                break;
+
+            case KeyEvent.VK_BACK_SLASH:
+                kickBomb = false;
+                break;
+
+            case KeyEvent.VK_E:
+                gizmoOn = !gizmoOn;
+                break;
         }
 
         movePressed = upPressed || downPressed || leftPressed || rightPressed;

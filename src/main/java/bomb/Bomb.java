@@ -17,6 +17,8 @@ public class Bomb {
 
     public GamePanel gp;
     public int x, y;
+    public final int speed = 4;
+    public String direction = "down";
 
     // ANIMATION
     protected BufferedImage[] sprites = null;
@@ -25,6 +27,7 @@ public class Bomb {
     protected int spriteTime;// time between 2 sprites
     protected int spriteNum = 0;// index of the using sprite
     protected int spriteCounter = 0;// should be frame counter
+    protected int drawX, drawY;// use for pickup bomb
 
     // COUNTDOWN
     protected int countDown;
@@ -32,6 +35,8 @@ public class Bomb {
     // STATE
     public boolean exploding = false;
     public boolean exploded = false;
+    public boolean beingPickedUp = false;
+    public boolean moving = false;
 
     // COLLISION
     public Rectangle solidArea;
@@ -52,8 +57,11 @@ public class Bomb {
         this.gp = gp;
         this.x = x;
         this.y = y;
+        this.drawX = x;
+        this.drawY = y;
         this.owner = owner;
         this.flameLength = flameLength;
+        this.solidArea = new Rectangle(x, y, tileSize, tileSize);
         explosionSound = LoadResource.explosionSound;
     }
 
@@ -66,6 +74,8 @@ public class Bomb {
     }
 
     public void update() {
+        if (moving) move();
+        checkPlayer();
     }
 
     public void draw(Graphics2D g2) {
@@ -77,6 +87,15 @@ public class Bomb {
         spriteCounter = 0;
         spriteNum = 0;
         explosionSound.play();
+    }
+
+    public void beingPickedUp() {
+        drawX -= 36;
+        beingPickedUp = true;
+    }
+
+    public void resetDraw() {
+        drawX = x;
     }
 
     public void setCountDown(int frameLeft) {
@@ -93,7 +112,38 @@ public class Bomb {
 
             if (!playerSolidArea.intersects(solidArea)) {
                 letPlayerPassThrough = false;
-            }
-        }
     }
+
+    void changeOwner(Entity newOwner) {
+        this.owner = newOwner;
+    }
+
+    public void move() {
+        boolean stop = gp.cChecker.checkTileForBomb(this)
+                || gp.cChecker.checkBombForBomb(this);
+        if (stop) {
+            moving = false;
+            return;
+        }
+        switch (direction) {
+            case "up":
+                y -= speed;
+                break;
+
+            case "down":
+                y += speed;
+                break;
+
+            case "left":
+                x -= speed;
+                break;
+
+            case "right":
+                x += speed;
+                break;
+        }
+        solidArea.x = x;
+        solidArea.y = y;
+    }
+
 }
