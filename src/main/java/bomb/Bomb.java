@@ -17,6 +17,8 @@ public class Bomb {
 
     public GamePanel gp;
     public int x, y;
+    public final int speed = 4;
+    public String direction = "down";
 
     // ANIMATION
     protected BufferedImage[] sprites = null;
@@ -25,6 +27,7 @@ public class Bomb {
     protected int spriteTime;// time between 2 sprites
     protected int spriteNum = 0;// index of the using sprite
     protected int spriteCounter = 0;// should be frame counter
+    protected int drawX, drawY;// use for pickup bomb
 
     // COUNTDOWN
     protected int countDown;
@@ -32,6 +35,8 @@ public class Bomb {
     // STATE
     public boolean exploding = false;
     public boolean exploded = false;
+    public boolean beingPickedUp = false;
+    public boolean moving = false;
 
     // COLLISION
     public Rectangle solidArea;
@@ -39,7 +44,7 @@ public class Bomb {
     public boolean letPlayerPassThrough = true;
 
     // FLAME
-    public Flame flame;
+    public Flame flame = null;
     public int flameLength = 1;
 
     // SOUND
@@ -52,8 +57,11 @@ public class Bomb {
         this.gp = gp;
         this.x = x;
         this.y = y;
+        this.drawX = x;
+        this.drawY = y;
         this.owner = owner;
         this.flameLength = flameLength;
+        this.solidArea = new Rectangle(x, y, tileSize, tileSize);
         explosionSound = LoadResource.explosionSound;
     }
 
@@ -66,9 +74,16 @@ public class Bomb {
     }
 
     public void update() {
+        if (moving) move();
+        checkPlayer();
     }
 
     public void draw(Graphics2D g2) {
+
+        g2.drawImage(sprites[spriteNum], x, y, null);
+        if (exploding) {
+            flame.draw(g2);
+        }
     }
 
     void explode() {
@@ -79,21 +94,56 @@ public class Bomb {
         explosionSound.play();
     }
 
+    public void beingPickedUp() {
+        drawX -= 36;
+        beingPickedUp = true;
+    }
+
+    public void resetDraw() {
+        drawX = x;
+    }
+
     public void setCountDown(int frameLeft) {
         countDown = frameLeft;
     }
 
     void checkPlayer() {
 
-        if (letPlayerPassThrough) {
-
-            Rectangle playerSolidArea = new Rectangle(owner.solidArea);
-            playerSolidArea.x += owner.x;
-            playerSolidArea.y += owner.y;
-
-            if (!playerSolidArea.intersects(solidArea)) {
+        if (letPlayerPassThrough)
+            if (!owner.solidArea.intersects(solidArea))
                 letPlayerPassThrough = false;
-            }
-        }
     }
+
+    void changeOwner(Entity newOwner) {
+        this.owner = newOwner;
+    }
+
+    public void move() {
+        boolean stop = gp.cChecker.checkTileForBomb(this)
+                || gp.cChecker.checkBombForBomb(this);
+        if (stop) {
+            moving = false;
+            return;
+        }
+        switch (direction) {
+            case "up":
+                y -= speed;
+                break;
+
+            case "down":
+                y += speed;
+                break;
+
+            case "left":
+                x -= speed;
+                break;
+
+            case "right":
+                x += speed;
+                break;
+        }
+        solidArea.x = x;
+        solidArea.y = y;
+    }
+
 }
