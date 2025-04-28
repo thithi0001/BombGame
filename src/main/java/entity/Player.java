@@ -77,9 +77,10 @@ public class Player extends Entity {
 
         // place bomb
         gp.bombs.addAll(bombs);
+        boolean hasBombHere = gp.cChecker.hasBombHere(col(), row());
         if (keyH.enterPressed && bombs.size() < maxBombs
-                && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
-            placingBomb();
+                && timer == 0 && !hasBombHere) {
+            placeBomb();
             timer = cooldown;
         }
 
@@ -182,6 +183,8 @@ public class Player extends Entity {
                 if (canMoveRight) x += speed;
                 break;
         }
+        solidArea.x = x + 12;
+        solidArea.y = y + 20;
         resetCollision();
     }
 

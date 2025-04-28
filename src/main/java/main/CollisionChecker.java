@@ -22,10 +22,10 @@ public class CollisionChecker {
     public void checkTile(Entity entity) {
 
         if (!entity.collisionOn) return;
-        int entityLeftX = entity.x + entity.solidArea.x;
-        int entityRightX = entityLeftX + entity.solidArea.width - 2;
-        int entityTopY = entity.y + entity.solidArea.y;
-        int entityBotY = entityTopY + entity.solidArea.height - 2;
+        int entityLeftX = entity.solidArea.x;
+        int entityRightX = entityLeftX + entity.solidArea.width;
+        int entityTopY = entity.solidArea.y;
+        int entityBotY = entityTopY + entity.solidArea.height;
 
         int entityLeftCol = entityLeftX / tileSize;
         int entityRightCol = entityRightX / tileSize;
@@ -71,17 +71,14 @@ public class CollisionChecker {
         }
     }
 
-    public boolean canPlaceBomb(Entity entity) {
+    public boolean hasBombHere(int col, int row) {
 
-        boolean canPlaceBomb = true;
-        for (int i = 0; i < gp.bombs.size(); i++) {
-            Bomb b = gp.bombs.get(i);
-            if (entity.col() == b.col() && entity.row() == b.row()) {
-                canPlaceBomb = false;
-                break;
+        for (Bomb bomb: gp.bombs) {
+            if (col == bomb.col() && row == bomb.row()) {
+                return true;
             }
         }
-        return canPlaceBomb;
+        return false;
     }
 
     public void checkBombForEntity(Entity entity) {
@@ -90,8 +87,6 @@ public class CollisionChecker {
         int eSpeed = entity.getSpeed();
 
         Rectangle solidArea = new Rectangle(entity.solidArea);
-        solidArea.x += entity.x;
-        solidArea.y += entity.y;
         switch (entity.direction) {
             case "up":
                 solidArea.y -= eSpeed;
@@ -140,8 +135,6 @@ public class CollisionChecker {
     public static void checkEntityForFlame(Flame flame, Entity entity) {
 
         Rectangle solidArea = new Rectangle(entity.solidArea);
-        solidArea.x += entity.x;
-        solidArea.y += entity.y;
         if (flame.verticalSolidArea.intersects(solidArea)
                 || flame.horizontalSolidArea.intersects(solidArea)) {
             entity.beingHit();
@@ -157,30 +150,17 @@ public class CollisionChecker {
         }
     }
 
-    // Thinh
     public void checkPlayerForMonster(Monster monster) {
 
         Player player = gp.player;
-        Rectangle solidArea = new Rectangle(player.solidArea);
-        solidArea.x += player.x;
-        solidArea.y += player.y;
-
-        Rectangle mSolidArea = new Rectangle(monster.solidArea);
-        mSolidArea.x += monster.x;
-        mSolidArea.y += monster.y;
-
-        if (solidArea.intersects(mSolidArea)) {
+        if (player.solidArea.intersects(monster.solidArea))
             player.beingHit();
-        }
     }
 
     public void checkPlayerForItem(Item item) {
 
         Player player = gp.player;
-        Rectangle solidArea = new Rectangle(player.solidArea);
-        solidArea.x += player.x;
-        solidArea.y += player.y;
-        if (item.state == Item.States.shown && solidArea.intersects(item.solidArea)) {
+        if (item.state == Item.States.shown && player.solidArea.intersects(item.solidArea)) {
             item.beingPickedUp();
             player.addScore(item.score);
             switch (item.name) {

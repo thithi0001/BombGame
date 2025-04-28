@@ -79,6 +79,11 @@ public class Bomb {
     }
 
     public void draw(Graphics2D g2) {
+
+        g2.drawImage(sprites[spriteNum], x, y, null);
+        if (exploding) {
+            flame.draw(g2);
+        }
     }
 
     void explode() {
@@ -104,13 +109,8 @@ public class Bomb {
 
     void checkPlayer() {
 
-        if (letPlayerPassThrough) {
-
-            Rectangle playerSolidArea = new Rectangle(owner.solidArea);
-            playerSolidArea.x += owner.x;
-            playerSolidArea.y += owner.y;
-
-            if (!playerSolidArea.intersects(solidArea)) {
+        if (letPlayerPassThrough)
+            if (!owner.solidArea.intersects(solidArea))
                 letPlayerPassThrough = false;
     }
 

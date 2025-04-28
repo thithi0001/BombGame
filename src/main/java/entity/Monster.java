@@ -121,6 +121,8 @@ public class Monster extends Entity {
                 }
                 break;
         }
+        solidArea.x = x + 12;
+        solidArea.y = y + 20;
 
         if (!moved) {
             randomMove();
