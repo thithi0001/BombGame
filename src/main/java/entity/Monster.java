@@ -32,6 +32,7 @@ public class Monster extends Entity {
     }
 
     public void setDefaultValues() {
+
         speed = 1;
         direction = "down";
         spriteTime = 6;
@@ -63,6 +64,7 @@ public class Monster extends Entity {
     }
 
     void randomMove() {
+        // tuong duong voi setDirection
         int randomDirection = random.nextInt(4);
         switch (randomDirection) {
             case 0:
@@ -128,6 +130,7 @@ public class Monster extends Entity {
     }
 
     public void draw(Graphics2D g2) {
+
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
         }

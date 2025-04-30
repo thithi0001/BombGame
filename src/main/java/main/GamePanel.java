@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TileManager tileManager = new TileManager(this);
     public Map map;
-    KeyHandler keyH = new KeyHandler();
+    public KeyHandler keyH = new KeyHandler();
     Gizmo gizmo = new Gizmo(this);
     private Thread gameThread;
     public Player player;
@@ -81,6 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
+        System.out.println("Player: (" + player.col() + ", " + player.row() + ")");
+        map.initMonsterAi();
 
         gameThread = new Thread(this);
         gameThread.start();

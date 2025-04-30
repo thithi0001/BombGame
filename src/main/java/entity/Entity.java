@@ -35,12 +35,10 @@ public class Entity {
     }
 
     public int col() {
-
         return (x + tileSize / 2) / tileSize;
     }
 
     public int row() {
-
         return (y + tileSize / 2) / tileSize;
     }
 
