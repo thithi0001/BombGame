@@ -36,7 +36,7 @@ public class CollisionChecker {
         int tile1, tile2;
 
         switch (entity.direction) {
-            case "up":
+            case UP:
                 entityTopRow = (entityTopY - eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityTopRow];
@@ -44,7 +44,7 @@ public class CollisionChecker {
                     entity.canMoveUp = false;
                 }
                 break;
-            case "down":
+            case DOWN:
                 entityBotRow = (entityBotY + eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityBotRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityBotRow];
@@ -52,7 +52,7 @@ public class CollisionChecker {
                     entity.canMoveDown = false;
                 }
                 break;
-            case "left":
+            case LEFT:
                 entityLeftCol = (entityLeftX - eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityLeftCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityLeftCol][entityBotRow];
@@ -60,7 +60,7 @@ public class CollisionChecker {
                     entity.canMoveLeft = false;
                 }
                 break;
-            case "right":
+            case RIGHT:
                 entityRightCol = (entityRightX + eSpeed) / tileSize;
                 tile1 = gp.map.mapTileNum[entityRightCol][entityTopRow];
                 tile2 = gp.map.mapTileNum[entityRightCol][entityBotRow];
@@ -88,7 +88,7 @@ public class CollisionChecker {
 
         Rectangle solidArea = new Rectangle(entity.solidArea);
         switch (entity.direction) {
-            case "up":
+            case UP:
                 solidArea.y -= eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
@@ -96,7 +96,7 @@ public class CollisionChecker {
                     }
                 });
                 break;
-            case "down":
+            case DOWN:
                 solidArea.y += eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
@@ -104,7 +104,7 @@ public class CollisionChecker {
                     }
                 });
                 break;
-            case "left":
+            case LEFT:
                 solidArea.x -= eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
@@ -112,7 +112,7 @@ public class CollisionChecker {
                     }
                 });
                 break;
-            case "right":
+            case RIGHT:
                 solidArea.x += eSpeed;
                 gp.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
@@ -202,16 +202,16 @@ public class CollisionChecker {
         int row =  bomb.y / tileSize;
         int col = bomb.x / tileSize;
         switch (bomb.direction) {
-            case "up":
+            case UP:
                 row = (bomb.y - bomb.speed) / tileSize;
                 break;
-            case "down":
+            case DOWN:
                 row += 1;
                 break;
-            case "left":
+            case LEFT:
                 col = (bomb.x - bomb.speed) / tileSize;
                 break;
-            case "right":
+            case RIGHT:
                 col += 1;
                 break;
         }
@@ -222,19 +222,19 @@ public class CollisionChecker {
     public boolean checkBombForBomb(Bomb bomb) {
         Rectangle solidArea = new Rectangle(bomb.solidArea);
         switch (bomb.direction) {
-            case "up":
+            case UP:
                 solidArea.y -= bomb.speed;
                 solidArea.height = bomb.speed;
                 break;
-            case "down":
+            case DOWN:
                 solidArea.y += tileSize;
                 solidArea.height = bomb.speed;
                 break;
-            case "left":
+            case LEFT:
                 solidArea.x -= bomb.speed;
                 solidArea.width = bomb.speed;
                 break;
-            case "right":
+            case RIGHT:
                 solidArea.x += tileSize;
                 solidArea.width = bomb.speed;
                 break;
@@ -249,16 +249,16 @@ public class CollisionChecker {
     public boolean checkMonsterForBomb(Bomb bomb) {
         Rectangle solidArea = new Rectangle(bomb.solidArea);
         switch (bomb.direction) {
-            case "up":
+            case UP:
                 solidArea.y -= bomb.speed;
                 break;
-            case "down":
+            case DOWN:
                 solidArea.y += bomb.speed;
                 break;
-            case "left":
+            case LEFT:
                 solidArea.x -= bomb.speed;
                 break;
-            case "right":
+            case RIGHT:
                 solidArea.x += bomb.speed;
                 break;
         }

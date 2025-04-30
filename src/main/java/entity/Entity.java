@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -17,7 +18,7 @@ public class Entity {
     final int maxSpeed = 4;
 
     protected BufferedImage[] sprites;
-    public String direction;// direction of sprites
+    public Direction direction;// direction of sprites
     protected int spriteTime;// time between 2 sprites
     protected int spriteNum = 0;// index of the using sprite
     protected int spriteCounter = 0;// should be frame counter
@@ -35,13 +36,16 @@ public class Entity {
     }
 
     public int col() {
-
         return (x + tileSize / 2) / tileSize;
     }
 
     public int row() {
-
         return (y + tileSize / 2) / tileSize;
+    }
+
+    public Point getPosition() {
+        // tra ve vi tri o hien tai dang dung
+        return new Point(col(), row());
     }
 
     public void beingHit() {

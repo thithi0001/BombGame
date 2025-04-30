@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import main.GamePanel;
 
 import static MenuSetUp.DimensionSize.*;
+import static entity.Direction.*;
 
 public class MonsterBoss extends Monster {
     int width, height;
@@ -27,7 +28,7 @@ public class MonsterBoss extends Monster {
     @Override
     public void setDefaultValues() {
         speed = 1;
-        direction = "down";
+        direction = DOWN;
 
         x = (screenWidth - width) / 2;
         y = (screenHeight - height) / 2;
@@ -52,28 +53,28 @@ public class MonsterBoss extends Monster {
         moved = false;
 
         switch (direction) {
-            case "up":
+            case UP:
                 if (y - speed >= 0 && canMoveUp) {
                     y -= speed;
                     moved = true;
                 }
                 break;
 
-            case "down":
+            case DOWN:
                 if (y + speed + height <= screenHeight && canMoveDown) {
                     y += speed;
                     moved = true;
                 }
                 break;
 
-            case "left":
+            case LEFT:
                 if (x - speed >= 0 && canMoveLeft) {
                     x -= speed;
                     moved = true;
                 }
                 break;
 
-            case "right":
+            case RIGHT:
                 if (x + speed + width <= screenWidth && canMoveRight) {
                     x += speed;
                     moved = true;

@@ -6,21 +6,24 @@ import entity.Entity;
 import entity.Item;
 import main.GamePanel;
 
-import java.awt.*;
-import java.util.List;
-
-import static MenuSetUp.DimensionSize.*;
+import java.awt.Point;
+import java.util.ArrayList;
 
 // class nay dung de lay thong tin dau vao cho agent xu ly
 public class InputContext {
 
-    GamePanel gp;
-    private Entity self;
-    private Entity target;
+    public GamePanel gp;
+    private Entity self;// start point
+    private Entity target;// goal point
 
-    private List<Bomb> bombs;
-    private List<Flame> flames;
-    private List<Item> items;
+    // chi can lay vi tri cua cac doi tuong la duoc
+    private ArrayList<Bomb> bombs;
+    private ArrayList<Flame> flames;
+    private ArrayList<Item> items;
+
+    public InputContext(GamePanel gp, Entity self) {
+        this(gp, self, gp.player);
+    }
 
     public InputContext(GamePanel gp, Entity self, Entity target) {
         this.gp = gp;
@@ -32,7 +35,32 @@ public class InputContext {
     }
 
     public Point getTargetPosition() {
-        return new Point(target.col(), target.row());
+        return target.getPosition();
+    }
+    public Point getSelfPosition() {
+        return self.getPosition();
+    }
+
+    public ArrayList<Point> getBombsPosition() {
+        ArrayList<Point> bombsPos = new ArrayList<>();
+        bombs.forEach(bomb -> {
+            bombsPos.add(new Point(bomb.col(), bomb.row()));
+        });
+        return bombsPos;
+    }
+    public ArrayList<Point> getFlamesPosition() {
+        ArrayList<Point> flamesPos = new ArrayList<>();
+        flames.forEach(flame -> {
+            flamesPos.add(new Point(flame.col(), flame.row()));
+        });
+        return flamesPos;
+    }
+    public ArrayList<Point> getItemsPosition() {
+        ArrayList<Point> itemsPos = new ArrayList<>();
+        items.forEach(item -> {
+            itemsPos.add(item.getPosition());
+        });
+        return itemsPos;
     }
 
     public boolean isTileWalkable(int col, int row) {
@@ -60,6 +88,5 @@ public class InputContext {
     }
 
     public void printContext() {}
-
 
 }

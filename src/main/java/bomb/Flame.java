@@ -70,6 +70,14 @@ public class Flame {
         }
     }
 
+    public int col() {
+        return x / tileSize;
+    }
+
+    public int row() {
+        return y / tileSize;
+    }
+
     public void draw(Graphics2D g2) {
 
         drawUp(g2);

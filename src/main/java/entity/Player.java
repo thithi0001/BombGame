@@ -13,6 +13,7 @@ import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
+import static entity.Direction.*;
 
 public class Player extends Entity {
 
@@ -56,7 +57,7 @@ public class Player extends Entity {
         flameLength = 1;
         bombType = "normal";
         speed = 2;
-        direction = "down";
+        direction = DOWN;
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
         x = gp.map.checkPos.x * tileSize;
@@ -71,6 +72,21 @@ public class Player extends Entity {
         playerLeft = LoadResource.charactersSprites[LoadResource.characterIndex].left;
         playerRight = LoadResource.charactersSprites[LoadResource.characterIndex].right;
         sprites = playerDown;
+    }
+
+    public void setDirection() {
+        if (gp.keyH.upPressed) {
+            direction = UP;
+        }
+        if (gp.keyH.downPressed) {
+            direction = DOWN;
+        }
+        if (gp.keyH.leftPressed) {
+            direction = LEFT;
+        }
+        if (gp.keyH.rightPressed) {
+            direction = RIGHT;
+        }
     }
 
     public void update() {
@@ -111,18 +127,7 @@ public class Player extends Entity {
 
         if (keyH.movePressed) {
 
-            if (keyH.upPressed) {
-                direction = "up";
-            }
-            if (keyH.downPressed) {
-                direction = "down";
-            }
-            if (keyH.leftPressed) {
-                direction = "left";
-            }
-            if (keyH.rightPressed) {
-                direction = "right";
-            }
+            setDirection();
 
             // CHECK COLLISION
             gp.cChecker.checkTile(this);
@@ -145,16 +150,16 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
 
         switch (direction) {
-            case "up":
+            case UP:
                 sprites = playerUp;
                 break;
-            case "down":
+            case DOWN:
                 sprites = playerDown;
                 break;
-            case "left":
+            case LEFT:
                 sprites = playerLeft;
                 break;
-            case "right":
+            case RIGHT:
                 sprites = playerRight;
                 break;
         }
@@ -170,16 +175,16 @@ public class Player extends Entity {
     void move() {
 
         switch (direction) {
-            case "up":
+            case UP:
                 if (canMoveUp) y -= speed;
                 break;
-            case "down":
+            case DOWN:
                 if (canMoveDown) y += speed;
                 break;
-            case "left":
+            case LEFT:
                 if (canMoveLeft) x -= speed;
                 break;
-            case "right":
+            case RIGHT:
                 if (canMoveRight) x += speed;
                 break;
         }
@@ -274,16 +279,16 @@ public class Player extends Entity {
         int col = col(), row = row();
         Bomb bomb = null;
         switch (direction) {
-            case "up":
+            case UP:
                 row -= 1;
                 break;
-            case "down":
+            case DOWN:
                 row += 1;
                 break;
-            case "left":
+            case LEFT:
                 col -= 1;
                 break;
-            case "right":
+            case RIGHT:
                 col += 1;
                 break;
         }
