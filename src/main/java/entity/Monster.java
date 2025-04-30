@@ -17,7 +17,6 @@ public class Monster extends Entity {
     boolean moved;
 
     public Monster(GamePanel gp, int x, int y) {
-
         this.gp = gp;
         this.name = "monster";
         this.x = x;
@@ -33,7 +32,6 @@ public class Monster extends Entity {
     }
 
     public void setDefaultValues() {
-
         speed = 1;
         direction = "down";
         spriteTime = 6;
@@ -43,7 +41,6 @@ public class Monster extends Entity {
     }
 
     public void update() {
-
         if (random.nextInt(100) < changeDirection) {
             randomMove();
         }
@@ -63,7 +60,6 @@ public class Monster extends Entity {
             }
             spriteCounter = 0;
         }
-
     }
 
     void randomMove() {
@@ -132,7 +128,6 @@ public class Monster extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
         }
