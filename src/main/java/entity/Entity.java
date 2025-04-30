@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -40,6 +41,11 @@ public class Entity {
 
     public int row() {
         return (y + tileSize / 2) / tileSize;
+    }
+
+    public Point getPosition() {
+        // tra ve vi tri o hien tai dang dung
+        return new Point(col(), row());
     }
 
     public void beingHit() {

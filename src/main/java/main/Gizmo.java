@@ -6,6 +6,9 @@ import entity.Entity;
 import entity.Item;
 
 import java.awt.*;
+import java.util.List;
+
+import static MenuSetUp.DimensionSize.tileSize;
 
 public class Gizmo {
 
@@ -39,9 +42,20 @@ public class Gizmo {
         gp.bombs.forEach(b -> bomb(b, g2));
         gp.map.items.forEach(i -> entity(i, Color.MAGENTA, g2));
         entity(gp.player, Color.BLACK, g2);
+        gp.map.monsters.forEach(m -> agentPath(m.getCurrentPath(), m.getPathIndex(), g2));
     }
 
-    void agentPath() {}
+    void agentPath(List<Point> path, int startIndex, Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        int lines = path.size() - startIndex;
+        for (int i = startIndex; i < path.size() - 1; i++) {
+            int x1 = path.get(i).x * tileSize + tileSize / 2;
+            int y1 = path.get(i).y * tileSize + tileSize / 2;
+            int x2 = path.get(i + 1).x * tileSize + tileSize / 2;
+            int y2 = path.get(i + 1).y * tileSize + tileSize / 2;
+            g2.drawLine(x1, y1, x2, y2);
+        }
+    }
     void agentState() {}
     void agent() {}
 }

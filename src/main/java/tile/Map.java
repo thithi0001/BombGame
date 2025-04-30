@@ -49,6 +49,10 @@ public class Map {
         monsterSpawnPos.forEach(m -> monsters.add(new Monster(gp, m.x, m.y)));
     }
 
+    public void initMonsterAi() {
+        monsters.forEach(Monster::initAI);
+    }
+
     void placeItem() {
 
         if (itemPos.isEmpty()) return;

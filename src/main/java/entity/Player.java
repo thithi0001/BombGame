@@ -74,6 +74,21 @@ public class Player extends Entity {
         sprites = playerDown;
     }
 
+    public void setDirection() {
+        if (gp.keyH.upPressed) {
+            direction = UP;
+        }
+        if (gp.keyH.downPressed) {
+            direction = DOWN;
+        }
+        if (gp.keyH.leftPressed) {
+            direction = LEFT;
+        }
+        if (gp.keyH.rightPressed) {
+            direction = RIGHT;
+        }
+    }
+
     public void update() {
 
         // place bomb
