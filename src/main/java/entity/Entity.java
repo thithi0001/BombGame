@@ -17,7 +17,7 @@ public class Entity {
     final int maxSpeed = 4;
 
     protected BufferedImage[] sprites;
-    public String direction;// direction of sprites
+    public Direction direction;// direction of sprites
     protected int spriteTime;// time between 2 sprites
     protected int spriteNum = 0;// index of the using sprite
     protected int spriteCounter = 0;// should be frame counter

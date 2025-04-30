@@ -1,11 +1,12 @@
 package entity;
 
-import java.awt.*;
-
+import AI.InputContext;
+import AI.pathFinding.DStartLite;
 import main.GamePanel;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
+import static entity.Direction.*;
 
 import java.util.Random;
 
@@ -34,7 +35,7 @@ public class Monster extends Entity {
     public void setDefaultValues() {
 
         speed = 1;
-        direction = "down";
+        direction = DOWN;
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
@@ -69,17 +70,17 @@ public class Monster extends Entity {
         switch (randomDirection) {
             case 0:
                 if (canMoveUp) {
-                    direction = "up";
+                    direction = UP;
                 }
                 break;
             case 1:
                 if (canMoveDown) {
-                    direction = "down";
+                    direction = DOWN;
                 }
                 break;
             case 2:
                 if (canMoveLeft) {
-                    direction = "left";
+                    direction = LEFT;
                 }
                 break;
             case 3:
@@ -94,25 +95,25 @@ public class Monster extends Entity {
         moved = false;
 
         switch (direction) {
-            case "up":
+            case UP:
                 if (canMoveUp) {
                     y -= speed;
                     moved = true;
                 }
                 break;
-            case "down":
+            case DOWN:
                 if (canMoveDown) {
                     y += speed;
                     moved = true;
                 }
                 break;
-            case "left":
+            case LEFT:
                 if (canMoveLeft) {
                     x -= speed;
                     moved = true;
                 }
                 break;
-            case "right":
+            case RIGHT:
                 if (canMoveRight) {
                     x += speed;
                     moved = true;

@@ -4,11 +4,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import MenuSetUp.Sound;
+import entity.Direction;
 import entity.Entity;
 import main.GamePanel;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
+import static entity.Direction.*;
 
 public class Bomb {
 
@@ -18,7 +20,7 @@ public class Bomb {
     public GamePanel gp;
     public int x, y;
     public final int speed = 4;
-    public String direction = "down";
+    public Direction direction = DOWN;
 
     // ANIMATION
     protected BufferedImage[] sprites = null;
@@ -126,19 +128,19 @@ public class Bomb {
             return;
         }
         switch (direction) {
-            case "up":
+            case UP:
                 y -= speed;
                 break;
 
-            case "down":
+            case DOWN:
                 y += speed;
                 break;
 
-            case "left":
+            case LEFT:
                 x -= speed;
                 break;
 
-            case "right":
+            case RIGHT:
                 x += speed;
                 break;
         }
