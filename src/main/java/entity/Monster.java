@@ -109,8 +109,10 @@ public class Monster extends Entity {
     }
 
     public void setDirection(Point current, Point next) {
+
         int x = next.x - current.x;
         int y = next.y - current.y;
+
         if (x == 0) {
             if (y == -1) direction = UP;
             if (y == 1) direction = DOWN;

@@ -211,7 +211,7 @@ public class DStartLite {
         computeShortestPath();
     }
 
-    public void addDynamicObstacle(Point obstacle) {
+    public void addObstacle(Point obstacle) {
         if (isObstacles(obstacle)) return;
         grid[obstacle.x][obstacle.y] = true;
 
@@ -224,7 +224,7 @@ public class DStartLite {
         }
     }
 
-    public void removeDynamicObstacle(Point obstacle) {
+    public void removeObstacle(Point obstacle) {
         if (!isObstacles(obstacle)) return;
         grid[obstacle.x][obstacle.y] = false;
 

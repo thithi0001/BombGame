@@ -48,6 +48,7 @@ public class InputContext {
         });
         return bombsPos;
     }
+
     public ArrayList<Point> getFlamesPosition() {
         ArrayList<Point> flamesPos = new ArrayList<>();
         flames.forEach(flame -> {
@@ -55,6 +56,7 @@ public class InputContext {
         });
         return flamesPos;
     }
+
     public ArrayList<Point> getItemsPosition() {
         ArrayList<Point> itemsPos = new ArrayList<>();
         items.forEach(item -> {
