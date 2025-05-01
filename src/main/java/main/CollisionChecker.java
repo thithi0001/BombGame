@@ -173,7 +173,7 @@ public class CollisionChecker {
                     break;
 
                 case "shoe":
-                    player.addSpeed(1);
+                    player.increaseSpeed();
                     break;
 
                 case "clock":

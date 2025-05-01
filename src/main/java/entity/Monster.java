@@ -53,7 +53,7 @@ public class Monster extends Entity {
 
     public void setDefaultValues() {
 
-        speed = 1;
+        setSpeedLevel(0);
         direction = DOWN;
         spriteTime = 6;
         x = x * tileSize;
@@ -152,16 +152,16 @@ public class Monster extends Entity {
 
         switch (direction) {
             case UP:
-                y -= speed;
+                moveUp();
                 break;
             case DOWN:
-                y += speed;
+                moveDown();
                 break;
             case LEFT:
-                x -= speed;
+                moveLeft();
                 break;
             case RIGHT:
-                x += speed;
+                moveRight();
                 break;
         }
         solidArea.x = x + 12;
@@ -178,25 +178,25 @@ public class Monster extends Entity {
         switch (direction) {
             case UP:
                 if (canMoveUp) {
-                    y -= speed;
+                    moveUp();
                     moved = true;
                 }
                 break;
             case DOWN:
                 if (canMoveDown) {
-                    y += speed;
+                    moveDown();
                     moved = true;
                 }
                 break;
             case LEFT:
                 if (canMoveLeft) {
-                    x -= speed;
+                    moveLeft();
                     moved = true;
                 }
                 break;
             case RIGHT:
                 if (canMoveRight) {
-                    x += speed;
+                    moveRight();
                     moved = true;
                 }
                 break;

@@ -13,9 +13,10 @@ public class Entity {
     GamePanel gp;
     public String name;
     public int x, y;// x = column, y = row
-    protected int speed;
-//    final int[] speedLevel = {1, 2, 3, 4, 6, 8, 12, 16, 24, 48};
-    final int maxSpeed = 4;
+    final int[] speedLevel = {1, 2, 3, 4, 6, 8, 12, 16, 24, 48};
+    private int currentSpeedLevel = 0;
+    private int maxSpeedLevel = 3;
+    protected int speed = speedLevel[currentSpeedLevel];
 
     protected BufferedImage[] sprites;
     public Direction direction;// direction of sprites
@@ -56,12 +57,35 @@ public class Entity {
         return speed;
     }
 
-    public void setSpeed(int n) {
-        speed = n;
+    public void setSpeedLevel(int level) {
+        level = Math.max(0, level);
+        currentSpeedLevel = Math.min(level, speedLevel.length);
+        speed = speedLevel[level];
     }
 
-    public void addSpeed(int n) {
-        if (speed < maxSpeed)
-            speed += n;
+    private void setMaxSpeedLevel(int level) {
+        level = Math.max(0, level);
+        maxSpeedLevel = Math.min(level, speedLevel.length);
+    }
+
+    public void increaseSpeed() {
+        setSpeedLevel(++currentSpeedLevel);
+    }
+
+    public void decreaseSpeed() {
+        setMaxSpeedLevel(--currentSpeedLevel);
+    }
+
+    public void moveUp() {
+        y -= speed;
+    }
+    public void moveDown() {
+        y += speed;
+    }
+    public void moveLeft() {
+        x -= speed;
+    }
+    public void moveRight() {
+        x += speed;
     }
 }

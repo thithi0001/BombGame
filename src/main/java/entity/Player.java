@@ -56,7 +56,7 @@ public class Player extends Entity {
         maxBombs = 1;
         flameLength = 1;
         bombType = "normal";
-        speed = 2;
+        setSpeedLevel(1);
         direction = DOWN;
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
@@ -176,16 +176,16 @@ public class Player extends Entity {
 
         switch (direction) {
             case UP:
-                if (canMoveUp) y -= speed;
+                if (canMoveUp) moveUp();
                 break;
             case DOWN:
-                if (canMoveDown) y += speed;
+                if (canMoveDown) moveDown();
                 break;
             case LEFT:
-                if (canMoveLeft) x -= speed;
+                if (canMoveLeft) moveLeft();
                 break;
             case RIGHT:
-                if (canMoveRight) x += speed;
+                if (canMoveRight) moveRight();
                 break;
         }
         solidArea.x = x + 12;
