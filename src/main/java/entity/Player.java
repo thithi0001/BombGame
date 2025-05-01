@@ -92,7 +92,7 @@ public class Player extends Entity {
     public void update() {
 
         // place bomb
-        gp.bombs.addAll(bombs);
+        gp.map.bombs.addAll(bombs);
         boolean hasBombHere = gp.cChecker.hasBombHere(col(), row());
         if (keyH.enterPressed && bombs.size() < maxBombs
                 && timer == 0 && !hasBombHere) {

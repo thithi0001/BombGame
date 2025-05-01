@@ -72,6 +72,10 @@ public class Monster extends Entity {
 //        gp.cChecker.checkBombForEntity(this);
 //        gp.cChecker.checkPlayerForMonster(this);
 
+        ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
+        ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
+        pathFinder.updateObstacles(removed, added);
+
         move2();
 //        move();
 
@@ -119,17 +123,18 @@ public class Monster extends Entity {
         int y = next.y - current.y;
 
         if (x == 0) {
-            if (y == -1) direction = UP;
-            if (y == 1) direction = DOWN;
+            if (y == -1 && canMoveUp) direction = UP;
+            if (y == 1 && canMoveDown) direction = DOWN;
         }
         if (y == 0) {
-            if (x == -1) direction = LEFT;
-            if (x == 1) direction = RIGHT;
+            if (x == -1 && canMoveLeft) direction = LEFT;
+            if (x == 1 && canMoveRight) direction = RIGHT;
         }
     }
 
     public void move2() {
 
+        // kiem tra thay doi cua goal (player)
         Point newGoal = inputContext.getTargetPosition();
         if (!pathFinder.getGoal().equals(newGoal)) {
             pathFinder.setNewGoal(newGoal);
@@ -152,7 +157,6 @@ public class Monster extends Entity {
 
                 next = currentPath.get(pathIndex);
                 pathFinder.moveAndRescan(next);
-
                 setDirection(current, next);
             }
         }

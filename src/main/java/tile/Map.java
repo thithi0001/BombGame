@@ -1,5 +1,6 @@
 package tile;
 
+import bomb.Bomb;
 import entity.Item;
 import entity.Monster;
 import main.GamePanel;
@@ -202,6 +203,7 @@ public class Map {
     }
 
     public void update() {
+
         items.forEach(Item::update);
         items.removeIf(item -> item.state == Item.States.isHit || item.state == Item.States.isPickedUp);
         monsters.forEach(Monster::update);

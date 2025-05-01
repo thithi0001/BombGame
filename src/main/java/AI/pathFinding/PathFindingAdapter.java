@@ -26,7 +26,7 @@ public class PathFindingAdapter {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Tile tile = input.gp.tileManager.tile[input.gp.map.mapTileNum[i][j]];
-                if (tile.collision && !tile.destructible) {
+                if (tile.collision) {
                     obstacles.add(new Point(i, j));
                 }
             }
