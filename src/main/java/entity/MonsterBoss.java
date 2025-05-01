@@ -27,7 +27,7 @@ public class MonsterBoss extends Monster {
 
     @Override
     public void setDefaultValues() {
-        speed = 1;
+        setSpeedLevel(0);
         direction = DOWN;
 
         x = (screenWidth - width) / 2;
@@ -55,28 +55,28 @@ public class MonsterBoss extends Monster {
         switch (direction) {
             case UP:
                 if (y - speed >= 0 && canMoveUp) {
-                    y -= speed;
+                    moveUp();
                     moved = true;
                 }
                 break;
 
             case DOWN:
                 if (y + speed + height <= screenHeight && canMoveDown) {
-                    y += speed;
+                    moveDown();
                     moved = true;
                 }
                 break;
 
             case LEFT:
                 if (x - speed >= 0 && canMoveLeft) {
-                    x -= speed;
+                    moveLeft();
                     moved = true;
                 }
                 break;
 
             case RIGHT:
                 if (x + speed + width <= screenWidth && canMoveRight) {
-                    x += speed;
+                    moveRight();
                     moved = true;
                 }
                 break;
@@ -106,7 +106,7 @@ public class MonsterBoss extends Monster {
         if (hp <= 0) {
             isAlive = false;
         } else {
-            addSpeed(1);
+            increaseSpeed();
         }
     }
 }

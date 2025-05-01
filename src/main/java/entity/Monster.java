@@ -9,6 +9,7 @@ import static MenuSetUp.DimensionSize.tileSize;
 import static entity.Direction.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class Monster extends Entity {
     protected int changeDirection = 2;
     boolean moved;
     InputContext inputContext;
-    DStartLite pathFinder;
+    private DStartLite pathFinder;
     private List<Point> currentPath;
     private int pathIndex;
 
@@ -53,7 +54,7 @@ public class Monster extends Entity {
 
     public void setDefaultValues() {
 
-        speed = 1;
+        setSpeedLevel(0);
         direction = DOWN;
         spriteTime = 6;
         x = x * tileSize;
@@ -61,11 +62,19 @@ public class Monster extends Entity {
         solidArea = new Rectangle(x + 12, y + 20, 24, 24);
     }
 
+    public DStartLite getPathFinder() {
+        return pathFinder;
+    }
+
     public void update() {
 
 //        gp.cChecker.checkTile(this);
 //        gp.cChecker.checkBombForEntity(this);
 //        gp.cChecker.checkPlayerForMonster(this);
+
+        ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
+        ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
+        pathFinder.updateObstacles(removed, added);
 
         move2();
 //        move();
@@ -109,20 +118,23 @@ public class Monster extends Entity {
     }
 
     public void setDirection(Point current, Point next) {
+
         int x = next.x - current.x;
         int y = next.y - current.y;
+
         if (x == 0) {
-            if (y == -1) direction = UP;
-            if (y == 1) direction = DOWN;
+            if (y == -1 && canMoveUp) direction = UP;
+            if (y == 1 && canMoveDown) direction = DOWN;
         }
         if (y == 0) {
-            if (x == -1) direction = LEFT;
-            if (x == 1) direction = RIGHT;
+            if (x == -1 && canMoveLeft) direction = LEFT;
+            if (x == 1 && canMoveRight) direction = RIGHT;
         }
     }
 
     public void move2() {
 
+        // kiem tra thay doi cua goal (player)
         Point newGoal = inputContext.getTargetPosition();
         if (!pathFinder.getGoal().equals(newGoal)) {
             pathFinder.setNewGoal(newGoal);
@@ -145,23 +157,22 @@ public class Monster extends Entity {
 
                 next = currentPath.get(pathIndex);
                 pathFinder.moveAndRescan(next);
-
                 setDirection(current, next);
             }
         }
 
         switch (direction) {
             case UP:
-                y -= speed;
+                moveUp();
                 break;
             case DOWN:
-                y += speed;
+                moveDown();
                 break;
             case LEFT:
-                x -= speed;
+                moveLeft();
                 break;
             case RIGHT:
-                x += speed;
+                moveRight();
                 break;
         }
         solidArea.x = x + 12;
@@ -178,25 +189,25 @@ public class Monster extends Entity {
         switch (direction) {
             case UP:
                 if (canMoveUp) {
-                    y -= speed;
+                    moveUp();
                     moved = true;
                 }
                 break;
             case DOWN:
                 if (canMoveDown) {
-                    y += speed;
+                    moveDown();
                     moved = true;
                 }
                 break;
             case LEFT:
                 if (canMoveLeft) {
-                    x -= speed;
+                    moveLeft();
                     moved = true;
                 }
                 break;
             case RIGHT:
                 if (canMoveRight) {
-                    x += speed;
+                    moveRight();
                     moved = true;
                 }
                 break;
@@ -223,7 +234,6 @@ public class Monster extends Entity {
         super.beingHit();
         isAlive = false;
     }
-
 }
 
 
