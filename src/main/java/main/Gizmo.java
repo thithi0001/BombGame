@@ -40,7 +40,7 @@ public class Gizmo {
 
     void draw(Graphics2D g2) {
         gp.map.monsters.forEach(m -> entity(m, Color.BLACK, g2));
-        gp.bombs.forEach(b -> bomb(b, g2));
+        gp.map.bombs.forEach(b -> bomb(b, g2));
         gp.map.items.forEach(i -> entity(i, Color.MAGENTA, g2));
         entity(gp.player, Color.BLACK, g2);
         gp.map.monsters.forEach(m -> agentPath(m.getCurrentPath(), m.getPathIndex(), g2));

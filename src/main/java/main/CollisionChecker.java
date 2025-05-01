@@ -73,7 +73,7 @@ public class CollisionChecker {
 
     public boolean hasBombHere(int col, int row) {
 
-        for (Bomb bomb: gp.bombs) {
+        for (Bomb bomb: gp.map.bombs) {
             if (col == bomb.col() && row == bomb.row()) {
                 return true;
             }
@@ -90,7 +90,7 @@ public class CollisionChecker {
         switch (entity.direction) {
             case UP:
                 solidArea.y -= eSpeed;
-                gp.bombs.forEach((b) -> {
+                gp.map.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveUp = false;
                     }
@@ -98,7 +98,7 @@ public class CollisionChecker {
                 break;
             case DOWN:
                 solidArea.y += eSpeed;
-                gp.bombs.forEach((b) -> {
+                gp.map.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveDown = false;
                     }
@@ -106,7 +106,7 @@ public class CollisionChecker {
                 break;
             case LEFT:
                 solidArea.x -= eSpeed;
-                gp.bombs.forEach((b) -> {
+                gp.map.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveLeft = false;
                     }
@@ -114,7 +114,7 @@ public class CollisionChecker {
                 break;
             case RIGHT:
                 solidArea.x += eSpeed;
-                gp.bombs.forEach((b) -> {
+                gp.map.bombs.forEach((b) -> {
                     if (solidArea.intersects(b.solidArea) && !b.letPlayerPassThrough) {
                         entity.canMoveRight = false;
                     }
@@ -240,8 +240,8 @@ public class CollisionChecker {
                 break;
         }
 
-        for (int i = 0; i < gp.bombs.size(); i++)
-            if (solidArea.intersects(gp.bombs.get(i).solidArea))
+        for (int i = 0; i < gp.map.bombs.size(); i++)
+            if (solidArea.intersects(gp.map.bombs.get(i).solidArea))
                 return true;
         return false;
     }

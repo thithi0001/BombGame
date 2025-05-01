@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
+//    ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
     public GamePanel(String mapFileName) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -162,7 +162,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        bombs.clear();
+        map.bombs.clear();
         player.update();
         map.update();
     }

@@ -30,7 +30,7 @@ public class InputContext {
         this.self = self;
         this.target = target;
 
-        this.bombs = gp.bombs;
+        this.bombs = gp.map.bombs;
         this.items = gp.map.items;
     }
 

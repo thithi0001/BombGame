@@ -9,6 +9,7 @@ import static MenuSetUp.DimensionSize.tileSize;
 import static entity.Direction.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class Monster extends Entity {
     protected int changeDirection = 2;
     boolean moved;
     InputContext inputContext;
-    DStartLite pathFinder;
+    private DStartLite pathFinder;
     private List<Point> currentPath;
     private int pathIndex;
 
@@ -59,6 +60,10 @@ public class Monster extends Entity {
         x = x * tileSize;
         y = y * tileSize;
         solidArea = new Rectangle(x + 12, y + 20, 24, 24);
+    }
+
+    public DStartLite getPathFinder() {
+        return pathFinder;
     }
 
     public void update() {
@@ -225,7 +230,6 @@ public class Monster extends Entity {
         super.beingHit();
         isAlive = false;
     }
-
 }
 
 

@@ -55,7 +55,7 @@ public class Flame {
 
         CollisionChecker.checkEntityForFlame(this, creator.owner);
         gp.map.items.forEach(item -> CollisionChecker.checkItemForFlame(this, item));
-        gp.bombs.forEach(bomb -> CollisionChecker.checkBombForFlame(this, bomb));
+        gp.map.bombs.forEach(bomb -> CollisionChecker.checkBombForFlame(this, bomb));
         gp.map.monsters.forEach(monster -> CollisionChecker.checkEntityForFlame(this, monster));
 //        CollisionChecker.checkEntityForFlame(this, gp.map.boss);
 

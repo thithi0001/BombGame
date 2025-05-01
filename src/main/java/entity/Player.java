@@ -114,7 +114,11 @@ public class Player extends Entity {
             kickBomb();
         }
 
-        bombs.forEach(Bomb::update);
+        bombs.forEach(bomb -> {
+            bomb.update();
+            if (bomb.exploded)
+                gp.map.removeBomb(bomb);
+        });
         bombs.removeIf(bomb -> bomb.exploded);
 
         if (hasShield && beingHit) {
@@ -256,14 +260,13 @@ public class Player extends Entity {
     }
 
     void placeBomb() {
-        switch (bombType) {
-            case "time":
-                bombs.add(new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
-                break;
-            case "normal":
-                bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
-                break;
-        }
+        Bomb bomb = switch (bombType) {
+            case "time" -> new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength);
+            case "normal" -> new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength);
+            default -> new Bomb();
+        };
+        bombs.add(bomb);
+        gp.map.addBomb(bomb);
     }
 
     void pickUpBomb() {
@@ -292,8 +295,8 @@ public class Player extends Entity {
                 col += 1;
                 break;
         }
-        for (int i = 0; i < gp.bombs.size(); i++) {
-            Bomb b = gp.bombs.get(i);
+        for (int i = 0; i < gp.map.bombs.size(); i++) {
+            Bomb b = gp.map.bombs.get(i);
             if (col == b.col() && row == b.row()) {
                 bomb = b;
                 break;

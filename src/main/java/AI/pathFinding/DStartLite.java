@@ -6,7 +6,6 @@ import main.GamePanel;
 
 import java.awt.Point;
 import java.util.*;
-import java.util.List;
 
 public class DStartLite {
 
@@ -23,7 +22,7 @@ public class DStartLite {
     private Point goal;
     private double km; // key modifier
 
-    private Set<Point> staticObstacles;
+    private final Set<Point> staticObstacles;
     private Map<Point, Double> g; // chi phi tu tot nhat tu start den 1 diem
     private Map<Point, Double> rhs; // chi uoc luong
     private Map<Pair, Double> cost; // chi phi giua cac diem
@@ -237,6 +236,13 @@ public class DStartLite {
         }
     }
 
+    public void updateObstacles(ArrayList<Point> removed, ArrayList<Point> added) {
+        removed.forEach(this::removeObstacle);
+        added.forEach(this::addObstacle);
+        if (added.isEmpty() && removed.isEmpty()) return;
+        computeShortestPath();
+    }
+
     public void computeShortestPath() {
         while (!U.isEmpty() &&
                 (comparator.compare(U.peek(), start) < 0 ||
@@ -295,10 +301,6 @@ public class DStartLite {
             current = nextState;
             path.add(current);
         }
-
-        System.out.print("\nPath: ");
-        path.forEach(point -> System.out.print("(" + point.x + ", " + point.y + ") "));
-        System.out.println();
         return path;
     }
 

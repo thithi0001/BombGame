@@ -75,6 +75,10 @@ public class Bomb {
         return y / tileSize;
     }
 
+    public Point getPosition() {
+        return new Point(col(), row());
+    }
+
     public void update() {
         if (moving) move();
         checkPlayer();
