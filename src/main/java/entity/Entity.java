@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -15,11 +16,11 @@ public class Entity {
     public int x, y;// x = column, y = row
     final int[] speedLevel = {1, 2, 3, 4, 6, 8, 12, 16, 24, 48};
     private int currentSpeedLevel = 0;
-    private int maxSpeedLevel = 3;
-    protected int speed = speedLevel[currentSpeedLevel];
+    protected int maxSpeedLevel;
+    protected int speed;
 
+    public Direction direction = Direction.DOWN;// direction of sprites
     protected BufferedImage[] sprites;
-    public Direction direction;// direction of sprites
     protected int spriteTime;// time between 2 sprites
     protected int spriteNum = 0;// index of the using sprite
     protected int spriteCounter = 0;// should be frame counter
@@ -27,7 +28,15 @@ public class Entity {
     public Rectangle solidArea;
     public boolean collisionOn = true;
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
+
+    int timer = 0;
+    int invincibleTime = 0;
+
+    protected int hp;
     public boolean isAlive = true;
+    protected boolean isVulnerable = true;
+    protected boolean isGettingHit = false;
+    protected boolean hasShield = false;
 
     protected void resetCollision() {
         canMoveUp = true;
@@ -49,8 +58,8 @@ public class Entity {
         return new Point(col(), row());
     }
 
-    public void beingHit() {
-        System.out.println("hit " + name);
+    public int getHp() {
+        return hp;
     }
 
     public int getSpeed() {
@@ -59,11 +68,11 @@ public class Entity {
 
     public void setSpeedLevel(int level) {
         level = Math.max(0, level);
-        currentSpeedLevel = Math.min(level, speedLevel.length);
-        speed = speedLevel[level];
+        currentSpeedLevel = Math.min(level, maxSpeedLevel);
+        speed = speedLevel[currentSpeedLevel];
     }
 
-    private void setMaxSpeedLevel(int level) {
+    public void setMaxSpeedLevel(int level) {
         level = Math.max(0, level);
         maxSpeedLevel = Math.min(level, speedLevel.length);
     }
@@ -73,7 +82,7 @@ public class Entity {
     }
 
     public void decreaseSpeed() {
-        setMaxSpeedLevel(--currentSpeedLevel);
+        setSpeedLevel(--currentSpeedLevel);
     }
 
     public void moveUp() {
@@ -87,5 +96,30 @@ public class Entity {
     }
     public void moveRight() {
         x += speed;
+    }
+
+    public void getHit() {
+        System.out.println("hit " + name);
+        isGettingHit = true;
+    }
+
+    public void activateShield() {
+        hasShield = true;
+        setInvincibleTime(1.0);
+    }
+
+    public void setInvincibleTime(double seconds) {
+        invincibleTime = UtilityTool.convertTime(seconds);
+    }
+
+    public void enterInvincibleTime() {
+        invincibleTime--;
+        isVulnerable = false;
+        if (invincibleTime == 0) {
+            hasShield = false;
+            isVulnerable = true;
+            isGettingHit = false;
+            setInvincibleTime(1.0);
+        }
     }
 }

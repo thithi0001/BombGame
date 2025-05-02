@@ -23,18 +23,15 @@ public class Player extends Entity {
 
     ArrayList<Bomb> bombs = new ArrayList<>();
     public BufferedImage statusBombTypeImg = LoadResource.itemImgMap.get("plus_bomb");
-    int cooldown;
-    int timer = 0;
-    int invincibleTime = 0;
+    private int cooldown;
 
     private int maxBombs;
     private int flameLength;
     private String bombType;
-    private boolean beingHit = false;
-    private boolean hasShield = false;
+
     private boolean hasGlove = false;
     private boolean canKickBomb = true;
-    private boolean holdingBomb = false;
+    private boolean isHoldingBomb = false;
     public int score = 0;
 
     public Player() {
@@ -53,11 +50,14 @@ public class Player extends Entity {
 
     void setDefaultValues() {
 
+//        collisionOn = false;
+        setInvincibleTime(1.0);
+        setMaxSpeedLevel(3);
+        setSpeedLevel(1);
+        hp = 3;
         maxBombs = 1;
         flameLength = 1;
-        bombType = "normal";
-        setSpeedLevel(1);
-        direction = DOWN;
+        bombType = "time";
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
         x = gp.map.checkPos.x * tileSize;
@@ -102,9 +102,9 @@ public class Player extends Entity {
 
         // pick up and throw bomb
         if (keyH.useGlove && hasGlove) {
-            if (hasBombHere && !holdingBomb) {
+            if (hasBombHere && !isHoldingBomb) {
                 pickUpBomb();
-            } else if (holdingBomb) {
+            } else if (isHoldingBomb) {
                 throwBomb();
             }
         }
@@ -121,7 +121,7 @@ public class Player extends Entity {
         });
         bombs.removeIf(bomb -> bomb.exploded);
 
-        if (hasShield && beingHit) {
+        if (isGettingHit) {
             enterInvincibleTime();
         }
 
@@ -198,23 +198,15 @@ public class Player extends Entity {
     }
 
     @Override
-    public void beingHit() {
+    public void getHit() {
 
-        super.beingHit();
-        beingHit = true;
+        super.getHit();
         if (hasShield) {
             System.out.println("Hit shield!");
             return;
         }
-        isAlive = false;
-    }
-
-    void enterInvincibleTime() {
-        invincibleTime--;
-        if (invincibleTime == 0) {
-            hasShield = false;
-            beingHit = false;
-        }
+        if (isVulnerable) hp--;
+        if (hp == 0) isAlive = false;
     }
 
     public KeyHandler getKeyHandler() {
@@ -227,11 +219,6 @@ public class Player extends Entity {
 
     public int getMaxBombs() {
         return maxBombs;
-    }
-
-    public void setHasShield(boolean bool) {
-        hasShield = bool;
-        invincibleTime = UtilityTool.convertTime(1.0);
     }
 
     public void setHasGlove() {
