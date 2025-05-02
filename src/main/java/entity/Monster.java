@@ -54,8 +54,9 @@ public class Monster extends Entity {
 
     public void setDefaultValues() {
 
+        setInvincibleTime(1.0);
+        setMaxSpeedLevel(3);
         setSpeedLevel(0);
-        direction = DOWN;
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
@@ -68,9 +69,14 @@ public class Monster extends Entity {
 
     public void update() {
 
-//        gp.cChecker.checkTile(this);
-//        gp.cChecker.checkBombForEntity(this);
-//        gp.cChecker.checkPlayerForMonster(this);
+        if (isGettingHit) {
+            enterInvincibleTime();
+        }
+
+        // logic game
+//        gp.cChecker.checkTile(this);// khong can
+//        gp.cChecker.checkBombForEntity(this);// khong can
+        gp.cChecker.checkPlayerForMonster(this);
 
         ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
         ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
@@ -164,15 +170,19 @@ public class Monster extends Entity {
         switch (direction) {
             case UP:
                 moveUp();
+                moved = true;
                 break;
             case DOWN:
                 moveDown();
+                moved = true;
                 break;
             case LEFT:
                 moveLeft();
+                moved = true;
                 break;
             case RIGHT:
                 moveRight();
+                moved = true;
                 break;
         }
         solidArea.x = x + 12;
@@ -230,8 +240,8 @@ public class Monster extends Entity {
     }
 
     @Override
-    public void beingHit() {
-        super.beingHit();
+    public void getHit() {
+        super.getHit();
         isAlive = false;
     }
 }

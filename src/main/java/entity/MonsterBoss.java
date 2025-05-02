@@ -27,9 +27,8 @@ public class MonsterBoss extends Monster {
 
     @Override
     public void setDefaultValues() {
-        setSpeedLevel(0);
-        direction = DOWN;
 
+        setSpeedLevel(0);
         x = (screenWidth - width) / 2;
         y = (screenHeight - height) / 2;
     }
@@ -99,7 +98,7 @@ public class MonsterBoss extends Monster {
     }
 
     @Override
-    public void beingHit() {
+    public void getHit() {
 
         hp--;
         System.out.println("hit");
