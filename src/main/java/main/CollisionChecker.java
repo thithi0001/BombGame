@@ -71,6 +71,8 @@ public class CollisionChecker {
         }
     }
 
+    public void checkMapBoundary(Entity entity) {}
+
     public boolean hasBombHere(int col, int row) {
 
         for (Bomb bomb: gp.map.bombs) {
@@ -137,7 +139,7 @@ public class CollisionChecker {
         Rectangle solidArea = new Rectangle(entity.solidArea);
         if (flame.verticalSolidArea.intersects(solidArea)
                 || flame.horizontalSolidArea.intersects(solidArea)) {
-            entity.beingHit();
+            entity.getHit();
         }
     }
 
@@ -146,7 +148,7 @@ public class CollisionChecker {
         if (item.state == Item.States.shown && flame.getDuration() > 1
                 && (flame.verticalSolidArea.intersects(item.solidArea)
                 || flame.horizontalSolidArea.intersects(item.solidArea))) {
-            item.beingHit();
+            item.getHit();
         }
     }
 
@@ -154,7 +156,7 @@ public class CollisionChecker {
 
         Player player = gp.player;
         if (player.solidArea.intersects(monster.solidArea))
-            player.beingHit();
+            player.getHit();
     }
 
     public void checkPlayerForItem(Item item) {
@@ -181,7 +183,7 @@ public class CollisionChecker {
                     break;
 
                 case "shield":
-                    player.setHasShield(true);
+                    player.activateShield();
                     break;
 
                 case "opening_door":
