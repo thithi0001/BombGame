@@ -4,7 +4,7 @@ import entity.Entity;
 import main.UtilityTool;
 
 abstract class Skill {
-
+    // tat ca ky nang chua duoc kiem tra su dung
     Entity user;
     private String name;
     private int cooldown;
