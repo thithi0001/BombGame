@@ -3,6 +3,7 @@ package entity;
 import AI.InputContext;
 import AI.pathFinding.DStartLite;
 import main.GamePanel;
+import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
@@ -23,6 +24,7 @@ public class Monster extends Entity {
     private DStartLite pathFinder;
     private List<Point> currentPath;
     private int pathIndex;
+    private final int recalculatePathTime = UtilityTool.convertTime((double) 1 /2);
 
     public Monster(GamePanel gp, int x, int y) {
         this.gp = gp;
@@ -57,6 +59,7 @@ public class Monster extends Entity {
         setInvincibleTime(1.0);
         setMaxSpeedLevel(3);
         setSpeedLevel(0);
+        setMaxHp(1);
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
@@ -74,13 +77,20 @@ public class Monster extends Entity {
         }
 
         // logic game
-//        gp.cChecker.checkTile(this);// khong can
-//        gp.cChecker.checkBombForEntity(this);// khong can
+        gp.cChecker.checkTile(this);// khong can
+        gp.cChecker.checkBombForEntity(this);// khong can
         gp.cChecker.checkPlayerForMonster(this);
 
         ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
         ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
         pathFinder.updateObstacles(removed, added);
+
+        if (timer > 0) {
+            timer--;
+        } else {
+            timer = recalculatePathTime;
+            recalculatePath();
+        }
 
         move2();
 //        move();
@@ -138,8 +148,7 @@ public class Monster extends Entity {
         }
     }
 
-    public void move2() {
-
+    public void recalculatePath() {
         // kiem tra thay doi cua goal (player)
         Point newGoal = inputContext.getTargetPosition();
         if (!pathFinder.getGoal().equals(newGoal)) {
@@ -147,13 +156,17 @@ public class Monster extends Entity {
             currentPath = pathFinder.findPath();
             pathIndex = 0;
         }
+    }
 
-        Point current = getPosition();
+    public void move2() {
+
         if (pathIndex < currentPath.size()) {
+            Point current = getPosition();
             Point next = currentPath.get(pathIndex);
 
             // neu chua den next thi tiep tuc di chuyen theo huong cu
-            if (current.equals(next)) {
+            if (current.equals(next) &&
+                    (this.x == next.x * tileSize && this.y == next.y * tileSize)) {
                 if (++pathIndex >= currentPath.size()) {
                     // toi day co nghia la da toi goal
                     // xu ly chuyen sang trang thai truy duoi hoac trang thai nhan roi
@@ -167,26 +180,24 @@ public class Monster extends Entity {
             }
         }
 
+        moved = false;
         switch (direction) {
             case UP:
                 moveUp();
-                moved = true;
                 break;
             case DOWN:
                 moveDown();
-                moved = true;
                 break;
             case LEFT:
                 moveLeft();
-                moved = true;
                 break;
             case RIGHT:
                 moveRight();
-                moved = true;
                 break;
         }
         solidArea.x = x + 12;
         solidArea.y = y + 20;
+        resetCollision();
     }
 
     public void move() {
@@ -198,28 +209,16 @@ public class Monster extends Entity {
 
         switch (direction) {
             case UP:
-                if (canMoveUp) {
-                    moveUp();
-                    moved = true;
-                }
+                moveUp();
                 break;
             case DOWN:
-                if (canMoveDown) {
-                    moveDown();
-                    moved = true;
-                }
+                moveDown();
                 break;
             case LEFT:
-                if (canMoveLeft) {
-                    moveLeft();
-                    moved = true;
-                }
+                moveLeft();
                 break;
             case RIGHT:
-                if (canMoveRight) {
-                    moveRight();
-                    moved = true;
-                }
+                moveRight();
                 break;
         }
         solidArea.x = x + 12;
@@ -232,17 +231,35 @@ public class Monster extends Entity {
         resetCollision();
     }
 
+    @Override
+    public void moveUp() {
+        super.moveUp();
+        moved = true;
+    }
+
+    @Override
+    public void moveDown() {
+        super.moveDown();
+        moved = true;
+    }
+
+    @Override
+    public void moveLeft() {
+        super.moveLeft();
+        moved = true;
+    }
+
+    @Override
+    public void moveRight() {
+        super.moveRight();
+        moved = true;
+    }
+
     public void draw(Graphics2D g2) {
 
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
         }
-    }
-
-    @Override
-    public void getHit() {
-        super.getHit();
-        isAlive = false;
     }
 }
 
