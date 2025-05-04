@@ -54,8 +54,8 @@ public class Player extends Entity {
         setInvincibleTime(1.0);
         setMaxSpeedLevel(3);
         setSpeedLevel(1);
-        hp = 3;
-        maxBombs = 1;
+        setMaxHp(3);
+        maxBombs = 2;
         flameLength = 1;
         bombType = "time";
         spriteTime = 6;
@@ -180,33 +180,21 @@ public class Player extends Entity {
 
         switch (direction) {
             case UP:
-                if (canMoveUp) moveUp();
+                moveUp();
                 break;
             case DOWN:
-                if (canMoveDown) moveDown();
+                moveDown();
                 break;
             case LEFT:
-                if (canMoveLeft) moveLeft();
+                moveLeft();
                 break;
             case RIGHT:
-                if (canMoveRight) moveRight();
+                moveRight();
                 break;
         }
         solidArea.x = x + 12;
         solidArea.y = y + 20;
         resetCollision();
-    }
-
-    @Override
-    public void getHit() {
-
-        super.getHit();
-        if (hasShield) {
-            System.out.println("Hit shield!");
-            return;
-        }
-        if (isVulnerable) hp--;
-        if (hp == 0) isAlive = false;
     }
 
     public KeyHandler getKeyHandler() {

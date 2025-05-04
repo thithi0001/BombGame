@@ -57,6 +57,7 @@ public class Monster extends Entity {
         setInvincibleTime(1.0);
         setMaxSpeedLevel(3);
         setSpeedLevel(0);
+        setMaxHp(1);
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
@@ -167,26 +168,24 @@ public class Monster extends Entity {
             }
         }
 
+        moved = false;
         switch (direction) {
             case UP:
                 moveUp();
-                moved = true;
                 break;
             case DOWN:
                 moveDown();
-                moved = true;
                 break;
             case LEFT:
                 moveLeft();
-                moved = true;
                 break;
             case RIGHT:
                 moveRight();
-                moved = true;
                 break;
         }
         solidArea.x = x + 12;
         solidArea.y = y + 20;
+        resetCollision();
     }
 
     public void move() {
@@ -198,28 +197,16 @@ public class Monster extends Entity {
 
         switch (direction) {
             case UP:
-                if (canMoveUp) {
-                    moveUp();
-                    moved = true;
-                }
+                moveUp();
                 break;
             case DOWN:
-                if (canMoveDown) {
-                    moveDown();
-                    moved = true;
-                }
+                moveDown();
                 break;
             case LEFT:
-                if (canMoveLeft) {
-                    moveLeft();
-                    moved = true;
-                }
+                moveLeft();
                 break;
             case RIGHT:
-                if (canMoveRight) {
-                    moveRight();
-                    moved = true;
-                }
+                moveRight();
                 break;
         }
         solidArea.x = x + 12;
@@ -230,6 +217,30 @@ public class Monster extends Entity {
         }
 
         resetCollision();
+    }
+
+    @Override
+    public void moveUp() {
+        super.moveUp();
+        moved = true;
+    }
+
+    @Override
+    public void moveDown() {
+        super.moveDown();
+        moved = true;
+    }
+
+    @Override
+    public void moveLeft() {
+        super.moveLeft();
+        moved = true;
+    }
+
+    @Override
+    public void moveRight() {
+        super.moveRight();
+        moved = true;
     }
 
     public void draw(Graphics2D g2) {
