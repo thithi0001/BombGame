@@ -6,7 +6,7 @@ public class Tile {
 
     public String name = "";
     public BufferedImage image = null;
-    public boolean collision = false;
+    public boolean collision = false;// = walkable
     public boolean destructible = false;
     public int score = 0;
     /*

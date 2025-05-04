@@ -1,5 +1,6 @@
 package tile;
 
+import bomb.Bomb;
 import entity.Item;
 import entity.Monster;
 import main.GamePanel;
@@ -18,6 +19,11 @@ public class Map {
     GamePanel gp;
     String mapFileName;
     public int[][] mapTileNum;
+
+    private final ArrayList<Point> newlyAddedObstacles = new ArrayList<>();
+    private final ArrayList<Point> newlyRemovedObstacles = new ArrayList<>();
+
+    public ArrayList<Bomb> bombs = new ArrayList<>();
 
     public ArrayList<Item> items = new ArrayList<>();
     ArrayList<Point> itemPos = new ArrayList<>();
@@ -47,6 +53,10 @@ public class Map {
 
     void spawnMonster() {
         monsterSpawnPos.forEach(m -> monsters.add(new Monster(gp, m.x, m.y)));
+    }
+
+    public void initMonsterAi() {
+        monsters.forEach(Monster::initAI);
     }
 
     void placeItem() {
@@ -87,6 +97,27 @@ public class Map {
                 item.state = Item.States.shown;
             }
         });
+
+        newlyRemovedObstacles.add(new Point(x, y));
+    }
+
+    public ArrayList<Point> getNewlyRemovedObstacles() {
+        return newlyRemovedObstacles;
+    }
+
+    public void addBomb(Bomb bomb) {
+        bombs.add(bomb);
+        newlyAddedObstacles.add(bomb.getPosition());
+    }
+
+    public void removeBomb(Bomb bomb) {
+        bombs.remove(bomb);
+        newlyAddedObstacles.remove(bomb.getPosition());
+        newlyRemovedObstacles.add(bomb.getPosition());
+    }
+
+    public ArrayList<Point> getNewlyAddedObstacles() {
+        return newlyAddedObstacles;
     }
 
     int findBaseIndex() {
@@ -172,6 +203,7 @@ public class Map {
     }
 
     public void update() {
+
         items.forEach(Item::update);
         items.removeIf(item -> item.state == Item.States.isHit || item.state == Item.States.isPickedUp);
         monsters.forEach(Monster::update);

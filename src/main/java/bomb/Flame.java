@@ -55,7 +55,7 @@ public class Flame {
 
         CollisionChecker.checkEntityForFlame(this, creator.owner);
         gp.map.items.forEach(item -> CollisionChecker.checkItemForFlame(this, item));
-        gp.bombs.forEach(bomb -> CollisionChecker.checkBombForFlame(this, bomb));
+        gp.map.bombs.forEach(bomb -> CollisionChecker.checkBombForFlame(this, bomb));
         gp.map.monsters.forEach(monster -> CollisionChecker.checkEntityForFlame(this, monster));
 //        CollisionChecker.checkEntityForFlame(this, gp.map.boss);
 
@@ -70,22 +70,24 @@ public class Flame {
         }
     }
 
+    public int col() {
+        return x / tileSize;
+    }
+
+    public int row() {
+        return y / tileSize;
+    }
+
     public void draw(Graphics2D g2) {
 
-        drawUp(g2);
-        drawDown(g2);
-        drawLeft(g2);
-        drawRight(g2);
+        extendUp(g2);
+        extendDown(g2);
+        extendLeft(g2);
+        extendRight(g2);
         solidAreaIsCreated = true;
     }
 
-    public void drawDebug(Graphics2D g2) {
-        g2.setColor(Color.BLUE);
-        g2.fillRect(verticalSolidArea.x, verticalSolidArea.y, verticalSolidArea.width, verticalSolidArea.height);
-        g2.fillRect(horizontalSolidArea.x, horizontalSolidArea.y, horizontalSolidArea.width, horizontalSolidArea.height);
-    }
-
-    void drawUp(Graphics2D g2) {
+    void extendUp(Graphics2D g2) {
 
         Tile tile;
         int fx, fy, offset = 0;
@@ -98,19 +100,11 @@ public class Flame {
                 offset -= tileSize;
                 break;
             }
-            if (i == length) {
-                // head
-                g2.drawImage(headUp[spriteNum], fx, fy, null);
-            } else {
-                // body
-                g2.drawImage(verticalBody[spriteNum], fx, fy, null);
-            }
+            drawFlame(i, fx, fy, headUp, verticalBody, g2);
 
             //a function to change the object tile to the base tile
             if (tile.destructible) {
-                if (duration == 1) {
-                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
-                }
+                destroyTile(fx, fy);
                 break;
             }
         }
@@ -121,7 +115,7 @@ public class Flame {
         }
     }
 
-    void drawDown(Graphics2D g2) {
+    void extendDown(Graphics2D g2) {
 
         Tile tile;
         int fx, fy, offset = 0;
@@ -134,19 +128,10 @@ public class Flame {
                 offset -= tileSize;
                 break;
             }
-            if (i == length) {
-                // head
-                g2.drawImage(headDown[spriteNum], fx, fy, null);
-            } else {
-                // body
-                g2.drawImage(verticalBody[spriteNum], fx, fy, null);
-            }
+            drawFlame(i, fx, fy, headDown, verticalBody, g2);
 
-            //a function to change the object tile to the base tile
             if (tile.destructible) {
-                if (duration == 1) {
-                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
-                }
+                destroyTile(fx, fy);
                 break;
             }
         }
@@ -156,7 +141,7 @@ public class Flame {
         }
     }
 
-    void drawLeft(Graphics2D g2) {
+    void extendLeft(Graphics2D g2) {
 
         Tile tile;
         int fx, fy, offset = 0;
@@ -169,19 +154,10 @@ public class Flame {
                 offset -= tileSize;
                 break;
             }
-            if (i == length) {
-                // head
-                g2.drawImage(headLeft[spriteNum], fx, fy, null);
-            } else {
-                // body
-                g2.drawImage(horizontalBody[spriteNum], fx, fy, null);
-            }
+            drawFlame(i, fx, fy, headLeft, horizontalBody, g2);
 
-            //a function to change the destructible tile to the base tile -> create a Map class
             if (tile.destructible) {
-                if (duration == 1) {
-                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
-                }
+                destroyTile(fx, fy);
                 break;
             }
         }
@@ -192,7 +168,7 @@ public class Flame {
         }
     }
 
-    void drawRight(Graphics2D g2) {
+    void extendRight(Graphics2D g2) {
 
         Tile tile;
         int fx, fy, offset = 0;
@@ -205,25 +181,30 @@ public class Flame {
                 offset -= tileSize;
                 break;
             }
-            if (i == length) {
-                // head
-                g2.drawImage(headRight[spriteNum], fx, fy, null);
-            } else {
-                // body
-                g2.drawImage(horizontalBody[spriteNum], fx, fy, null);
-            }
+            drawFlame(i, fx, fy, headRight, horizontalBody, g2);
 
-            //a function to change the object tile to the base tile
             if (tile.destructible) {
-                if (duration == 1) {
-                    gp.map.toBaseTile(fx / tileSize, fy / tileSize);
-                }
+                destroyTile(fx, fy);
                 break;
             }
         }
 
         if (!solidAreaIsCreated) {
             horizontalSolidArea.width += offset;
+        }
+    }
+
+    public void drawFlame(int i, int fx, int fy, BufferedImage[] head, BufferedImage[] body, Graphics2D g2) {
+        if (i == length) {
+            g2.drawImage(head[spriteNum], fx, fy, null);
+        } else {
+            g2.drawImage(body[spriteNum], fx, fy, null);
+        }
+    }
+
+    public void destroyTile(int fx, int fy) {
+        if (duration == 1) {
+            gp.map.toBaseTile(fx / tileSize, fy / tileSize);
         }
     }
 

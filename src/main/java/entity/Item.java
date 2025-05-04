@@ -58,9 +58,9 @@ public class Item extends Entity {
     }
 
     @Override
-    public void beingHit() {
+    public void getHit() {
         if (isCheckPoint) return;
-        super.beingHit();
+        super.getHit();
         state = States.isHit;
     }
 

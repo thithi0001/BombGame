@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean WIN = false;
 
     // FPS
-    public static int FPS = 60;
-    int countFPS = 0;
+    public static final int FPS = 60;
+    int countFPS = 0, shownFPS = FPS;
     public Clock clock = new Clock(this);
 
     public LevelGameFrame parent;
@@ -39,11 +39,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     public TileManager tileManager = new TileManager(this);
     public Map map;
-    KeyHandler keyH = new KeyHandler();
+    public KeyHandler keyH = new KeyHandler();
+    Gizmo gizmo = new Gizmo(this);
     private Thread gameThread;
     public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
+//    ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
     public GamePanel(String mapFileName) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -80,6 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
+        System.out.println("Player: (" + player.col() + ", " + player.row() + ")");
+        map.initMonsterAi();
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -140,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1e9) {
                 clock.update();
+                shownFPS = countFPS;
                 countFPS = 0;
                 timer = 0;
             }
@@ -158,7 +162,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        bombs.clear();
+        map.bombs.clear();
         player.update();
         map.update();
     }
@@ -178,6 +182,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.draw(g2);
 
+        if (keyH.gizmoOn)
+            gizmo.draw(g2);
+
         drawUI(g2);
 
         g2.dispose();// save memories
@@ -191,10 +198,13 @@ public class GamePanel extends JPanel implements Runnable {
 
         g2.setColor(Color.WHITE);
         int len = ("SCORE " + player.score).length();
+        // score bg
         g2.fillRect(10, y - 16, len * 11 + 2, 20);
         len = clock.toString().length();
+        // clock bg
         g2.fillRect((screenWidth - len) / 2, y - 16, len * 11 + 1, 20);
-//        g2.fillRect(screenWidth / 2 + tileSize * 2, y - 16, 45, 20);
+        // FPS bg
+        g2.fillRect(screenWidth / 2 + tileSize * 2, y - 16, 75, 20);
 
         g2.setColor(Color.BLACK);
         g2.setFont(LoadResource.gameStatus);
@@ -206,13 +216,13 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawString(clock.toString(), (screenWidth - len) / 2, y);
 
         // draw FPS
-//        g2.drawString(Integer.toString(countFPS), screenWidth / 2 + tileSize * 2, y);
+        g2.drawString("FPS " + shownFPS, screenWidth / 2 + tileSize * 2, y);
 
-        // draw status
-        x = tileSize * 3;
+        // draw player's status
+        x = tileSize * 2 + 24;
         y = 0;
         g2.setColor(LoadResource.statusBg);
-        g2.fillRect(x, y, tileSize * 3 + 24, tileSize);
+        g2.fillRect(x, y, tileSize * 4 + 24, tileSize);
 
         y += 12;
         int size = 24;
@@ -220,6 +230,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawImage(LoadResource.itemImgMap.get("plus_flame"), x, y, size, size, null);
         g2.drawImage(player.statusBombTypeImg, x + offset, y, size, size, null);
         g2.drawImage(LoadResource.itemImgMap.get("shoe"), x + offset * 2, y, size, size, null);
+        g2.drawImage(LoadResource.itemImgMap.get("heart"), x + offset * 3, y, size, size, null);
 
         x = x + size;
         y += size - 4;
@@ -227,6 +238,7 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawString("x" + player.getFlameLength(), x, y);
         g2.drawString("x" + player.getMaxBombs(), x + offset, y);
         g2.drawString("x" + player.getSpeed(), x + offset * 2, y);
+        g2.drawString("x" + player.getHp(), x + offset * 3, y);
     }
 
     public static class Clock {

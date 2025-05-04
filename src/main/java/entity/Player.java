@@ -13,6 +13,7 @@ import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
+import static entity.Direction.*;
 
 public class Player extends Entity {
 
@@ -21,16 +22,16 @@ public class Player extends Entity {
     BufferedImage[] playerUp, playerDown, playerLeft, playerRight;
 
     ArrayList<Bomb> bombs = new ArrayList<>();
-    private String bombType = "normal";
     public BufferedImage statusBombTypeImg = LoadResource.itemImgMap.get("plus_bomb");
+    private int cooldown;
+
     private int maxBombs;
     private int flameLength;
-    int cooldown;
-    int timer = 0;
-    int invincibleTime = 0;
+    private String bombType;
 
-    private boolean beingHit = false;
-    private boolean hasShield = false;
+    private boolean hasGlove = false;
+    private boolean canKickBomb = true;
+    private boolean isHoldingBomb = false;
     public int score = 0;
 
     public Player() {
@@ -43,22 +44,25 @@ public class Player extends Entity {
         this.keyH = keyH;
         this.name = "player";
 
-        solidArea = new Rectangle(12, 20, 24, 24);
-
         setDefaultValues();
         getPlayerImage();
     }
 
     void setDefaultValues() {
 
-        maxBombs = 1;
+//        collisionOn = false;
+        setInvincibleTime(1.0);
+        setMaxSpeedLevel(3);
+        setSpeedLevel(1);
+        setMaxHp(3);
+        maxBombs = 2;
         flameLength = 1;
-        speed = 2;
-        direction = "down";
+        bombType = "time";
         spriteTime = 6;
         cooldown = UtilityTool.convertTime(0.1);
         x = gp.map.checkPos.x * tileSize;
         y = gp.map.checkPos.y * tileSize;
+        solidArea = new Rectangle(x + 12, y + 20, 24, 24);
     }
 
     void getPlayerImage() {
@@ -70,20 +74,54 @@ public class Player extends Entity {
         sprites = playerDown;
     }
 
+    public void setDirection() {
+        if (gp.keyH.upPressed) {
+            direction = UP;
+        }
+        if (gp.keyH.downPressed) {
+            direction = DOWN;
+        }
+        if (gp.keyH.leftPressed) {
+            direction = LEFT;
+        }
+        if (gp.keyH.rightPressed) {
+            direction = RIGHT;
+        }
+    }
+
     public void update() {
 
-        // placing bomb
-        gp.bombs.addAll(bombs);
+        // place bomb
+        gp.map.bombs.addAll(bombs);
+        boolean hasBombHere = gp.cChecker.hasBombHere(col(), row());
         if (keyH.enterPressed && bombs.size() < maxBombs
-                && timer == 0 && gp.cChecker.canPlaceBomb(this)) {
-            placingBomb();
+                && timer == 0 && !hasBombHere) {
+            placeBomb();
             timer = cooldown;
         }
 
-        bombs.forEach(Bomb::update);
+        // pick up and throw bomb
+        if (keyH.useGlove && hasGlove) {
+            if (hasBombHere && !isHoldingBomb) {
+                pickUpBomb();
+            } else if (isHoldingBomb) {
+                throwBomb();
+            }
+        }
+
+        // kick bomb
+        if (keyH.kickBomb && canKickBomb) {
+            kickBomb();
+        }
+
+        bombs.forEach(bomb -> {
+            bomb.update();
+            if (bomb.exploded)
+                gp.map.removeBomb(bomb);
+        });
         bombs.removeIf(bomb -> bomb.exploded);
 
-        if (hasShield && beingHit) {
+        if (isGettingHit) {
             enterInvincibleTime();
         }
 
@@ -93,22 +131,11 @@ public class Player extends Entity {
 
         if (keyH.movePressed) {
 
-            if (keyH.upPressed) {
-                direction = "up";
-            }
-            if (keyH.downPressed) {
-                direction = "down";
-            }
-            if (keyH.leftPressed) {
-                direction = "left";
-            }
-            if (keyH.rightPressed) {
-                direction = "right";
-            }
+            setDirection();
 
             // CHECK COLLISION
             gp.cChecker.checkTile(this);
-            gp.cChecker.checkBombForMoving(this);
+            gp.cChecker.checkBombForEntity(this);
 
             move();
         }
@@ -127,16 +154,16 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
 
         switch (direction) {
-            case "up":
+            case UP:
                 sprites = playerUp;
                 break;
-            case "down":
+            case DOWN:
                 sprites = playerDown;
                 break;
-            case "left":
+            case LEFT:
                 sprites = playerLeft;
                 break;
-            case "right":
+            case RIGHT:
                 sprites = playerRight;
                 break;
         }
@@ -152,40 +179,22 @@ public class Player extends Entity {
     void move() {
 
         switch (direction) {
-            case "up":
-                if (canMoveUp) y -= speed;
+            case UP:
+                moveUp();
                 break;
-            case "down":
-                if (canMoveDown) y += speed;
+            case DOWN:
+                moveDown();
                 break;
-            case "left":
-                if (canMoveLeft) x -= speed;
+            case LEFT:
+                moveLeft();
                 break;
-            case "right":
-                if (canMoveRight) x += speed;
+            case RIGHT:
+                moveRight();
                 break;
         }
+        solidArea.x = x + 12;
+        solidArea.y = y + 20;
         resetCollision();
-    }
-
-    @Override
-    public void beingHit() {
-
-        super.beingHit();
-        beingHit = true;
-        if (hasShield) {
-            System.out.println("Hit shield!");
-            return;
-        }
-        isAlive = false;
-    }
-
-    void enterInvincibleTime() {
-        invincibleTime--;
-        if (invincibleTime == 0) {
-            hasShield = false;
-            beingHit = false;
-        }
     }
 
     public KeyHandler getKeyHandler() {
@@ -200,9 +209,12 @@ public class Player extends Entity {
         return maxBombs;
     }
 
-    public void setHasShield(boolean bool) {
-        hasShield = bool;
-        invincibleTime = UtilityTool.convertTime(1.0);
+    public void setHasGlove() {
+        hasGlove = true;
+    }
+
+    public void activeKickBomb() {
+        canKickBomb = true;
     }
 
     public void setBombType(String newType) {
@@ -222,15 +234,54 @@ public class Player extends Entity {
         score += point;
     }
 
-    public void placingBomb() {
-        switch (bombType) {
-            case "time":
-                bombs.add(new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
-                break;
-            case "normal":
-                bombs.add(new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength));
-                break;
-        }
+    void placeBomb() {
+        Bomb bomb = switch (bombType) {
+            case "time" -> new TimeBomb(gp, col() * tileSize, row() * tileSize, this, flameLength);
+            case "normal" -> new NormalBomb(gp, col() * tileSize, row() * tileSize, this, flameLength);
+            default -> new Bomb();
+        };
+        bombs.add(bomb);
+        gp.map.addBomb(bomb);
     }
 
+    void pickUpBomb() {
+
+    }
+
+    void throwBomb() {
+
+    }
+
+    void kickBomb() {
+        // find
+        int col = col(), row = row();
+        Bomb bomb = null;
+        switch (direction) {
+            case UP:
+                row -= 1;
+                break;
+            case DOWN:
+                row += 1;
+                break;
+            case LEFT:
+                col -= 1;
+                break;
+            case RIGHT:
+                col += 1;
+                break;
+        }
+        for (int i = 0; i < gp.map.bombs.size(); i++) {
+            Bomb b = gp.map.bombs.get(i);
+            if (col == b.col() && row == b.row()) {
+                bomb = b;
+                break;
+            }
+        }
+
+        // kick
+        if (bomb == null) return;
+        bomb.moving = true;
+        bomb.direction = direction;
+        bomb.move();
+    }
 }

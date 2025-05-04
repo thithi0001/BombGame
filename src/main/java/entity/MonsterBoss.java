@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import main.GamePanel;
 
 import static MenuSetUp.DimensionSize.*;
+import static entity.Direction.*;
 
 public class MonsterBoss extends Monster {
     int width, height;
@@ -26,9 +27,8 @@ public class MonsterBoss extends Monster {
 
     @Override
     public void setDefaultValues() {
-        speed = 1;
-        direction = "down";
 
+        setSpeedLevel(0);
         x = (screenWidth - width) / 2;
         y = (screenHeight - height) / 2;
     }
@@ -40,7 +40,7 @@ public class MonsterBoss extends Monster {
             randomMove();
         }
 
-        gp.cChecker.checkBombForMoving(this);
+        gp.cChecker.checkBombForEntity(this);
         gp.cChecker.checkPlayerForMonster(this);
 
         move();
@@ -52,30 +52,30 @@ public class MonsterBoss extends Monster {
         moved = false;
 
         switch (direction) {
-            case "up":
+            case UP:
                 if (y - speed >= 0 && canMoveUp) {
-                    y -= speed;
+                    moveUp();
                     moved = true;
                 }
                 break;
 
-            case "down":
+            case DOWN:
                 if (y + speed + height <= screenHeight && canMoveDown) {
-                    y += speed;
+                    moveDown();
                     moved = true;
                 }
                 break;
 
-            case "left":
+            case LEFT:
                 if (x - speed >= 0 && canMoveLeft) {
-                    x -= speed;
+                    moveLeft();
                     moved = true;
                 }
                 break;
 
-            case "right":
+            case RIGHT:
                 if (x + speed + width <= screenWidth && canMoveRight) {
-                    x += speed;
+                    moveRight();
                     moved = true;
                 }
                 break;
@@ -98,14 +98,14 @@ public class MonsterBoss extends Monster {
     }
 
     @Override
-    public void beingHit() {
+    public void getHit() {
 
         hp--;
         System.out.println("hit");
         if (hp <= 0) {
             isAlive = false;
         } else {
-            addSpeed(1);
+            increaseSpeed();
         }
     }
 }

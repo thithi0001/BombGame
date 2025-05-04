@@ -1,13 +1,17 @@
 package entity;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-
+import AI.InputContext;
+import AI.pathFinding.DStartLite;
 import main.GamePanel;
+import main.UtilityTool;
 import res.LoadResource;
 
 import static MenuSetUp.DimensionSize.tileSize;
+import static entity.Direction.*;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Monster extends Entity {
@@ -16,19 +20,35 @@ public class Monster extends Entity {
 
     protected int changeDirection = 2;
     boolean moved;
+    InputContext inputContext;
+    private DStartLite pathFinder;
+    private List<Point> currentPath;
+    private int pathIndex;
+    private final int recalculatePathTime = UtilityTool.convertTime((double) 1 /2);
 
     public Monster(GamePanel gp, int x, int y) {
-
         this.gp = gp;
         this.name = "monster";
         this.x = x;
         this.y = y;
-        this.solidArea = new Rectangle(0, 0, tileSize, tileSize);
         random = new Random();
 
         setDefaultValues();
         getMonsterImage();
+        System.out.println(getPosition());
     }
+
+    public void initAI() {
+
+        inputContext = new InputContext(gp, this);
+        pathFinder = new DStartLite(inputContext);
+        currentPath = pathFinder.findPath();
+        pathIndex = 0;
+    }
+
+    public List<Point> getCurrentPath() {return currentPath;}
+
+    public int getPathIndex() {return pathIndex;}
 
     public void getMonsterImage() {
         sprites = LoadResource.monster;
@@ -36,24 +56,44 @@ public class Monster extends Entity {
 
     public void setDefaultValues() {
 
-        speed = 1;
-        direction = "down";
+        setInvincibleTime(1.0);
+        setMaxSpeedLevel(3);
+        setSpeedLevel(0);
+        setMaxHp(1);
         spriteTime = 6;
         x = x * tileSize;
         y = y * tileSize;
+        solidArea = new Rectangle(x + 12, y + 20, 24, 24);
+    }
+
+    public DStartLite getPathFinder() {
+        return pathFinder;
     }
 
     public void update() {
 
-        if (random.nextInt(100) < changeDirection) {
-            randomMove();
+        if (isGettingHit) {
+            enterInvincibleTime();
         }
 
-        gp.cChecker.checkTile(this);
-        gp.cChecker.checkBombForMoving(this);
+        // logic game
+        gp.cChecker.checkTile(this);// khong can
+        gp.cChecker.checkBombForEntity(this);// khong can
         gp.cChecker.checkPlayerForMonster(this);
 
-        move();
+        ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
+        ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
+        pathFinder.updateObstacles(removed, added);
+
+        if (timer > 0) {
+            timer--;
+        } else {
+            timer = recalculatePathTime;
+            recalculatePath();
+        }
+
+        move2();
+//        move();
 
         if (++spriteCounter > spriteTime) {
 
@@ -64,64 +104,125 @@ public class Monster extends Entity {
             }
             spriteCounter = 0;
         }
-
     }
 
     void randomMove() {
+        // tuong duong voi setDirection
         int randomDirection = random.nextInt(4);
         switch (randomDirection) {
             case 0:
                 if (canMoveUp) {
-                    direction = "up";
+                    direction = UP;
                 }
                 break;
             case 1:
                 if (canMoveDown) {
-                    direction = "down";
+                    direction = DOWN;
                 }
                 break;
             case 2:
                 if (canMoveLeft) {
-                    direction = "left";
+                    direction = LEFT;
                 }
                 break;
             case 3:
                 if (canMoveRight) {
-                    direction = "right";
+                    direction = RIGHT;
                 }
                 break;
         }
     }
 
+    public void setDirection(Point current, Point next) {
+
+        int x = next.x - current.x;
+        int y = next.y - current.y;
+
+        if (x == 0) {
+            if (y == -1 && canMoveUp) direction = UP;
+            if (y == 1 && canMoveDown) direction = DOWN;
+        }
+        if (y == 0) {
+            if (x == -1 && canMoveLeft) direction = LEFT;
+            if (x == 1 && canMoveRight) direction = RIGHT;
+        }
+    }
+
+    public void recalculatePath() {
+        // kiem tra thay doi cua goal (player)
+        Point newGoal = inputContext.getTargetPosition();
+        if (!pathFinder.getGoal().equals(newGoal)) {
+            pathFinder.setNewGoal(newGoal);
+            currentPath = pathFinder.findPath();
+            pathIndex = 0;
+        }
+    }
+
+    public void move2() {
+
+        if (pathIndex < currentPath.size()) {
+            Point current = getPosition();
+            Point next = currentPath.get(pathIndex);
+
+            // neu chua den next thi tiep tuc di chuyen theo huong cu
+            if (current.equals(next) &&
+                    (this.x == next.x * tileSize && this.y == next.y * tileSize)) {
+                if (++pathIndex >= currentPath.size()) {
+                    // toi day co nghia la da toi goal
+                    // xu ly chuyen sang trang thai truy duoi hoac trang thai nhan roi
+                    --pathIndex; // xu ly cai cho nay
+                    return;
+                }
+
+                next = currentPath.get(pathIndex);
+                pathFinder.moveAndRescan(next);
+                setDirection(current, next);
+            }
+        }
+
+        moved = false;
+        switch (direction) {
+            case UP:
+                moveUp();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            case RIGHT:
+                moveRight();
+                break;
+        }
+        solidArea.x = x + 12;
+        solidArea.y = y + 20;
+        resetCollision();
+    }
+
     public void move() {
+
+        if (random.nextInt(100) < changeDirection) {
+            randomMove();
+        }
         moved = false;
 
         switch (direction) {
-            case "up":
-                if (canMoveUp) {
-                    y -= speed;
-                    moved = true;
-                }
+            case UP:
+                moveUp();
                 break;
-            case "down":
-                if (canMoveDown) {
-                    y += speed;
-                    moved = true;
-                }
+            case DOWN:
+                moveDown();
                 break;
-            case "left":
-                if (canMoveLeft) {
-                    x -= speed;
-                    moved = true;
-                }
+            case LEFT:
+                moveLeft();
                 break;
-            case "right":
-                if (canMoveRight) {
-                    x += speed;
-                    moved = true;
-                }
+            case RIGHT:
+                moveRight();
                 break;
         }
+        solidArea.x = x + 12;
+        solidArea.y = y + 20;
 
         if (!moved) {
             randomMove();
@@ -130,19 +231,36 @@ public class Monster extends Entity {
         resetCollision();
     }
 
+    @Override
+    public void moveUp() {
+        super.moveUp();
+        moved = true;
+    }
+
+    @Override
+    public void moveDown() {
+        super.moveDown();
+        moved = true;
+    }
+
+    @Override
+    public void moveLeft() {
+        super.moveLeft();
+        moved = true;
+    }
+
+    @Override
+    public void moveRight() {
+        super.moveRight();
+        moved = true;
+    }
+
     public void draw(Graphics2D g2) {
 
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
         }
     }
-
-    @Override
-    public void beingHit() {
-        super.beingHit();
-        isAlive = false;
-    }
-
 }
 
 
