@@ -3,13 +3,14 @@ package skill;
 import entity.Entity;
 import main.UtilityTool;
 
-abstract class Skill {
+public abstract class Skill {
     // tat ca ky nang chua duoc kiem tra su dung
     Entity user;
     private String name;
     private int cooldown;
     private int duration;
     private boolean isActivating;
+    private boolean isCoolingDown;
     private boolean canActivate;
     private int timer = 0;
 
@@ -19,6 +20,8 @@ abstract class Skill {
         setCooldown(cooldownSecond);
         setDuration(durationSecond);
         isActivating = false;
+        isCoolingDown = false;
+        canActivate = true;
     }
 
     public String getName() {
@@ -49,39 +52,45 @@ abstract class Skill {
         return isActivating;
     }
 
+    public boolean isCoolingDown() {return isCoolingDown;}
+
     public boolean canActivate() {
         return canActivate;
     }
 
     public void update() {
-        if (timer == 0) {
-            if (isActivating) {
-                deactivate();
-            } else {
-                reset();
-            }
+        if (timer == 0 && isActivating) {
+            deactivate();
         }
 
-        if (timer > 0) {
-            timer--;
+        if (timer == 0 && isCoolingDown) {
+            doneCoolDown();
         }
+
+        if (timer == 0) return;
+
+        timer--;
     }
 
     public void activate() {
         timer = duration;
         isActivating = true;
-        canActivate =false;
+        canActivate = false;
         action();
     }
 
     public void deactivate() {
         timer = cooldown;
         isActivating = false;
+        isCoolingDown = true;
+        reset();
     }
 
-    public void reset() {
+    public void doneCoolDown() {
+        isCoolingDown = false;
         canActivate = true;
     }
 
     abstract void action();
+    abstract void reset();
 }

@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
 
     public boolean movePressed;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+
     public boolean enterPressed;
     public boolean activateBomb, useGlove, kickBomb;
     public boolean gizmoOn = false;
