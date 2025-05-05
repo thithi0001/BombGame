@@ -180,6 +180,7 @@ public class Monster extends Entity {
             }
         }
 
+        if (!canMove) return;
         moved = false;
         switch (direction) {
             case UP:
@@ -255,10 +256,12 @@ public class Monster extends Entity {
         moved = true;
     }
 
+    @Override
     public void draw(Graphics2D g2) {
 
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
+            drawEffect(g2);
         }
     }
 }

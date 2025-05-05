@@ -40,6 +40,7 @@ public class Entity {
 
     public Rectangle solidArea;
     public boolean collisionOn = true;
+    public boolean canMove = true;
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
 
     protected int timer = 0;
@@ -82,6 +83,7 @@ public class Entity {
     }
 
     protected void resetCollision() {
+        canMove = true;
         canMoveUp = true;
         canMoveDown = true;
         canMoveLeft = true;
