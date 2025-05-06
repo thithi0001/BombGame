@@ -18,13 +18,13 @@ public class Entity {
     public int x, y;// x = column, y = row
     final int[] speedLevel = {1, 2, 3, 4, 6, 8, 12, 16, 24, 48};
     private int currentSpeedLevel = 0;
-    protected int maxSpeedLevel;
+    private int maxSpeedLevel;
     protected int speed;
 
-    protected int maxHp;
-    protected int hp;
+    private int maxHp;
+    private int hp;
     public boolean isAlive = true;
-    protected boolean isVulnerable = true;
+    private boolean isVulnerable = true;
     protected boolean isGettingHit = false;
     protected boolean hasShield = false;
 
@@ -44,7 +44,7 @@ public class Entity {
     public boolean canMoveUp = true, canMoveDown = true, canMoveLeft = true, canMoveRight = true;
 
     protected int timer = 0;
-    protected int invincibleTime = 0;
+    private int invincibleTime = 0;
 
     public void setStatus(EntityStatus status) {
         this.status = status;

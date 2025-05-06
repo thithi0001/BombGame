@@ -101,6 +101,10 @@ public class Map {
         newlyRemovedObstacles.add(new Point(x, y));
     }
 
+    public boolean isObstacle(int x, int y) {
+        return gp.tileManager.tile[mapTileNum[x][y]].collision;
+    }
+
     public ArrayList<Point> getNewlyRemovedObstacles() {
         return newlyRemovedObstacles;
     }

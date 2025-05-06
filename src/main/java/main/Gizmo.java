@@ -18,6 +18,15 @@ public class Gizmo {
         this.gp = gp;
     }
 
+    public void draw(Graphics2D g2) {
+        gp.map.monsters.forEach(m -> entity(m, Color.BLACK, g2));
+        gp.map.bombs.forEach(b -> bomb(b, g2));
+        gp.map.items.forEach(i -> entity(i, Color.MAGENTA, g2));
+        entity(gp.player, Color.BLACK, g2);
+        gp.map.monsters.forEach(m -> drawPath(m.getCurrentPath(), m.getPathIndex(), g2));
+        gp.map.monsters.forEach(m -> m.getCrossLoS().draw(g2));
+    }
+
     void flame(Flame flame, Graphics2D g2) {
         g2.setColor(Color.BLUE);
         g2.fill(flame.verticalSolidArea);
@@ -38,15 +47,7 @@ public class Gizmo {
         g2.drawRect(entity.x, entity.y, tileSize, tileSize);
     }
 
-    void draw(Graphics2D g2) {
-        gp.map.monsters.forEach(m -> entity(m, Color.BLACK, g2));
-        gp.map.bombs.forEach(b -> bomb(b, g2));
-        gp.map.items.forEach(i -> entity(i, Color.MAGENTA, g2));
-        entity(gp.player, Color.BLACK, g2);
-        gp.map.monsters.forEach(m -> agentPath(m.getCurrentPath(), m.getPathIndex(), g2));
-    }
-
-    void agentPath(List<Point> path, int startIndex, Graphics2D g2) {
+    void drawPath(List<Point> path, int startIndex, Graphics2D g2) {
         g2.setColor(Color.BLACK);
         int lines = path.size() - startIndex;
         for (int i = startIndex; i < path.size() - 1; i++) {
@@ -57,6 +58,8 @@ public class Gizmo {
             g2.drawLine(x1, y1, x2, y2);
         }
     }
-    void agentState() {}
-    void agent() {}
+
+    void agentState(Graphics2D g2) {}
+
+    void agent(Graphics2D g2) {}
 }
