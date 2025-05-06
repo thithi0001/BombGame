@@ -1,9 +1,5 @@
 package AI.pathFinding;
 
-import AI.InputContext;
-import entity.Entity;
-import main.GamePanel;
-
 import java.awt.Point;
 import java.util.*;
 
@@ -31,17 +27,11 @@ public class DStartLite {
 
     private boolean[][] grid;
 
-    public DStartLite(GamePanel gp, Entity self) {
-        this(new InputContext(gp, self));
-    }
-
-    public DStartLite(InputContext inputContext) {
-        this(new PathFindingAdapter(inputContext));
-    }
-
     public DStartLite(PathFindingAdapter adapter) {
         this(adapter.width, adapter.height, adapter.start, adapter.goal, adapter.obstacles);
     }
+
+//    public DStartLite(GamePanel gp, Entity self, Entity target)
 
     public DStartLite(int width, int height, Point start, Point goal, Set<Point> obstacles) {
         this.WIDTH = width;

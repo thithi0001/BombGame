@@ -2,6 +2,7 @@ package entity;
 
 import AI.InputContext;
 import AI.pathFinding.DStartLite;
+import AI.pathFinding.PathFindingAdapter;
 import main.GamePanel;
 import main.UtilityTool;
 import res.LoadResource;
@@ -20,7 +21,9 @@ public class Monster extends Entity {
 
     protected int changeDirection = 2;
     boolean moved;
-    InputContext inputContext;
+
+    private CrossLoS crossLoS;
+
     private DStartLite pathFinder;
     private List<Point> currentPath;
     private int pathIndex;
@@ -40,8 +43,9 @@ public class Monster extends Entity {
 
     public void initAI() {
 
-        inputContext = new InputContext(gp, this);
-        pathFinder = new DStartLite(inputContext);
+        crossLoS = new CrossLoS(gp, this, gp.player, 5);
+        crossLoS.update();
+        pathFinder = new DStartLite(new PathFindingAdapter(gp, this, gp.player));
         currentPath = pathFinder.findPath();
         pathIndex = 0;
     }
@@ -150,7 +154,7 @@ public class Monster extends Entity {
 
     public void recalculatePath() {
         // kiem tra thay doi cua goal (player)
-        Point newGoal = inputContext.getTargetPosition();
+        Point newGoal = gp.player.getPosition();
         if (!pathFinder.getGoal().equals(newGoal)) {
             pathFinder.setNewGoal(newGoal);
             currentPath = pathFinder.findPath();
