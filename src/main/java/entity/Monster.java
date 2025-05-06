@@ -1,6 +1,6 @@
 package entity;
 
-import AI.InputContext;
+import AI.LoS.CrossLoS;
 import AI.pathFinding.DStartLite;
 import AI.pathFinding.PathFindingAdapter;
 import main.GamePanel;
@@ -74,6 +74,10 @@ public class Monster extends Entity {
         return pathFinder;
     }
 
+    public CrossLoS getCrossLoS() {
+        return crossLoS;
+    }
+
     public void update() {
 
         if (isGettingHit) {
@@ -98,6 +102,8 @@ public class Monster extends Entity {
 
         move2();
 //        move();
+
+        crossLoS.update();
 
         if (++spriteCounter > spriteTime) {
 
@@ -157,6 +163,7 @@ public class Monster extends Entity {
         Point newGoal = gp.player.getPosition();
         if (!pathFinder.getGoal().equals(newGoal)) {
             pathFinder.setNewGoal(newGoal);
+//            if (!crossLoS.isVisible()) return;
             currentPath = pathFinder.findPath();
             pathIndex = 0;
         }
