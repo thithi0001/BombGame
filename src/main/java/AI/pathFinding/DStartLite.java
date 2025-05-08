@@ -26,7 +26,6 @@ public class DStartLite {
     private Point goal;
     private double km; // key modifier
 
-    private final Set<Point> staticObstacles;
     private Map<Point, Double> g; // chi phi tu tot nhat tu start den 1 diem
     private Map<Point, Double> rhs; // chi uoc luong
     private Map<Pair, Double> cost; // chi phi giua cac diem
@@ -316,6 +315,48 @@ public class DStartLite {
         start = newStart;
 
         computeShortestPath();
+    }
+
+    public Point fleeingPoint() {
+        int[][] distFromTarget = new int[WIDTH][HEIGHT];
+        for (int[] row: distFromTarget) Arrays.fill(row, -1);
+
+        if (!target.getPosition().equals(goal)) {
+            goal = target.getPosition();
+        }
+
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(goal);
+        distFromTarget[goal.x][goal.y] = 0;
+
+        while (!queue.isEmpty()) {
+            Point p = queue.poll();
+            for (int[] dir: DIRECTIONS) {
+                Point n = new Point(p.x + dir[0], p.y + dir[1]);
+                if (isValid(n) && !isObstacles(n) && distFromTarget[n.x][n.y] == -1) {
+                    distFromTarget[n.x][n.y] = distFromTarget[p.x][p.y] + 1;
+                    queue.add(n);
+                }
+            }
+        }
+
+        int maxDist = -1;
+        Point f = start;
+
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
+                if (!grid[x][y] && distFromTarget[x][y] > maxDist) {
+                    maxDist = distFromTarget[x][y];
+                    f = new Point(x, y);
+                }
+            }
+        }
+
+        return f;
+    }
+
+    public void flee() {
+
     }
 
     public void detectEnvironmentChanges(Map<Point, Map<Point, Double>> changedEdges) {

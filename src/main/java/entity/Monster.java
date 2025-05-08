@@ -166,6 +166,12 @@ public class Monster extends Entity {
             currentPath = pathFinder.findPath();
             pathIndex = 0;
         }
+
+        // FLEE
+//        Point f = pathFinder.fleeingPoint();
+//        pathFinder.setNewGoal(f);
+//        currentPath = pathFinder.findPath();
+//        pathIndex = 0;
     }
 
     public void move2() {
