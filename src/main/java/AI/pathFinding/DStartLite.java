@@ -1,5 +1,10 @@
 package AI.pathFinding;
 
+import MenuSetUp.DimensionSize;
+import entity.Entity;
+import main.GamePanel;
+import tile.Tile;
+
 import java.awt.Point;
 import java.util.*;
 
@@ -7,18 +12,20 @@ public class DStartLite {
 
     private final double INF = Double.POSITIVE_INFINITY;
     private final int[][] DIRECTIONS = {
-            {0, -1},        // up
-            {0, 1},     // down
-            {-1, 0},     // left
-            {1, 0}     // right
+            {0, -1}, // up
+            {0, 1}, // down
+            {-1, 0}, // left
+            {1, 0} // right
     };
     private final int WIDTH, HEIGHT;
+
+    private final Entity self;
+    private final Entity target;
 
     private Point start;
     private Point goal;
     private double km; // key modifier
 
-    private final Set<Point> staticObstacles;
     private Map<Point, Double> g; // chi phi tu tot nhat tu start den 1 diem
     private Map<Point, Double> rhs; // chi uoc luong
     private Map<Pair, Double> cost; // chi phi giua cac diem
@@ -27,31 +34,21 @@ public class DStartLite {
 
     private boolean[][] grid;
 
-    public DStartLite(PathFindingAdapter adapter) {
-        this(adapter.width, adapter.height, adapter.start, adapter.goal, adapter.obstacles);
-    }
-
-//    public DStartLite(GamePanel gp, Entity self, Entity target)
-
-    public DStartLite(int width, int height, Point start, Point goal, Set<Point> obstacles) {
-        this.WIDTH = width;
-        this.HEIGHT = height;
-        this.start = start;
-        this.goal = goal;
+    public DStartLite(GamePanel gp, Entity self, Entity target) {
+        this.WIDTH = DimensionSize.maxScreenCol;
+        this.HEIGHT = DimensionSize.maxScreenRow;
+        this.self = self;
+        this.target = target;
+        this.start = self.getPosition();
+        this.goal = target.getPosition();
         this.km = 0;
-        this.staticObstacles = new HashSet<>(obstacles);
 
-        // khoi tao grid
-        initializeGrid();
-
-        // khoi tao g, rhs, cost
-        initializeCost();
-
-        // khoi tao priority queue
-        initializeQueue();
+        initGrid(gp.tileManager.tile, gp.map.mapTileNum);
+        initCost();
+        initQueue();
     }
 
-    void initializeQueue() {
+    void initQueue() {
         comparator = (s1, s2) -> {
             double[] k1 = calculateKey(s1);
             double[] k2 = calculateKey(s2);
@@ -67,11 +64,13 @@ public class DStartLite {
         U.add(goal);
     }
 
-    void initializeGrid() {
+    void initGrid(Tile[] tile, int[][] mapTileNum) {
         grid = new boolean[WIDTH][HEIGHT];
-        for (Point obstacle: staticObstacles) {
-            if (isValid(obstacle))
-                grid[obstacle.x][obstacle.y] = true;
+
+        for (int i = 0; i < WIDTH; i++) {
+            for (int j = 0; j < HEIGHT; j++) {
+                grid[i][j] = tile[mapTileNum[i][j]].collision;
+            }
         }
 
         if (grid[start.x][start.y])
@@ -81,7 +80,7 @@ public class DStartLite {
             throw new IllegalArgumentException("Goal can not be an obstacle.");
     }
 
-    void initializeCost() {
+    void initCost() {
         g = new HashMap<>();
         rhs = new HashMap<>();
         cost = new HashMap<>();
@@ -185,6 +184,18 @@ public class DStartLite {
         cost.put(new Pair(s2, s1), c);
         updateState(s1);
         updateState(s2);
+    }
+
+    public Point getSelfPosition() {
+        return self.getPosition();
+    }
+
+    public Entity getTarget() {
+        return target;
+    }
+
+    public Point getTargetPosition() {
+        return target.getPosition();
     }
 
     public Point getGoal() {
@@ -304,6 +315,48 @@ public class DStartLite {
         start = newStart;
 
         computeShortestPath();
+    }
+
+    public Point fleeingPoint() {
+        int[][] distFromTarget = new int[WIDTH][HEIGHT];
+        for (int[] row: distFromTarget) Arrays.fill(row, -1);
+
+        if (!target.getPosition().equals(goal)) {
+            goal = target.getPosition();
+        }
+
+        Queue<Point> queue = new LinkedList<>();
+        queue.add(goal);
+        distFromTarget[goal.x][goal.y] = 0;
+
+        while (!queue.isEmpty()) {
+            Point p = queue.poll();
+            for (int[] dir: DIRECTIONS) {
+                Point n = new Point(p.x + dir[0], p.y + dir[1]);
+                if (isValid(n) && !isObstacles(n) && distFromTarget[n.x][n.y] == -1) {
+                    distFromTarget[n.x][n.y] = distFromTarget[p.x][p.y] + 1;
+                    queue.add(n);
+                }
+            }
+        }
+
+        int maxDist = -1;
+        Point f = start;
+
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = 0; y < HEIGHT; y++) {
+                if (!grid[x][y] && distFromTarget[x][y] > maxDist) {
+                    maxDist = distFromTarget[x][y];
+                    f = new Point(x, y);
+                }
+            }
+        }
+
+        return f;
+    }
+
+    public void flee() {
+
     }
 
     public void detectEnvironmentChanges(Map<Point, Map<Point, Double>> changedEdges) {

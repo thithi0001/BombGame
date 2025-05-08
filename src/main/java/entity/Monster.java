@@ -2,7 +2,6 @@ package entity;
 
 import AI.LoS.CrossLoS;
 import AI.pathFinding.DStartLite;
-import AI.pathFinding.PathFindingAdapter;
 import main.GamePanel;
 import main.UtilityTool;
 import res.LoadResource;
@@ -27,7 +26,7 @@ public class Monster extends Entity {
     private DStartLite pathFinder;
     private List<Point> currentPath;
     private int pathIndex;
-    private final int recalculatePathTime = UtilityTool.convertTime((double) 1 /2);
+    private final int recalculatePathTime = UtilityTool.convertTime(0.5f);
 
     public Monster(GamePanel gp, int x, int y) {
         this.gp = gp;
@@ -45,7 +44,7 @@ public class Monster extends Entity {
 
         crossLoS = new CrossLoS(gp, this, gp.player, 5);
         crossLoS.update();
-        pathFinder = new DStartLite(new PathFindingAdapter(gp, this, gp.player));
+        pathFinder = new DStartLite(gp, this, gp.player);
         currentPath = pathFinder.findPath();
         pathIndex = 0;
     }
@@ -159,14 +158,20 @@ public class Monster extends Entity {
     }
 
     public void recalculatePath() {
-        // kiem tra thay doi cua goal (player)
-        Point newGoal = gp.player.getPosition();
-        if (!pathFinder.getGoal().equals(newGoal)) {
-            pathFinder.setNewGoal(newGoal);
+        // PURSUE
+        Point playerPos = pathFinder.getTargetPosition();
+        if (!pathFinder.getGoal().equals(playerPos)) {
+            pathFinder.setNewGoal(playerPos);
 //            if (!crossLoS.isVisible()) return;
             currentPath = pathFinder.findPath();
             pathIndex = 0;
         }
+
+        // FLEE
+//        Point f = pathFinder.fleeingPoint();
+//        pathFinder.setNewGoal(f);
+//        currentPath = pathFinder.findPath();
+//        pathIndex = 0;
     }
 
     public void move2() {

@@ -66,7 +66,7 @@ public class Player extends Entity {
 //        collisionOn = false;
         setInvincibleTime(1.0);
         setMaxSpeedLevel(3);
-        setSpeedLevel(1);
+        setSpeedLevel(2);
         setMaxHp(3);
         maxBombs = 2;
         flameLength = 1;

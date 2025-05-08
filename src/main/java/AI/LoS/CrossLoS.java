@@ -81,10 +81,6 @@ public class CrossLoS extends LineOfSight {
     public void update() {
         calculateDistance();
         isVisible = checkVertical() || checkHorizontal();
-//        System.out.println(distanceUp + " " + distanceDown + " " + distanceLeft + " " + distanceRight);
-//        System.out.println(vertical);
-//        System.out.println(horizontal);
-//        System.out.println(isVisible);
     }
 
     @Override
