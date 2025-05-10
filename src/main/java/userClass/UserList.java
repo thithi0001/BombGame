@@ -51,6 +51,9 @@ public class UserList {
                 for (int i = 0; i < a.level; i++) {
                     x += a.lvScore[i] + ";";
                 }
+                for (int i = 0; i < a.level; i++) {
+                    x += a.hardLvScore + ";";
+                }
                 writer.write(x + "\n");
             }
             writer.close();

@@ -4,6 +4,8 @@ import javax.swing.JButton;
 
 import main.Main;
 
+import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 
 
@@ -19,6 +21,7 @@ public class MyButton extends JButton {
 
         this.setContentAreaFilled(false);//
         this.setBorder(null);//delete button border
+        this.setPreferredSize(new Dimension(width, height));
     }
 
     public String nameFileIcon(String name) {

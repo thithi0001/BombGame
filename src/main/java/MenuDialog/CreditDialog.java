@@ -57,21 +57,21 @@ public class CreditDialog extends SuperDialog {
         MyButton back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 400);
         getContentPane().add(back);
-        back.addActionListener(e -> {
+        back.addActionListener(_ -> {
             parent.setEnabled(true);
             setVisible(false);
         });
 
         left = new MyButton("brightLeft");
         left.setLocateButton(30, 400);
-        left.addActionListener(e -> {
+        left.addActionListener(_ -> {
             toPreviousCredit();
             content.setText(creditsContent[currentCredit]);
         });
 
         right = new MyButton("brightRight");
         right.setLocateButton(500 - right.icon.getIconWidth() - 30, 400);
-        right.addActionListener(e -> {
+        right.addActionListener(_ -> {
             toNextCredit();
             content.setText(creditsContent[currentCredit]);
         });

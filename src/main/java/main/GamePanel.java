@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
         button = new MyButton("pause");
         button.setLocateButton(screenWidth - 60, 10);
         this.add(button);
-        button.addActionListener(e -> endGame("uncompleted"));
+        button.addActionListener(_ -> endGame("uncompleted"));
     }
 
     public void startGameThread() {
@@ -95,7 +95,9 @@ public class GamePanel extends JPanel implements Runnable {
                 // UNLOCK NEW LEVEL
                 if (levelPanel.user.getLevel() < 3) {
                     levelPanel.user.setLevel(parent.lv + 1);
+                    levelPanel.user.setScore(parent.lv, player.score);
                     levelPanel.resetLevelPanel(levelPanel.user, levelPanel.levelButtonPanel);
+                    levelPanel.actionLevelButton();
                 }
                 // READ SCORE
                 levelPanel.user.setScore(parent.lv, player.score);
