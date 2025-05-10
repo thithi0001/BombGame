@@ -15,7 +15,7 @@ public class PauseDialog extends SuperDialog {
         setTitle("PAUSE");
 
         MyButton resume = new MyButton("resume");
-        resume.addActionListener(e -> {
+        resume.addActionListener(_ -> {
             setVisible(false);
             parent.gamePanel.isPausing = false;
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
@@ -25,7 +25,7 @@ public class PauseDialog extends SuperDialog {
 
 
         MyButton restart = new MyButton("bigRestart");
-        restart.addActionListener(e -> {
+        restart.addActionListener(_ -> {
             setVisible(false);
             parent.setVisible(false);
             parent.gamePanel.setGameThread(null);
@@ -34,18 +34,18 @@ public class PauseDialog extends SuperDialog {
         });
 
         MyButton exit = new MyButton("exit");
-        exit.addActionListener(e -> {
+        exit.addActionListener(_ -> {
             parent.setVisible(false);
             parent.gamePanel.setGameThread(null);
             parent.levelPanel.change.frame.setVisible(true);
         });
 
         MyButton setting = new MyButton("setting");
-        setting.addActionListener((e) -> {
+        setting.addActionListener(_ -> {
             setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(parent, parent.levelPanel.change);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(event -> setEnabled(true));
+            settingDialog.back.addActionListener(_ -> setEnabled(true));
         });
         Content(resume, exit, setting, restart);
 

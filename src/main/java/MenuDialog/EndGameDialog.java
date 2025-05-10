@@ -62,7 +62,7 @@ public class EndGameDialog extends SuperDialog {
 
     void setNextBtn(LevelGameFrame parent) {
         next = new MyButton("next");
-        next.addActionListener(e -> {
+        next.addActionListener(_ -> {
             LevelGameFrame nextLevel = new LevelGameFrame(parent.lv + 1, parent.levelPanel);
             parent.setVisible(false);
             nextLevel.setVisible(true);
@@ -71,7 +71,7 @@ public class EndGameDialog extends SuperDialog {
 
     void setRestartBtn(LevelGameFrame parent) {
         restart = new MyButton("restart");
-        restart.addActionListener(e -> {
+        restart.addActionListener(_ -> {
             setVisible(false);
             parent.setVisible(false);
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
@@ -81,7 +81,7 @@ public class EndGameDialog extends SuperDialog {
 
     void setQuitBtn(LevelGameFrame parent, ChangePanel change) {
         quit = new MyButton("level");
-        quit.addActionListener(e -> {
+        quit.addActionListener(_ -> {
             parent.setVisible(false);
             change.frame.setVisible(true);
         });

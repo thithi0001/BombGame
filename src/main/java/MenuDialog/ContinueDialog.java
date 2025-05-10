@@ -35,11 +35,11 @@ public class ContinueDialog extends SuperDialog {
         setBackground();
 
         //SET BUTTON ACTION
-        noButton.addActionListener(e -> {
+        noButton.addActionListener(_ -> {
             parent.setEnabled(true);
             setVisible(false);
         });
-        okButton.addActionListener(e -> {
+        okButton.addActionListener(_ -> {
             parent.setEnabled(true);
             User A = userBox.getItemAt(userBox.getSelectedIndex());
             User currentUser = new User(A.getUserName());

@@ -23,7 +23,7 @@ public class ReplaceDialog extends JDialog {
         cancelButton = new MyButton("no");
         addButton(okButton, cancelButton);
 
-        okButton.addActionListener(e -> setVisible(false));
+        okButton.addActionListener(_ -> setVisible(false));
     }
 
     void addMessage() {

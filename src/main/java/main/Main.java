@@ -12,7 +12,6 @@ public class Main {
     public static String res = new File("..src\\main\\java\\res").getAbsolutePath().replace("..", "");
 
     public static void main(String[] args) {
-
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(DimensionSize.screenWidth, DimensionSize.screenHeight);

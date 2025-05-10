@@ -23,7 +23,7 @@ public class SettingDialog extends SuperDialog {
         back = new MyButton("back");
         back.setLocateButton((500 - 50) / 2, 400);
         getContentPane().add(back);
-        back.addActionListener(e -> {
+        back.addActionListener(_ -> {
             change.music.saveSetting(change.music);
             setVisible(false);
         });
@@ -44,7 +44,7 @@ public class SettingDialog extends SuperDialog {
         musicSlider = new MySlider(250, 25, (int) music.musicVolume, "music");
         musicSlider.addMySlider(content);
         musicSlider.slider.setEnabled(music.isMusicOn);
-        musicSlider.slider.addChangeListener((e) -> {
+        musicSlider.slider.addChangeListener(_ -> {
             music.musicVolume = musicSlider.slider.getValue();
             music.controlMusic.setValue(music.musicVolume);
         });
@@ -54,7 +54,7 @@ public class SettingDialog extends SuperDialog {
         SESlider.addMySlider(content);
         SESlider.slider.setEnabled(Sound.SE);
 
-        SESlider.slider.addChangeListener((e) -> {
+        SESlider.slider.addChangeListener(_ -> {
             Sound.SEVolume = SESlider.slider.getValue();
         });
 
@@ -68,7 +68,7 @@ public class SettingDialog extends SuperDialog {
     void addMusicButton(JPanel content, Sound music) {
         MyButton musicButton = music.isMusicOn ? new MyButton("music") : new MyButton("musicOff");
         content.add(musicButton);
-        musicButton.addActionListener((e) -> {
+        musicButton.addActionListener(_ -> {
             music.isMusicOn = !music.isMusicOn;
             music.checkVolume();
 
@@ -84,7 +84,7 @@ public class SettingDialog extends SuperDialog {
 
         MyButton seButton = Sound.SE ? new MyButton("sound") : new MyButton("soundOff");
         content.add(seButton);
-        seButton.addActionListener((e) -> {
+        seButton.addActionListener(_ -> {
             Sound.SE = !Sound.SE;
             //set icon
             seButton.icon = Sound.SE ? LoadResource.soundOnBtnIcon : LoadResource.soundOffBtnIcon;
