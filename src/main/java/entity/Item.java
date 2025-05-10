@@ -50,6 +50,7 @@ public class Item extends Entity {
         gp.cChecker.checkPlayerForItem(this);
     }
 
+    @Override
     public void draw(Graphics2D g2) {
 
         if (state == States.shown) {

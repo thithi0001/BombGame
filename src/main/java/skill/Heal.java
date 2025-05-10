@@ -1,15 +1,22 @@
 package skill;
 
 import entity.Entity;
+import entity.EntityStatus;
 
 public class Heal extends Skill{
 
-    public Heal(Entity user, String name, double cooldownSecond) {
-        super(user, name, cooldownSecond, 0);
+    public Heal(Entity user, double cooldownSecond) {
+        super(user, "Heal", cooldownSecond, 1.0);
     }
 
     @Override
     void action() {
         user.increaseHp();
+        user.setStatus(EntityStatus.HEAL);
+    }
+
+    @Override
+    void reset() {
+        user.setStatus(EntityStatus.NORMAL);
     }
 }

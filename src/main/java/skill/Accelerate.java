@@ -1,29 +1,31 @@
 package skill;
 
 import entity.Entity;
+import entity.EntityStatus;
 
 public class Accelerate extends Skill{
 
-    private final int currentSpeedLevel;
+    private int currentSpeedLevel;
     private final int maxSpeedLevel;
     private final int speedLevel;
 
-    public Accelerate(int level, Entity user, String name, double cooldownSecond, double durationSecond) {
-        super(user, name, cooldownSecond, durationSecond);
+    public Accelerate(Entity user, int level, double cooldownSecond, double durationSecond) {
+        super(user, "Accelerate", cooldownSecond, durationSecond);
         this.speedLevel = level;
-        currentSpeedLevel = user.getCurrentSpeedLevel();
         maxSpeedLevel = user.getMaxSpeedLevel();
     }
 
     @Override
     void action() {
+        currentSpeedLevel = user.getCurrentSpeedLevel();
         user.setMaxSpeedLevel(speedLevel);
+        user.setStatus(EntityStatus.ACCELERATE);
     }
 
     @Override
-    public void reset() {
-        super.reset();
+    void reset() {
         user.setMaxSpeedLevel(maxSpeedLevel);
         user.setSpeedLevel(currentSpeedLevel);
+        user.setStatus(EntityStatus.NORMAL);
     }
 }

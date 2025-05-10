@@ -11,6 +11,10 @@ import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
 import res.LoadResource;
+import skill.Accelerate;
+import skill.Harden;
+import skill.Heal;
+import skill.Skill;
 
 import static MenuSetUp.DimensionSize.tileSize;
 import static entity.Direction.*;
@@ -34,6 +38,8 @@ public class Player extends Entity {
     private boolean isHoldingBomb = false;
     public int score = 0;
 
+    public Skill skill;
+
     public Player() {
         keyH = new KeyHandler();
     }
@@ -46,6 +52,13 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImage();
+//        setSkill();
+    }
+
+    void setSkill() {
+//        skill = new Harden(this, 5.0, 2.0);
+//        skill = new Accelerate(this, 5, 5.0, 2.0);
+//        skill = new Heal(this, 5.0);
     }
 
     void setDefaultValues() {
@@ -53,7 +66,7 @@ public class Player extends Entity {
 //        collisionOn = false;
         setInvincibleTime(1.0);
         setMaxSpeedLevel(3);
-        setSpeedLevel(1);
+        setSpeedLevel(2);
         setMaxHp(3);
         maxBombs = 2;
         flameLength = 1;
@@ -114,6 +127,12 @@ public class Player extends Entity {
             kickBomb();
         }
 
+        // skills
+//        if (keyH.activateSkill && skill.canActivate()) {
+//            skill.activate();
+//        }
+//        skill.update();
+
         bombs.forEach(bomb -> {
             bomb.update();
             if (bomb.exploded)
@@ -121,7 +140,7 @@ public class Player extends Entity {
         });
         bombs.removeIf(bomb -> bomb.exploded);
 
-        if (isGettingHit) {
+        if (isGettingHit || status == EntityStatus.HARDEN) {
             enterInvincibleTime();
         }
 
@@ -151,6 +170,7 @@ public class Player extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics2D g2) {
 
         switch (direction) {
@@ -172,12 +192,14 @@ public class Player extends Entity {
         if (hasShield) {
             g2.drawImage(LoadResource.itemImgMap.get("protection_effect_2"), x, y, null);
         }
+        drawEffect(g2);
 
         bombs.forEach(bomb -> bomb.draw(g2));
     }
 
     void move() {
 
+        if (!canMove) return;
         switch (direction) {
             case UP:
                 moveUp();

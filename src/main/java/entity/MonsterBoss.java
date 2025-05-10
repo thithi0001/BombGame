@@ -49,8 +49,8 @@ public class MonsterBoss extends Monster {
     @Override
     public void move() {
 
+        if (!canMove) return;
         moved = false;
-
         switch (direction) {
             case UP:
                 if (y - speed >= 0 && canMoveUp) {
