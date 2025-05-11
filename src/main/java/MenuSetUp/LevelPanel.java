@@ -13,7 +13,6 @@ import java.util.List;
 import java.awt.Insets;
 // import java.awt.List;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 // import java.awt.Dimension;
 // import java.awt.Font;
@@ -94,7 +93,8 @@ public class LevelPanel extends JPanel {
         for (int i = 0; i < LoadResource.maxMap - 1; i++) {
             gbc.gridx = i % 4; // Cột
             gbc.gridy = i / 4; // Hàng
-            smallLevel[i] = new BackGroundPanel(Main.res + "/button/level1.png");   
+            String x = Main.res + "/button/level" +(i+1)+".png";
+            smallLevel[i] = new BackGroundPanel(x);   
             smallLevel[i].setLayout(null);
             smallLevel[i].setPreferredSize(new Dimension(150, 150));
             MyButton[] lv = new MyButton[2];
@@ -123,7 +123,12 @@ public class LevelPanel extends JPanel {
             int a = i + 1;
             if (i < user.getLevel()) {
                 levelButton.get(i)[0].addActionListener(_ -> {
-                    LevelGameFrame lv = new LevelGameFrame(a, this);
+                    LevelGameFrame lv = new LevelGameFrame(a, this, "normal");
+                    lv.setVisible(true);
+                    change.frame.setVisible(false);
+                });
+                levelButton.get(i)[1].addActionListener(_ -> {
+                    LevelGameFrame lv = new LevelGameFrame(a, this, "hard");
                     lv.setVisible(true);
                     change.frame.setVisible(false);
                 });
@@ -194,7 +199,7 @@ public class LevelPanel extends JPanel {
             //saveGame ok button
             saveGame.okButton.addActionListener(_ -> {
                 change.userList.addUser(user);
-                // change.userList.saveGame();
+                change.userList.saveGame();
                 change.frame.setEnabled(true);
                 change.cardLayout.show(change.contentPane, "menu");
                 saveGame.setVisible(false);

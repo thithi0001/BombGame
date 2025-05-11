@@ -11,14 +11,13 @@ public class Fitness {
         double connectivityScore = evaluateConnectivity(map);
         double wallBalanceScore = evaluateWallBalance(map);
         double safeStartScore = evaluateSafeStart(map);
-        double monsterMobility = evaluateMonsterMobility(map);
         double monsterDistribution = evaluateMonsterDistribution(map);
     
         // Trọng số cho các tiêu chí
-        double w1 = 0.1, w2 = 0.25, w3 = 0.15, w5 = 0.3, w6 = 0.2;
+        double w1 = 0.1, w2 = 0.25, w3 = 0.15, w6 = 0.2;
     
         // Tổng hợp điểm số
-        return 2 *safeStartScore * (w1* blockProbality + w2 * connectivityScore + w3 * wallBalanceScore + w5 * monsterMobility + w6 * monsterDistribution);
+        return 2 *safeStartScore * (w1* blockProbality + w2 * connectivityScore + w3 * wallBalanceScore + w6 * monsterDistribution);
     }
 
     public static double evaluateBlockProbability(int[][] map) {
@@ -156,7 +155,7 @@ public class Fitness {
     private static double evaluateWallBalance(int[][] map) {
         int destroyableCount = 0;
         int emptyCount = 0;
-        double idealRatio = 0.35;
+        double idealRatio = 0.45;
         // Duyệt qua bản đồ để đếm số lượng
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
@@ -203,6 +202,7 @@ public class Fitness {
             if (map[x][y] == 0) { // Ô trống
                 safeCount++;
             } else if (map[x][y] == 3) { // Ô có quái
+                safeCount++;
                 monsterPenalty++;
             }
     
@@ -231,62 +231,6 @@ public class Fitness {
             return score/ (monsterPenalty + 1); 
         }
         return  score;// Tính điểm dựa trên sự chênh lệch
-    }
-    
-    public static double evaluateMonsterMobility(int[][] map) {
-        int rows = map.length;
-        int cols = map[0].length;
-        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};  // Các hướng di chuyển (trái, phải, lên, xuống)
-        
-        boolean[][] visited = new boolean[rows][cols];  // Mảng lưu trạng thái đã thăm
-        double totalFitnessScore = 0.0;
-        int monterZones = 0;
-        // Duyệt qua toàn bộ bản đồ để tìm các ô quái
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (map[i][j] == 3 && !visited[i][j]) {  // Nếu gặp quái và chưa thăm
-                    List<int[]> zone = new ArrayList<>();
-                    Queue<int[]> queue = new LinkedList<>();
-                    queue.add(new int[]{i, j});
-                    visited[i][j] = true;
-                    zone.add(new int[]{i, j});
-                    int monsterCountInZone = 0;
-                    // BFS mở rộng đến các ô trống xung quanh
-                    while (!queue.isEmpty()) {
-                        int[] current = queue.poll();
-                        for (int[] dir : directions) {
-                            int x = current[0] + dir[0];
-                            int y = current[1] + dir[1];
-                            if (x >= 0 && x < rows && y >= 0 && y < cols && !visited[x][y]) {
-                                if (map[x][y] == 0 ) {  // Nếu là ô trống hoặc có quái
-                                    visited[x][y] = true;
-                                    queue.add(new int[]{x, y});
-                                    zone.add(new int[]{x, y});  // Thêm ô vào vùng
-                                }
-                                if(map[x][y] == 3){
-                                    visited[x][y] = true;
-                                    queue.add(new int[]{x, y});
-                                    zone.add(new int[]{x, y});
-                                    monsterCountInZone ++;
-                                }
-                            }
-                        }
-                    }
-                    int zoneSize = zone.size();  // Kích thước của vùng
-                    int idealMonsterCount = zoneSize / 9;
-                    if (zoneSize % 9 != 0) {
-                        idealMonsterCount++;  // Nếu không chia hết, thêm 1 quái vào
-                    }
-                    
-                    // Phạt nếu số quái quá ít hoặc quá nhiều
-                    double fitnessForZone = 1.0 / (1.0 + Math.abs(monsterCountInZone - idealMonsterCount));
-                    totalFitnessScore += fitnessForZone;  // Cộng điểm cho vùng này
-                    // monsterZones.add(zone);  // Thêm vùng mà quái có thể di chuyển vào danh sách
-                    monterZones++;
-                }
-            }
-        }
-        return totalFitnessScore / monterZones;
     }
 
     public static double evaluateMonsterDistribution(int[][] map) {

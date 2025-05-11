@@ -6,9 +6,9 @@ import java.util.List;
 import res.LoadResource;
 
 public class CreateListItem {
-    private static int itemScore = 200;
     private String re ;
-    public CreateListItem(){
+    public CreateListItem(int itemScore){
+        re = "";
         int currentItemScore = 0;
         int sizeOfListItem = 0;
         List<String> listItem = new ArrayList<>();

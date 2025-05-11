@@ -52,7 +52,7 @@ public class UserList {
                     x += a.lvScore[i] + ";";
                 }
                 for (int i = 0; i < a.level; i++) {
-                    x += a.hardLvScore + ";";
+                    x += a.hardLvScore[i] + ";";
                 }
                 writer.write(x + "\n");
             }

@@ -15,10 +15,10 @@ public class PauseDialog extends SuperDialog {
         setTitle("PAUSE");
 
         MyButton resume = new MyButton("resume");
-        resume.addActionListener(_ -> {
-            setVisible(false);
+        resume.addActionListener(_ -> {  
             parent.gamePanel.isPausing = false;
-            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel);
+            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.gamePanel, parent.mode);
+            setVisible(false);
             parent.setVisible(false);
             newParent.setVisible(true);
         });
@@ -29,7 +29,7 @@ public class PauseDialog extends SuperDialog {
             setVisible(false);
             parent.setVisible(false);
             parent.gamePanel.setGameThread(null);
-            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
+            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.mode);
             newParent.setVisible(true);
         });
 

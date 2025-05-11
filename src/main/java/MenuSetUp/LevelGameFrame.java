@@ -8,8 +8,9 @@ public class LevelGameFrame extends JFrame {
     public GamePanel gamePanel;
     public int lv;
     public LevelPanel levelPanel;
+    public String mode;
 
-    public LevelGameFrame(int lv, LevelPanel levelPanel) {
+    public LevelGameFrame(int lv, LevelPanel levelPanel, String mode) {
         new JFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -17,7 +18,8 @@ public class LevelGameFrame extends JFrame {
 
         this.lv = lv;
         this.levelPanel = levelPanel;
-        gamePanel = new GamePanel(mapFileNameToString(lv), this, levelPanel);
+        this.mode = mode;
+        gamePanel = new GamePanel(mapFileNameToString(lv), this, levelPanel, mode);
         add(gamePanel);
         pack();
 
@@ -27,7 +29,7 @@ public class LevelGameFrame extends JFrame {
         gamePanel.startGameThread();
     }
 
-    public LevelGameFrame(int lv, LevelPanel levelPanel, GamePanel oldGamePanel) {
+    public LevelGameFrame(int lv, LevelPanel levelPanel, GamePanel oldGamePanel, String mode) {
         new JFrame();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -35,6 +37,7 @@ public class LevelGameFrame extends JFrame {
 
         this.lv = lv;
         this.levelPanel = levelPanel;
+        this.mode = mode;
         oldGamePanel.setParentFrame(this);
         this.gamePanel = oldGamePanel;
         add(this.gamePanel);

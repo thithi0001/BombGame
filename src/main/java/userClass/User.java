@@ -12,14 +12,14 @@ public class User {
     public User() {
         level = 1;
         lvScore = new int[LoadResource.maxMap];
-        hardLvScore = new int[LoadResource.maxMap + 1];
+        hardLvScore = new int[LoadResource.maxMap];
     }
 
     public User(String userName) {
         this.userName = userName;
         level = 1;
         lvScore = new int[LoadResource.maxMap];
-        hardLvScore = new int[LoadResource.maxMap + 1];
+        hardLvScore = new int[LoadResource.maxMap];
     }
 
     public void setLevel(int lv) {

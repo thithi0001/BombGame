@@ -23,7 +23,7 @@ public class BoombMapGenerator {
         for (int i = 0; i < POPULATION_SIZE; i++) {
             int[][] newMap = randomMap(mapWidth, mapHeight);
             placeMonsters(newMap, monsterCount);
-            if(Fitness.evaluateFitness(newMap) < 0.4){
+            if(Fitness.evaluateFitness(newMap) < 0.7){
                 i--;
                 continue;
             }
@@ -34,7 +34,7 @@ public class BoombMapGenerator {
     
         // Lặp qua các thế hệ
         for (int generation = 0; generation < GENERATIONS; generation++) {
-            // Tính điểm fitnessSystem.out.println("generation "+ generation);
+            // Tính điểm fitness
             List<Double> fitnessScores = new ArrayList<>();
             for (int[][] map : population) {
                 double fitness = Fitness.evaluateFitness(map);
@@ -76,8 +76,7 @@ public class BoombMapGenerator {
             newPopulation.addAll(elites);
             population = newPopulation;
         }
-    
-        StoredMap.saveMap(sortPopulation(population).get(0));;
+        StoredMap.saveMap(sortPopulation(population).get(0));
     }
 
     public int[][] randomMap(int mapWidth, int mapHeight){
@@ -109,7 +108,7 @@ public class BoombMapGenerator {
         while (placedMonsters < monsterCount) {
             int x = rand.nextInt(map.length);
             int y = rand.nextInt(map[0].length);
-            if (map[x][y] == 0 || map[x][y] == 22) {
+            if (map[x][y] == 0 ) {
                 map[x][y] = 3; 
                 placedMonsters++;
             }
@@ -146,14 +145,15 @@ public class BoombMapGenerator {
         // Giao phối: Chọn nửa trên từ parent1, nửa dưới từ parent2
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if(parent1[i][j] == 3 || parent2[i][j] == 3){
-                    offspring[i][j] = 3;
-                    continue;
-                }
                 if (i < rows / 2) {
                     offspring[i][j] = parent1[i][j]; // Nửa trên từ parent1
+                    
                 } else {
                     offspring[i][j] = parent2[i][j]; // Nửa dưới từ parent2
+                    if(parent1[i][j] == 3 || parent2[i][j] == 3){
+                        offspring[i][j] = 3;
+                        continue;
+                    }
                 }
             }
         }
@@ -226,7 +226,7 @@ public class BoombMapGenerator {
         Random rand = new Random();
         int rows = map.length;
         int cols = map[0].length;
-        // Duyệt qua các ô trên bản đồ, bỏ qua tường cố định
+
         for (int i = 1; i < rows - 1; i++) {
             for (int j = 1; j < cols - 1; j++) {
                 if (rand.nextDouble() < MUTATION_RATE) {
@@ -243,6 +243,6 @@ public class BoombMapGenerator {
 
     public static void main(String[] args) {
         BoombMapGenerator a = new BoombMapGenerator();
-        a.generateMap(7, 16, 12);
+        a.generateMap(8, 16, 12);
     }
 }
