@@ -33,7 +33,7 @@ public class StoredMap {
     public  static void saveMap(int[][] map ) {
 
         try {
-            FileWriter writer = new FileWriter(Main.res + "/maps/level_2.txt");
+            FileWriter writer = new FileWriter(Main.res + "/maps/level_4.txt");
             CreateListItem normalListItem = new CreateListItem(200);
             CreateListItem hardListItem = new CreateListItem(150);
             writer.write("grass_2\n");

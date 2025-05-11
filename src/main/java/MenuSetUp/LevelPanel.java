@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 // import javax.swing.SwingConstants;
 
+import AI.MapGenerator.BoombMapGenerator;
 import MenuDialog.RemindDialog;
 import MenuDialog.SettingDialog;
 import main.Main;
@@ -100,7 +101,11 @@ public class LevelPanel extends JPanel {
             MyButton[] lv = new MyButton[2];
             if(user.getLevel() > i ){
                 lv[0] = new MyButton("normal");
-                if(user.getScoreLv(i+1) > 0) lv[1] = new MyButton("hard");// đã vượt qua màn dễ
+                if(user.getScoreLv(i+1) > 0) {// đã vượt qua màn dễ
+                    if(i == LoadResource.maxMap - 2) lv[1] = new MyButton("DLevel");
+                    else lv[1] = new MyButton("hard");
+                }
+                
                 else lv[1] = new MyButton("DLevelLocked");
             }
             else{
@@ -128,9 +133,18 @@ public class LevelPanel extends JPanel {
                     change.frame.setVisible(false);
                 });
                 levelButton.get(i)[1].addActionListener(_ -> {
-                    LevelGameFrame lv = new LevelGameFrame(a, this, "hard");
-                    lv.setVisible(true);
+                    if(a == 3){
+                        BoombMapGenerator AIMap = new BoombMapGenerator();
+                        AIMap.generateMap(10,16,12);
+                        LevelGameFrame lv = new LevelGameFrame(a + 1, this, "hard");
+                        lv.setVisible(true);
+                    }
+                    else {
+                        LevelGameFrame lv = new LevelGameFrame(a, this, "hard");
+                        lv.setVisible(true);
+                    }
                     change.frame.setVisible(false);
+                    
                 });
             }
         }
