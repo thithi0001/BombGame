@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Monster extends Entity {
+    enum MonsterState {
+    IDLE, PATROL, PURSUE, FLEE
+    }
+    private MonsterState currentState = MonsterState.IDLE;
+    private final int maxIdleTime = UtilityTool.convertTime(3.0f);
+    private int idleCounter = 0;
 
     Random random;
 
@@ -28,6 +34,8 @@ public class Monster extends Entity {
     private int pathIndex;
     private final int recalculatePathTime = UtilityTool.convertTime(0.5f);
 
+    private int timer = recalculatePathTime;
+
     public Monster(GamePanel gp, int x, int y) {
         this.gp = gp;
         this.name = "monster";
@@ -37,15 +45,23 @@ public class Monster extends Entity {
 
         setDefaultValues();
         getMonsterImage();
+        initAI();
         System.out.println(getPosition());
     }
 
     public void initAI() {
+            if (gp == null || gp.player == null) {
+        System.out.println("Chưa thể khởi tạo AI: player hoặc gamePanel null.");
+        return;
+    }
 
         crossLoS = new CrossLoS(gp, this, gp.player, 5);
         crossLoS.update();
         pathFinder = new DStartLite(gp, this, gp.player);
         currentPath = pathFinder.findPath();
+ //       currentPath = new ArrayList<>();
+       if (currentPath == null) currentPath = new ArrayList<>();
+
         pathIndex = 0;
     }
 
@@ -84,36 +100,142 @@ public class Monster extends Entity {
         }
 
         // logic game
-        gp.cChecker.checkTile(this);// khong can
-        gp.cChecker.checkBombForEntity(this);// khong can
+        gp.cChecker.checkTile(this);
+        gp.cChecker.checkBombForEntity(this);
         gp.cChecker.checkPlayerForMonster(this);
 
+    // Cập nhật AI một lần ở đây
+    if (pathFinder != null) { // Kiểm tra null phòng trường hợp initAI chưa được gọi
+        ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
+        ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
+        pathFinder.updateObstacles(removed, added);
+    }
+    if (crossLoS != null) {
+        crossLoS.update();
+    }
+
+
+
+//        move2();
+//        move();
+
+//       crossLoS.update();
+
+        switch (currentState) {
+            case IDLE -> handleIdle();
+            case PATROL -> handlePatrol();
+            case PURSUE -> handlePursue();
+            case FLEE -> handleFlee();
+        }
+        updateAnimation();
+
+    }
+
+    private void handleIdle() {
+        idleCounter++;
+        if (idleCounter >= maxIdleTime) {
+            idleCounter = 0;
+            currentState = MonsterState.PATROL;
+        }
+
+
+        if (crossLoS.isVisible()) {
+            currentState = MonsterState.PURSUE;
+        }
+    }
+
+
+    private void handlePatrol() {
+        if (random.nextInt(100) < changeDirection) {
+            randomMove();
+        }
+        move();
+//	    crossLoS.update();
+
+
+        if (crossLoS.isVisible()) {
+            currentState = MonsterState.PURSUE;
+        }
+    }
+
+
+    private void handlePursue() {
         ArrayList<Point> removed = gp.map.getNewlyRemovedObstacles();
         ArrayList<Point> added = gp.map.getNewlyAddedObstacles();
         pathFinder.updateObstacles(removed, added);
 
+
         if (timer > 0) {
             timer--;
         } else {
-            timer = recalculatePathTime;
-            recalculatePath();
+            timer = recalculatePathTime; // Reset timer
+
+            if (pathFinder != null && gp != null && gp.player != null) { // Đảm bảo các đối tượng cần thiết không null
+                Point playerPos = pathFinder.getTargetPosition(); // Giả định getTargetPosition() lấy vị trí người chơi
+
+                if (playerPos != null) { // Đảm bảo vị trí người chơi không null
+                    // Kiểm tra xem mục tiêu hiện tại có phải là người chơi không, hoặc chưa có mục tiêu
+                    if (pathFinder.getGoal() == null || !pathFinder.getGoal().equals(playerPos)) {
+                        pathFinder.setNewGoal(playerPos);
+                        currentPath = pathFinder.findPath();
+
+                        if (currentPath == null) { 
+                            currentPath = new ArrayList<>(); // Tạo một danh sách rỗng để tránh NullPointerException
+                            // chuyển sang trạng thái IDLE hoặc PATROL nếu không tìm thấy đường
+                            currentState = MonsterState.IDLE;
+                            // System.out.println(name + ": Không tìm thấy đường đến người chơi, chuyển sang IDLE.");
+                        }
+                        pathIndex = 0; // Bắt đầu từ đầu đường đi mới
+                    }
+                } else {
+                    //System.out.println(name + ": Không lấy được vị trí người chơi trong handlePursue.");
+                    // Nếu không có vị trí người chơi, có thể chuyển sang IDLE hoặc PATROL
+                    currentState = MonsterState.IDLE;
+                }
+            }
         }
 
+
         move2();
-//        move();
+//	    crossLoS.update();
 
-        crossLoS.update();
 
+        if (!crossLoS.isVisible()) {
+            currentState = MonsterState.IDLE;
+        }
+
+
+        if (getHp() < getMaxHp() / 2) {
+            currentState = MonsterState.FLEE;
+        }
+    }
+
+
+    private void handleFlee() {
+        Point fleePoint = pathFinder.fleeingPoint();
+        pathFinder.setNewGoal(fleePoint);
+        currentPath = pathFinder.findPath();
+        pathIndex = 0;
+
+
+        move2();
+//	      crossLoS.update();
+
+
+        if (getHp() < getMaxHp() / 2) {
+            currentState = MonsterState.FLEE;
+        }
+    }
+
+
+    private void updateAnimation() {
         if (++spriteCounter > spriteTime) {
-
             if (moved) spriteNum++;
-            if (spriteNum == sprites.length) {
-
-                spriteNum = 0;
-            }
+            if (spriteNum >= sprites.length) spriteNum = 0;
             spriteCounter = 0;
         }
     }
+
 
     void randomMove() {
         // tuong duong voi setDirection
@@ -281,5 +403,4 @@ public class Monster extends Entity {
         }
     }
 }
-
 
