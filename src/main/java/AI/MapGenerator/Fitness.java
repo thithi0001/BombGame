@@ -14,7 +14,7 @@ public class Fitness {
         double monsterDistribution = evaluateMonsterDistribution(map);
     
         // Trọng số cho các tiêu chí
-        double w1 = 0.1, w2 = 0.25, w3 = 0.15, w6 = 0.2;
+        double w1 = 0.1, w2 = 0.25, w3 = 0.15, w6 = 0.5;
     
         // Tổng hợp điểm số
         return 2 *safeStartScore * (w1* blockProbality + w2 * connectivityScore + w3 * wallBalanceScore + w6 * monsterDistribution);
@@ -174,7 +174,7 @@ public class Fitness {
     }
     
 
-    private static double evaluateSafeStart(int[][] map) {
+    public static double evaluateSafeStart(int[][] map) {
         int rows = map.length;
         int cols = map[0].length;
         
@@ -188,8 +188,7 @@ public class Fitness {
         queue.add(new int[]{1, 1});  // Bắt đầu từ ô (1,1)
         visited[1][1] = true;
     
-        int safeCount = 0;
-        int monsterPenalty = 0;
+        int safeCount = 1;
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     
         // BFS để tìm tất cả các ô trống liên kết với ô (1,1)
@@ -201,35 +200,27 @@ public class Fitness {
             // Kiểm tra ô hiện tại
             if (map[x][y] == 0) { // Ô trống
                 safeCount++;
-            } else if (map[x][y] == 3) { // Ô có quái
-                safeCount++;
-                monsterPenalty++;
             }
-    
             // Thêm các ô lân cận vào queue nếu chúng là ô trống và chưa được thăm
             for (int[] dir : directions) {
                 int nx = x + dir[0];
                 int ny = y + dir[1];
     
                 // Kiểm tra tính hợp lệ của ô (nx, ny)
-                if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && !visited[nx][ny] && map[nx][ny] == 0) {
+                if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && !visited[nx][ny]) {
                     visited[nx][ny] = true;
-                    queue.add(new int[]{nx, ny});
+                    if (map[nx][ny] == 3) {
+                        return 0; // Nếu ô có quái, trả về điểm 0 ngay lập tức
+                    } else if (map[nx][ny] == 0) {
+                        queue.add(new int[]{nx, ny});
+                    }
                 }
             }
         }
     
-        
-        
-    
         // Tính điểm dựa trên số lượng ô trống trong khu vực bắt đầu
         double idealSafeCount = 4; // Mục tiêu lý tưởng là 4 ô trống
         double score = 1.0 / (1.0 + Math.abs(safeCount - idealSafeCount));
-
-        // Nếu có quái trong khu vực bắt đầu, điểm sẽ được chia cho số (quái + 1)
-        if (monsterPenalty > 0) {
-            return score/ (monsterPenalty + 1); 
-        }
         return  score;// Tính điểm dựa trên sự chênh lệch
     }
 
