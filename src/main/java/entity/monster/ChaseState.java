@@ -15,7 +15,7 @@ public class ChaseState implements MonsterState {
 
     @Override
     public void updateState(Monster monster) {
-        if (!monster.getCrossLoS().isVisible()) {
+        if (monster.getCurrentPath().size() == 1) {
             monster.setState(new PatrolState());
         } else if (monster.getHp() <= monster.getLowHpThreshold()) {
             monster.setState(new FleeState());
