@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 // import javax.swing.SwingConstants;
 
+import AI.MapGenerator.BoombMapGenerator;
 import MenuDialog.RemindDialog;
 import MenuDialog.SettingDialog;
 import main.Main;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.awt.Insets;
 // import java.awt.List;
 import java.util.ArrayList;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 // import java.awt.Dimension;
 // import java.awt.Font;
@@ -94,13 +94,18 @@ public class LevelPanel extends JPanel {
         for (int i = 0; i < LoadResource.maxMap - 1; i++) {
             gbc.gridx = i % 4; // Cột
             gbc.gridy = i / 4; // Hàng
-            smallLevel[i] = new BackGroundPanel(Main.res + "/button/level1.png");   
+            String x = Main.res + "/button/level" +(i+1)+".png";
+            smallLevel[i] = new BackGroundPanel(x);   
             smallLevel[i].setLayout(null);
             smallLevel[i].setPreferredSize(new Dimension(150, 150));
             MyButton[] lv = new MyButton[2];
             if(user.getLevel() > i ){
                 lv[0] = new MyButton("normal");
-                if(user.getScoreLv(i+1) > 0) lv[1] = new MyButton("hard");// đã vượt qua màn dễ
+                if(user.getScoreLv(i+1) > 0) {// đã vượt qua màn dễ
+                    if(i == LoadResource.maxMap - 2) lv[1] = new MyButton("DLevel");
+                    else lv[1] = new MyButton("hard");
+                }
+                
                 else lv[1] = new MyButton("DLevelLocked");
             }
             else{
@@ -123,9 +128,23 @@ public class LevelPanel extends JPanel {
             int a = i + 1;
             if (i < user.getLevel()) {
                 levelButton.get(i)[0].addActionListener(_ -> {
-                    LevelGameFrame lv = new LevelGameFrame(a, this);
+                    LevelGameFrame lv = new LevelGameFrame(a, this, "normal");
                     lv.setVisible(true);
                     change.frame.setVisible(false);
+                });
+                levelButton.get(i)[1].addActionListener(_ -> {
+                    if(a == 3){
+                        BoombMapGenerator AIMap = new BoombMapGenerator();
+                        AIMap.generateMap(10,16,12);
+                        LevelGameFrame lv = new LevelGameFrame(a + 1, this, "hard");
+                        lv.setVisible(true);
+                    }
+                    else {
+                        LevelGameFrame lv = new LevelGameFrame(a, this, "hard");
+                        lv.setVisible(true);
+                    }
+                    change.frame.setVisible(false);
+                    
                 });
             }
         }
@@ -194,7 +213,7 @@ public class LevelPanel extends JPanel {
             //saveGame ok button
             saveGame.okButton.addActionListener(_ -> {
                 change.userList.addUser(user);
-                // change.userList.saveGame();
+                change.userList.saveGame();
                 change.frame.setEnabled(true);
                 change.cardLayout.show(change.contentPane, "menu");
                 saveGame.setVisible(false);

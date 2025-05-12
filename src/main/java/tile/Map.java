@@ -32,15 +32,19 @@ public class Map {
     public ArrayList<Monster> monsters = new ArrayList<>();
     ArrayList<Point> monsterSpawnPos = new ArrayList<>();
 
+    String mode;
+    int normalNumMonsters;
+
     public Point checkPos = new Point();
     String baseTile;
     int baseIndex;
     public int destructibleTiles;
 
-    public Map(GamePanel gp, String mapFileName) {
+    public Map(GamePanel gp, String mapFileName, String mode) {
 
         this.gp = gp;
         this.mapFileName = mapFileName;
+        this.mode = mode;
         mapTileNum = new int[maxScreenCol][maxScreenRow];
 
         loadMap(Main.res + "/maps/" + mapFileName + ".txt");
@@ -143,8 +147,9 @@ public class Map {
 
     void getMonsterPos(String[] arr) {
         String[] pos;
-        for (String str : arr) {
-            pos = str.split(",");
+        int size = (mode.equals("hard"))? arr.length : normalNumMonsters;
+        for (int i = 0; i < size; i++) {
+            pos = arr[i].split(",");
             monsterSpawnPos.add(new Point(Integer.parseInt(pos[1]),
                     Integer.parseInt(pos[0])));
         }
@@ -163,15 +168,19 @@ public class Map {
             baseTile = br.readLine();
             baseIndex = findBaseIndex();
             // get items' position
-            String[] itemList = br.readLine().split(";");
+            String[] normalItemList = br.readLine().split(";");
+            String[] hardItemList = br.readLine().split(";");
             // get monsters' position
-            getMonsterPos(br.readLine().split(";"));
+            String[] monsterList = br.readLine().split(";");
+            normalNumMonsters = Integer.parseInt(br.readLine());
+            getMonsterPos(monsterList);
             // get checkPoint's position
             String[] point = br.readLine().split(",");
             checkPos.x = Integer.parseInt(point[1]);
             checkPos.y = Integer.parseInt(point[0]);
             // get item's quantity
             String[] tmp;
+            String[] itemList = (mode.equals("hard"))? hardItemList : normalItemList;
             int quantity;
             for (String item : itemList) {
                 tmp = item.split(" ");

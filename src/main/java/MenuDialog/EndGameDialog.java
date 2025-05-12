@@ -10,20 +10,17 @@ import main.GamePanel;
 import res.LoadResource;
 
 public class EndGameDialog extends SuperDialog {
-    MyButton next, restart, quit;
+    MyButton restart, quit;
 
     public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change) {
         super(parent);
         setTitle(title);
         parent.gamePanel.setGameThread(null);
-
-        setNextBtn(parent);
+        
         setRestartBtn(parent);
         setQuitBtn(parent, change);
 
-        if (title.equals("YOU WIN") && parent.lv < LoadResource.maxMap)
-            addButton(restart, quit, next);
-        else addButton(restart, quit);
+       addButton(restart, quit);
 
         String b = String.format("%2d", score);
 
@@ -44,13 +41,11 @@ public class EndGameDialog extends SuperDialog {
         setTitle(title);
         parent.gamePanel.setGameThread(null);
 
-        setNextBtn(parent);
+        // setNextBtn(parent);
         setRestartBtn(parent);
         setQuitBtn(parent, change);
 
-        if (title.equals("YOU WIN") && parent.lv < LoadResource.maxMap)
-            addButton(restart, quit, next);
-        else addButton(restart, quit);
+        addButton(restart, quit);
 
         String b = String.format("%2d", score);
 
@@ -60,21 +55,12 @@ public class EndGameDialog extends SuperDialog {
         setBackground();
     }
 
-    void setNextBtn(LevelGameFrame parent) {
-        next = new MyButton("next");
-        next.addActionListener(_ -> {
-            LevelGameFrame nextLevel = new LevelGameFrame(parent.lv + 1, parent.levelPanel);
-            parent.setVisible(false);
-            nextLevel.setVisible(true);
-        });
-    }
-
     void setRestartBtn(LevelGameFrame parent) {
         restart = new MyButton("restart");
         restart.addActionListener(_ -> {
             setVisible(false);
             parent.setVisible(false);
-            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel);
+            LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.mode);
             newParent.setVisible(true);
         });
     }
@@ -84,6 +70,8 @@ public class EndGameDialog extends SuperDialog {
         quit.addActionListener(_ -> {
             parent.setVisible(false);
             change.frame.setVisible(true);
+            parent.levelPanel.addButton(parent.levelPanel.user, parent.levelPanel.levelButtonPanel);
+            parent.levelPanel.actionLevelButton();
         });
     }
 

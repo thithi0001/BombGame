@@ -14,6 +14,8 @@ public class BackGroundPanel extends JPanel {
     public BackGroundPanel(String imagePath){
         try {
             backgroundImage = ImageIO.read(new File(imagePath));
+            width = backgroundImage.getWidth();
+            height = backgroundImage.getHeight();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Không thể tải hình nền từ đường dẫn: " + imagePath);
@@ -24,7 +26,7 @@ public class BackGroundPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, 150, 150, this);
+            g.drawImage(backgroundImage, 0, 0, width, height, this);
         }
     }
 }

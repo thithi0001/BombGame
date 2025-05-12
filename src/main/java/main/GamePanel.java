@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
 import MenuDialog.EndGameDialog;
@@ -15,7 +13,6 @@ import MenuSetUp.LevelGameFrame;
 import MenuSetUp.LevelPanel;
 import MenuSetUp.MyButton;
 
-import bomb.Bomb;
 import entity.Player;
 import res.LoadResource;
 import tile.Map;
@@ -44,27 +41,28 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     public Player player;
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public String mode;
 //    ArrayList<Bomb> bombs = new ArrayList<>();// all bombs in the map
 
-    public GamePanel(String mapFileName) {
+    public GamePanel(String mapFileName, String mode) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
-
-        this.map = new Map(this, mapFileName);
+        this.mode = mode;
+        this.map = new Map(this, mapFileName, mode);
         this.player = new Player(this, keyH);
         this.setLayout(null);
         addButton();
     }
 
-    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level) {
+    public GamePanel(String mapFileName, LevelGameFrame parent, LevelPanel level, String mode) {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);// this can be focused to receive key input
-
-        this.map = new Map(this, mapFileName);
+        this.mode = mode;
+        this.map = new Map(this, mapFileName, mode);
         this.player = new Player(this, keyH);
 
         this.parent = parent;
@@ -93,14 +91,16 @@ public class GamePanel extends JPanel implements Runnable {
         switch (result) {
             case "win":
                 // UNLOCK NEW LEVEL
-                if (levelPanel.user.getLevel() < 3) {
+                
+                if (levelPanel.user.getLevel() < LoadResource.maxMap - 1) {
                     levelPanel.user.setLevel(parent.lv + 1);
-                    levelPanel.user.setScore(parent.lv, player.score);
-                    levelPanel.resetLevelPanel(levelPanel.user, levelPanel.levelButtonPanel);
-                    levelPanel.actionLevelButton();
                 }
+                if(mode.equals("hard"))
+                    levelPanel.user.sethardLvScore(parent.lv, player.score);
+                else levelPanel.user.setScore(parent.lv, player.score);  
+                // levelPanel.resetLevelPanel(levelPanel.user, levelPanel.levelButtonPanel);
+                // levelPanel.actionLevelButton();
                 // READ SCORE
-                levelPanel.user.setScore(parent.lv, player.score);
                 EndGameDialog winDialog = new EndGameDialog("YOU WIN", parent, player.score, clock.toString(), levelPanel.change);
                 winDialog.setVisible(true);
                 break;

@@ -47,27 +47,27 @@ public class ChangePanel {
 
     public void actionChange() {
         // SET UP HOME PANEL BUTTON
-        home.start.addActionListener((e) -> cardLayout.next(contentPane));
-        home.quit.addActionListener((e) -> {
+        home.start.addActionListener(_ -> cardLayout.next(contentPane));
+        home.quit.addActionListener(_ -> {
             RemindDialog a = new RemindDialog(frame, "exit Game ");
             a.setVisible(true);
             frame.setEnabled(false);
             //SET UP BUTTON FOR RemindDialog
-            a.okButton.addActionListener(event -> {
+            a.okButton.addActionListener(_ -> {
                 userList.saveGame();
                 System.exit(0);
             });
-            a.noButton.addActionListener(event -> {
+            a.noButton.addActionListener(_ -> {
                 frame.setEnabled(true);
                 a.setVisible(false);
             });
         });
-        home.instruction.addActionListener((e) -> {
+        home.instruction.addActionListener(_ -> {
             frame.setEnabled(false);
             InstructionDialog a = new InstructionDialog(frame);
             a.setVisible(true);
         });
-        home.credits.addActionListener((e) -> {
+        home.credits.addActionListener(_ -> {
             frame.setEnabled(false);
             CreditDialog a = new CreditDialog(frame);
             a.setVisible(true);
@@ -75,7 +75,7 @@ public class ChangePanel {
 
         //SET UP MENU PANEL BUTTON
         ReplaceDialog replace = new ReplaceDialog(frame);
-        menu.newGame.addActionListener(event -> {
+        menu.newGame.addActionListener(_ -> {
             NewGameDialog newUser = new NewGameDialog(frame);
             frame.setEnabled(false);
             newUser.setVisible(true);
@@ -84,7 +84,7 @@ public class ChangePanel {
             newUserAction NA = new newUserAction(newUser, this, replace);
             newUser.okButton.addActionListener(NA);
             newUser.textField.addActionListener(NA);
-            newUser.cancelButton.addActionListener(e -> {
+            newUser.cancelButton.addActionListener(_ -> {
                 frame.setEnabled(true);
                 newUser.setVisible(false);
                 newUser.textField.setText("");
@@ -92,30 +92,30 @@ public class ChangePanel {
 
             //SET UP DIALOG REPLACE IF USER HAS EXISTED
             replace.okButton.addActionListener(new replaceAction(newUser, this, replace));
-            replace.cancelButton.addActionListener(e -> {
+            replace.cancelButton.addActionListener(_ -> {
                 newUser.setEnabled(true);
                 replace.setVisible(false);
             });
         });
 
-        menu.continueButton.addActionListener(e -> {
+        menu.continueButton.addActionListener(_ -> {
             frame.setEnabled(false);
             ContinueDialog dialog = new ContinueDialog(frame, this);
             dialog.setVisible(true);
         });
 
-        menu.score.addActionListener(e -> {
+        menu.score.addActionListener(_ -> {
             frame.setEnabled(false);
             HighScoreDialog highScore = new HighScoreDialog(frame, userList);
             highScore.setVisible(true);
         });
 
-        menu.back.addActionListener(e -> cardLayout.previous(contentPane));
-        menu.setting.addActionListener(e -> {
+        menu.back.addActionListener(_ -> cardLayout.previous(contentPane));
+        menu.setting.addActionListener(_ -> {
             frame.setEnabled(false);
             SettingDialog settingDialog = new SettingDialog(frame, this);
             settingDialog.setVisible(true);
-            settingDialog.back.addActionListener(event -> frame.setEnabled(true));
+            settingDialog.back.addActionListener(_ -> frame.setEnabled(true));
         });
 
     }
@@ -141,7 +141,7 @@ class newUserAction implements ActionListener {
             NoticeDialog note = new NoticeDialog(change.frame);
             newUser.setEnabled(false);
             note.setVisible(true);
-            note.okButton.addActionListener(event -> {
+            note.okButton.addActionListener(_ -> {
                 newUser.setEnabled(true);
                 note.setVisible(false);
             });

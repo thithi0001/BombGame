@@ -194,6 +194,10 @@ public class CollisionChecker {
                     player.setHasGlove();
                     break;
 
+                case "heart":
+                    player.increaseHp();
+                    break;
+
                 default:
                     break;
             }

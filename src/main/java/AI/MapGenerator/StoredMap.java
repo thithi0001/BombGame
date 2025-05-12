@@ -33,11 +33,12 @@ public class StoredMap {
     public  static void saveMap(int[][] map ) {
 
         try {
-            FileWriter writer = new FileWriter(Main.res + "/maps/levelRandom.txt");
-            CreateListItem listItem = new CreateListItem();
+            FileWriter writer = new FileWriter(Main.res + "/maps/level_4.txt");
+            CreateListItem normalListItem = new CreateListItem(200);
+            CreateListItem hardListItem = new CreateListItem(150);
             writer.write("grass_2\n");
-            writer.write(listItem.getRe() +"\n");
-
+            writer.write(normalListItem.getRe() +"\n");
+            writer.write(hardListItem.getRe() +"\n");
             List<int[]> monterList = new ArrayList<>();
             String stringMap = new String();
             for(int i = 0; i < map.length; i++ ){
@@ -54,6 +55,7 @@ public class StoredMap {
             }
             
             writer.write(toStringMonsterList(monterList)+ "\n");
+            writer.write(monterList.size() * 6 / 10 + "\n");//số quái ở map dễ bằng 60% map khó.
             writer.write("1,1");
             writer.write(stringMap);
             writer.close();
