@@ -14,6 +14,8 @@ public class KeyHandler implements KeyListener {
 
     public boolean enterPressed;
     public boolean activateBomb, useGlove, kickBomb;
+    public boolean activateSkill;
+
     public boolean gizmoOn = false;
 
     @Override
@@ -61,6 +63,10 @@ public class KeyHandler implements KeyListener {
 
             case KeyEvent.VK_BACK_SLASH:
                 kickBomb = true;
+                break;
+
+            case KeyEvent.VK_F:
+                activateSkill = true;
                 break;
         }
 
@@ -112,6 +118,10 @@ public class KeyHandler implements KeyListener {
 
             case KeyEvent.VK_E:
                 gizmoOn = !gizmoOn;
+                break;
+
+            case KeyEvent.VK_F:
+                activateSkill = false;
                 break;
         }
 
