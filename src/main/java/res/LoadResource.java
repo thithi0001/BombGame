@@ -36,6 +36,7 @@ public class LoadResource {
     public static Font panelTitle = new Font("Courier New", Font.BOLD, 38);
     public static Font settingContent = new Font("Courier New", Font.ITALIC, 16);
     public static Font gameStatus = new Font("Consolas", Font.BOLD, 20);
+    public static Font monsterStatus = new Font("Consolas", Font.BOLD, 10);
 
     // color
     public static Color statusBg = new Color(255, 255, 255, 100);
