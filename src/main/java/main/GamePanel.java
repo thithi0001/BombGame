@@ -87,21 +87,25 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     void endGame(String result) {
-
+        parent.setEnabled(false);
         switch (result) {
             case "win":
                 // UNLOCK NEW LEVEL
                 
                 if (levelPanel.user.getLevel() < LoadResource.maxMap - 1) {
                     levelPanel.user.setLevel(parent.lv + 1);
+                    if(mode.equals("hard"))
+                        levelPanel.user.sethardLvScore(parent.lv, player.score);
+                    else 
+                        levelPanel.user.setScore(parent.lv, player.score);  
+                    levelPanel.addButton(levelPanel.user,levelPanel.levelButtonPanel);
                 }
                 if(mode.equals("hard"))
                     levelPanel.user.sethardLvScore(parent.lv, player.score);
                 else levelPanel.user.setScore(parent.lv, player.score);  
-                // levelPanel.resetLevelPanel(levelPanel.user, levelPanel.levelButtonPanel);
-                // levelPanel.actionLevelButton();
+                
                 // READ SCORE
-                EndGameDialog winDialog = new EndGameDialog("YOU WIN", parent, player.score, clock.toString(), levelPanel.change);
+                EndGameDialog winDialog = new EndGameDialog("YOU WIN", parent, player.score, clock.toString());
                 winDialog.setVisible(true);
                 break;
 
@@ -112,7 +116,6 @@ public class GamePanel extends JPanel implements Runnable {
 
             case "uncompleted":
                 isPausing = true;
-                parent.setEnabled(false);
                 PauseDialog pauseDialog = new PauseDialog(parent);
                 pauseDialog.setVisible(true);
                 break;

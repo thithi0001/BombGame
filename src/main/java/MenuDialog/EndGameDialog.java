@@ -12,15 +12,15 @@ import res.LoadResource;
 public class EndGameDialog extends SuperDialog {
     MyButton restart, quit;
 
-    public EndGameDialog(String title, LevelGameFrame parent, int score, String time, ChangePanel change) {
+    public EndGameDialog(String title, LevelGameFrame parent, int score, String time) {
         super(parent);
         setTitle(title);
         parent.gamePanel.setGameThread(null);
         
         setRestartBtn(parent);
-        setQuitBtn(parent, change);
+        setQuitBtn(parent, parent.levelPanel.change);
 
-       addButton(restart, quit);
+        addButton(restart, quit);
 
         String b = String.format("%2d", score);
 
@@ -60,6 +60,7 @@ public class EndGameDialog extends SuperDialog {
         restart.addActionListener(_ -> {
             setVisible(false);
             parent.setVisible(false);
+            parent.gamePanel.setGameThread(null);
             LevelGameFrame newParent = new LevelGameFrame(parent.lv, parent.levelPanel, parent.mode);
             newParent.setVisible(true);
         });
@@ -68,10 +69,11 @@ public class EndGameDialog extends SuperDialog {
     void setQuitBtn(LevelGameFrame parent, ChangePanel change) {
         quit = new MyButton("level");
         quit.addActionListener(_ -> {
+            
+            parent.gamePanel.setGameThread(null);
+            parent.levelPanel.change.frame.setVisible(true);
+            parent.levelPanel.change.frame.setEnabled(true);    
             parent.setVisible(false);
-            change.frame.setVisible(true);
-            parent.levelPanel.addButton(parent.levelPanel.user, parent.levelPanel.levelButtonPanel);
-            parent.levelPanel.actionLevelButton();
         });
     }
 
