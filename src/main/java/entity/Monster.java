@@ -11,6 +11,7 @@ import static MenuSetUp.DimensionSize.tileSize;
 import static MenuSetUp.DimensionSize.maxScreenCol;
 import static MenuSetUp.DimensionSize.maxScreenRow;
 import static entity.Direction.*;
+import static res.LoadResource.monsterStatus;
 //import static entity.EntityState.*;
 
 import java.awt.*;
@@ -392,6 +393,17 @@ public class Monster extends Entity {
         if (isAlive) {
             g2.drawImage(sprites[spriteNum], x, y, null);
             drawEffect(g2);
+            drawState(g2);
         }
+    }
+
+    public void drawState(Graphics2D g2) {
+        g2.setColor(Color.WHITE);
+        g2.fillRect(x, y - 16, tileSize + 24, 16);
+        g2.setColor(Color.BLACK);
+        g2.setFont(monsterStatus);
+        g2.drawImage(LoadResource.itemImgMap.get("heart"), x, y - 16, 16, 16, null);
+        g2.drawString("x" + getHp(), x + 16, y - 8);
+        g2.drawString(currentState.getName(), x + 32, y - 8);
     }
 }
