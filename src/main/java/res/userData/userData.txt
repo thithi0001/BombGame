@@ -8,4 +8,4 @@ heo;1;0;0;
 quang;1;0;0;
 Lan;1;0;0;
 quandeptrai;1;0;0;
-QUANG;1;0;0;
+QUANG;2;640;0;0;0;

@@ -27,7 +27,7 @@ public class LevelPanel extends JPanel {
     MyButton skin;
     public User user;
     MyButton[] level = new MyButton[LoadResource.maxMap];
-    List<MyButton[]> levelButton = new ArrayList<>();
+    public List<MyButton[]> levelButton = new ArrayList<>();
     public JPanel levelButtonPanel;
     public ChangePanel change;
 
@@ -43,7 +43,6 @@ public class LevelPanel extends JPanel {
         levelButtonPanel = new JPanel();
         addButton(user, levelButtonPanel);
         add(levelButtonPanel);
-        actionLevelButton();
 
         //back button
         back = new MyButton("back");
@@ -80,6 +79,8 @@ public class LevelPanel extends JPanel {
     }
 
     public void addButton(User a, JPanel levelButtonPanel){
+        levelButton = new ArrayList<>();
+        levelButtonPanel.removeAll();
         levelButtonPanel.setLayout(new GridBagLayout());
         levelButtonPanel.setLocation(50, 150);
         levelButtonPanel.setSize(DimensionSize.screenWidth - 100, DimensionSize.screenHeight - 250);
@@ -121,18 +122,21 @@ public class LevelPanel extends JPanel {
         }
         levelButtonPanel.revalidate();
         levelButtonPanel.repaint();
-        // gbc.insets = new Insets(20, 20, 20, 20); // Khoảng cách giữa các nút
+        actionLevelButton();
     }
     public void actionLevelButton() {
         for (int i = 0; i < LoadResource.maxMap - 1; i++) {
             int a = i + 1;
+            
             if (i < user.getLevel()) {
+
                 levelButton.get(i)[0].addActionListener(_ -> {
+                    change.frame.setVisible(false);   
                     LevelGameFrame lv = new LevelGameFrame(a, this, "normal");
                     lv.setVisible(true);
-                    change.frame.setVisible(false);
+                    
                 });
-                levelButton.get(i)[1].addActionListener(_ -> {
+                levelButton.get(i)[1].addActionListener(_ -> {  
                     if(a == 3){
                         BoombMapGenerator AIMap = new BoombMapGenerator();
                         AIMap.generateMap(10,16,12);
@@ -143,8 +147,7 @@ public class LevelPanel extends JPanel {
                         LevelGameFrame lv = new LevelGameFrame(a, this, "hard");
                         lv.setVisible(true);
                     }
-                    change.frame.setVisible(false);
-                    
+                    change.frame.setVisible(false);   
                 });
             }
         }
@@ -195,15 +198,6 @@ public class LevelPanel extends JPanel {
     //         }
     //     }
     // }
-
-    public void resetLevelPanel(User a, JPanel levelButtonPanel) {
-        levelButtonPanel.removeAll();
-        //add new button
-        addButton(a, levelButtonPanel);
-
-        //add action for new button
-        actionLevelButton();
-    }
 
     void addActionBackButton() {
         back.addActionListener(_ -> {
