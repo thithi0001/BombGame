@@ -7,33 +7,25 @@ import java.util.Queue;
 
 public class Fitness {
     public static double evaluateFitness(int[][] map) {
-        double blockProbality = evaluateBlockProbability(map);
+        double blockProbality = evaluateBlocksDistribution(map);
         double connectivityScore = evaluateConnectivity(map);
-        double wallBalanceScore = evaluateWallBalance(map);
-        double safeStartScore = evaluateSafeStart(map);
+        double blocksRatioScore = evaluateBlocksRatio(map);
         double monsterDistribution = evaluateMonsterDistribution(map);
+        double safeStartScore = evaluateSafeStart(map);
     
-        // Trọng số cho các tiêu chí
-        double w1 = 0.1, w2 = 0.25, w3 = 0.15, w6 = 0.5;
+        double w1 = 0.1, w3 = 0.15, w4 = 0.5;
     
-        // Tổng hợp điểm số
-        return 2 *safeStartScore * (w1* blockProbality + w2 * connectivityScore + w3 * wallBalanceScore + w6 * monsterDistribution);
+        return 2 *safeStartScore * connectivityScore * (w1* blockProbality + w3 * blocksRatioScore + w4 * monsterDistribution);
     }
 
-    public static double evaluateBlockProbability(int[][] map) {
+    public static double evaluateBlocksDistribution(int[][] map) {
         int mapHeight = map.length;
         int mapWidth = map[0].length;
     
-        // Biến tổng hợp
-        double groupBalanceScore = 0; // Điểm cho sự phân bố nhóm tường phá hủy
-        
-        int groupCount = 0;   // Số nhóm ô phá hủy
-        int totalGroupCells = 0;   // Tổng số ô thuộc nhóm tường phá hủy
-        
-        // Duyệt qua tất cả các ô trên bản đồ để tìm nhóm tường phá hủy
+        int groupCount = 0; 
+        List<List<int[]>> groups = new ArrayList<>();
+
         boolean[][] visited = new boolean[mapHeight][mapWidth];
-        
-        // Dùng DFS hoặc BFS để tìm các nhóm liên tiếp của ô phá hủy
         for (int i = 0; i < mapHeight; i++) {
             for (int j = 0; j < mapWidth; j++) {
                 if (map[i][j] == 2 && !visited[i][j]) {
@@ -43,25 +35,27 @@ public class Fitness {
                     
                     // Cập nhật số lượng nhóm và tổng số ô thuộc nhóm
                     groupCount++;
-                    totalGroupCells += group.size();
+                    groups.add(group);
                 }
             }
         }
         
-        // Tính điểm sự phân bố nhóm
-        if (groupCount > 0) {
-            groupBalanceScore = (double) totalGroupCells / (mapHeight * mapWidth);
+        double groupBalanceScore = 0.0;
+        int idealGroupSize = 5;
+        double sizeTolerance = 2.0; 
+
+        for (List<int[]> group : groups) {
+            int size = group.size();
+            double deviation = Math.abs(size - idealGroupSize) / idealGroupSize;
+            groupBalanceScore += Math.exp(-deviation / sizeTolerance);
         }
-    
-        // Trọng số cho sự phân bố nhóm
-        double groupBalanceWeight = 1.0; // Bạn có thể điều chỉnh trọng số này
-        
-        // Trả về điểm fitness (sử dụng thêm các yếu tố khác nếu cần)
-        return groupBalanceWeight * groupBalanceScore;
+
+        if (groupCount == 0) return 0.0;
+
+        return groupBalanceScore /= groupCount;
     }
     
-    // Hàm tìm nhóm ô phá hủy sử dụng DFS
-    private static void dfs(int[][] map, int i, int j, boolean[][] visited, List<int[]> group) {
+    private static void dfs(int[][] map, int i, int j, boolean[][] visited, List<int[]> group ) {
         int mapHeight = map.length;
         int mapWidth = map[0].length;
     
@@ -84,11 +78,10 @@ public class Fitness {
         int cols = map[0].length;
     
         boolean[][] visited = new boolean[rows][cols];
-        int totalCells = 0; // Tổng số ô có thể kết nối
-        int reachableCells = 0; // Số ô có thể tiếp cận
-        int disconnectedRegions = 0; // Số vùng không kết nối
+        int totalCells = 0; 
+        int reachableCells = 0;
+        int disconnectedRegions = 0;
     
-        // Đếm tổng số ô hợp lệ
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (map[i][j] == 0 || map[i][j] == 2 || map[i][j] == 3) {
@@ -97,29 +90,24 @@ public class Fitness {
             }
         }
     
-        // Duyệt toàn bộ bản đồ để tìm các vùng kết nối
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (!visited[i][j] && (map[i][j] == 0 || map[i][j] == 2 || map[i][j] == 3)) {
                     // Tìm thấy một vùng kết nối mới, sử dụng BFS để đếm số ô trong vùng
                     int regionSize = bfsCountRegion(map, visited, i, j);
                     reachableCells += regionSize;
+                    if (reachableCells == totalCells){
+                        break;
+                    }
                     disconnectedRegions++;
+                    if(disconnectedRegions > 1 )
+                        return 0;
                 }
             }
         }
-    
-        // Tính tỷ lệ ô kết nối được trên tổng số ô
-        double connectivityScore = (double) reachableCells / totalCells;
-    
-        // Phạt nếu có nhiều vùng không kết nối
-        double penalty = disconnectedRegions > 1 ? 1.0 / (1.0 + disconnectedRegions - 1) : 1.0;
-    
-        // Điểm cuối cùng là điểm kết nối nhân với hệ số phạt
-        return connectivityScore * penalty;
+        return 1;
     }
     
-    // BFS để đếm số ô trong một vùng kết nối
     private static int bfsCountRegion(int[][] map, boolean[][] visited, int startX, int startY) {
         int rows = map.length;
         int cols = map[0].length;
@@ -152,7 +140,7 @@ public class Fitness {
     }
     
 
-    private static double evaluateWallBalance(int[][] map) {
+    private static double evaluateBlocksRatio(int[][] map) {
         int destroyableCount = 0;
         int emptyCount = 0;
         double idealRatio = 0.45;
@@ -251,21 +239,18 @@ public class Fitness {
         }
     
         // Số lượng lý tưởng quái mỗi khu vực
-        double idealMonsterPerRegion = (double)  monsterCount/ (regionsX * regionsY);
+        int idealMonsterPerRegion = monsterCount/(regionsX * regionsY) + 1;
         // Tính điểm phân bố
         double totalScore = 0.0;
         int regionCount = regionsX * regionsY;
         for (int y = 0; y < regionsY; y++) {
             for (int x = 0; x < regionsX; x++) {
                 int monstersInRegion = regionMonsterCount[y][x];
-    
-                // Tính điểm cho khu vực
-                // Điểm giảm dần khi số quái lệch nhiều khỏi số lý tưởng
                 double score = 1.0 / (1.0 + Math.abs(monstersInRegion - idealMonsterPerRegion));
                 totalScore += score;
             }
         }
-        // Trả về điểm trung bình
+
         return totalScore / regionCount;
     }
 }

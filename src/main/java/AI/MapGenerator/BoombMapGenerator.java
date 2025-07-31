@@ -17,13 +17,12 @@ public class BoombMapGenerator {
 
     public void generateMap(int monsterCount, int mapWidth, int mapHeight) {
         List<int[][]> population = new ArrayList<>();
-        // Random rand = new Random();
     
         // Khởi tạo quần thể ban đầu
         for (int i = 0; i < POPULATION_SIZE; i++) {
             int[][] newMap = randomMap(mapWidth, mapHeight);
             placeMonsters(newMap, monsterCount);
-            if(Fitness.evaluateFitness(newMap) < 0.7){
+            if(Fitness.evaluateFitness(newMap) < 0.5){
                 i--;
                 continue;
             }
@@ -32,9 +31,9 @@ public class BoombMapGenerator {
     
         double previousAverageFitness = 0.0;
     
-        // Lặp qua các thế hệ
+        // Lặp thế hệ
         for (int generation = 0; generation < GENERATIONS; generation++) {
-            // Tính điểm fitness
+            // Tính điểm thích nghi
             List<Double> fitnessScores = new ArrayList<>();
             for (int[][] map : population) {
                 double fitness = Fitness.evaluateFitness(map);
@@ -42,18 +41,16 @@ public class BoombMapGenerator {
                 if(fitness <0)System.out.println(fitness);
             }
             
-            // Tính fitness trung bình
             double averageFitness = fitnessScores.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
     
-            // Điều kiện dừng động
-            if (Math.abs(averageFitness - previousAverageFitness) < 0.001) {
+            if (previousAverageFitness - averageFitness > 0.02) {
                 System.out.println("stop at generation "+ generation);
                 StoredMap.saveMap(sortPopulation(population).get(0));
                 return;
             } // Dừng nếu không cải thiện
+
             previousAverageFitness = averageFitness;
     
-            // Chọn cha mẹ và tạo thế hệ mới
             List<int[][]> newPopulation = new ArrayList<>();
             while (newPopulation.size() < POPULATION_SIZE) {
                 int[][] parent1 = selectParent(population, fitnessScores);
